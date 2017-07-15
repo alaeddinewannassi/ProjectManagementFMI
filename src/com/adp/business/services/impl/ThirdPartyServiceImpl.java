@@ -43,4 +43,10 @@ public class ThirdPartyServiceImpl implements ThirdPartyService {
 		return thirdPartyDAO.getThirdPartyByName(name);
 	}
 
+	@Override
+	public List<ThirdPartyEntity> getThirdPartysByTeam(Long teamId) throws ADPException {
+		// TODO Auto-generated method stub
+		return thirdPartyDAO.getThirdPartysByTeam(teamId);
+	}
+
 }

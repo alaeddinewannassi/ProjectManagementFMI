@@ -13,5 +13,6 @@ public interface ThirdPartyDAO extends GenericDAO<ThirdPartyEntity>{
 	public void deleteThirdParty(Long idThirdParty) throws ADPException ;
 	List<ThirdPartyEntity> getAllThirdPartys()throws ADPException ;
 	public ThirdPartyEntity getThirdPartyByName(String name)throws ADPException ;
+	public List<ThirdPartyEntity> getThirdPartysByTeam(Long teamId)throws ADPException ;
 	
 }

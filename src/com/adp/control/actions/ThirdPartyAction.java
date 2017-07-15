@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.adp.business.services.TeamService;
 import com.adp.business.services.ThirdPartyService;
+import com.adp.entities.TeamEntity;
 import com.adp.entities.ThirdPartyEntity;
 import com.adp.exceptions.ADPException;
 
@@ -13,32 +15,37 @@ public class ThirdPartyAction extends AbstractAction {
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
+	TeamService teamService ;
+	
+	@Autowired
 	ThirdPartyService thirdPartyService ;
 	
-	private ThirdPartyEntity ThirdParty ;
+	private ThirdPartyEntity thirdParty ;
 	
-	private List<ThirdPartyEntity> ThirdPartys ;
+	private List<TeamEntity> teams ;
 	
 	
-	
+
 	public ThirdPartyEntity getThirdParty() {
-		return ThirdParty;
+		return thirdParty;
 	}
 
-	public void setThirdParty(ThirdPartyEntity ThirdParty) {
-		this.ThirdParty = ThirdParty;
+	public void setThirdParty(ThirdPartyEntity thirdParty) {
+		this.thirdParty = thirdParty;
 	}
 
-	public List<ThirdPartyEntity> getThirdPartys() {
-		return ThirdPartys;
+	
+
+	public List<TeamEntity> getTeams() {
+		return teams;
 	}
 
-	public void setThirdPartys(List<ThirdPartyEntity> ThirdPartys) {
-		this.ThirdPartys = ThirdPartys;
+	public void setTeams(List<TeamEntity> teams) {
+		this.teams = teams;
 	}
 
-	public String addThirdParty()  {
-		
+	public String addThirdParty() throws ADPException  {
+		teams = teamService.getAllTeams() ;
 		return SUCCESS ;
 	}
 	
@@ -64,7 +71,7 @@ public class ThirdPartyAction extends AbstractAction {
 	public String modifyThirdParty() throws ADPException {
 		
 		
-		ThirdParty = thirdPartyService.getThirdParty(id);
+		thirdParty = thirdPartyService.getThirdParty(id);
 		
 		
 		return SUCCESS ;
@@ -72,7 +79,7 @@ public class ThirdPartyAction extends AbstractAction {
 	public String viewThirdPartys() throws ADPException {
 		
 		try {
-			ThirdPartys = thirdPartyService.getAllThirdPartys();
+			teams = teamService.getAllTeams() ;
 		} catch (ADPException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

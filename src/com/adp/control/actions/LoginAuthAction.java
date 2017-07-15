@@ -60,13 +60,10 @@ public class LoginAuthAction extends AbstractAction {
 		
 		String loggedInUser = user.getLogin();
 		
-		// passing username to index 
-		addActionMessage(loggedInUser);
-		
 		// session prepare 
 		setLoggedInUser(loggedInUser);
 		ServletActionContext.getRequest().getSession().setAttribute("loggedInUser", user);
-		
+	
 		return SUCCESS;  
   
 	} 

@@ -45,6 +45,12 @@ String query = "from ThirdPartyEntity where ThirdPartyName= :x";
 		}
 		else return null;
 	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ThirdPartyEntity> getThirdPartysByTeam(Long teamId)throws ADPException {
+		String q =" from MissionEntity m where m.project.id = ? " ;
+		return getHibernateTemplate().find(q,teamId);
+	}
 
 
 	

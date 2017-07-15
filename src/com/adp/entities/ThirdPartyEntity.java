@@ -3,6 +3,7 @@ package com.adp.entities;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -101,6 +102,17 @@ public class ThirdPartyEntity extends AbstractEntity {
 	}
 	public void setAssociation(Set<AffectationEntity> association) {
 		this.association = association;
+	}
+	public ThirdPartyEntity(String firstName, String lastName, String jobTitle, Date birthday, String gender,
+			String phone) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.jobTitle = jobTitle;
+		this.birthday = birthday;
+		this.gender = gender;
+		this.phone = phone;
+		this.matricule=  UUID.randomUUID().toString();
 	}
 	
 	
