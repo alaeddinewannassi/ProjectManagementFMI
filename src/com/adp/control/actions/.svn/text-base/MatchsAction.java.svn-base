@@ -1,0 +1,72 @@
+package com.adp.control.actions;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.adp.business.services.MatchService;
+import com.adp.business.services.PoolService;
+import com.adp.entities.MatchEntity;
+import com.adp.entities.PoolEntity;
+import com.adp.exceptions.ADPException;
+
+
+public class MatchsAction extends AbstractAction{
+
+	private static final long serialVersionUID = -1L;
+	
+	@Autowired
+	private MatchService matchService;
+	
+	@Autowired
+	private PoolService poolService;
+	
+	private Long poolId;
+	
+	private List<PoolEntity> pools;
+	
+	private List<MatchEntity> matchs;
+	
+	public String execute(){
+		
+		try {
+			pools = poolService.chargerPools();
+			
+			if(poolId != null){
+				matchs = matchService.chargerMatchs(poolId);
+			}else{
+				matchs = matchService.chargerMatchs();
+			}
+			
+		} catch (ADPException e) {
+			e.printStackTrace();
+		}
+		return SUCCESS;		
+	}
+
+	public List<MatchEntity> getMatchs() {
+		return matchs;
+	}
+
+	public void setMatchs(List<MatchEntity> matchs) {
+		this.matchs = matchs;
+	}
+
+	public Long getPoolId() {
+		return poolId;
+	}
+
+	public void setPoolId(Long poolId) {
+		this.poolId = poolId;
+	}
+
+	public List<PoolEntity> getPools() {
+		return pools;
+	}
+
+	public void setPools(List<PoolEntity> pools) {
+		this.pools = pools;
+	}
+
+	
+}

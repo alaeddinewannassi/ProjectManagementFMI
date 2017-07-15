@@ -1,0 +1,44 @@
+package com.adp.control.actions;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.adp.business.services.ScoreService;
+import com.adp.entities.ScoreEntity;
+import com.adp.exceptions.ADPException;
+import com.adp.utils.CollectionsUtil;
+
+
+public class ScoresAction extends AbstractAction{
+
+	private static final long serialVersionUID = -1L;
+	
+	@Autowired
+	private ScoreService scoreService;
+	
+	private List<ScoreEntity> scores;
+	
+	public String execute(){
+		
+		try {
+			scores = scoreService.chargerScores();
+			if(CollectionsUtil.isNotEmpty(scores)){
+			}
+		} catch (ADPException e) {
+			e.printStackTrace();
+		}
+		return SUCCESS;		
+	}
+
+	public List<ScoreEntity> getScores() {
+		return scores;
+	}
+
+	public void setScores(List<ScoreEntity> scores) {
+		this.scores = scores;
+	}
+	
+	
+
+}

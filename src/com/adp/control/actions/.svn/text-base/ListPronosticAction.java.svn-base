@@ -1,0 +1,222 @@
+package com.adp.control.actions;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
+import org.apache.struts2.ServletActionContext;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.adp.business.services.MatchService;
+import com.adp.business.services.PronostiqueService;
+import com.adp.business.services.UtilisateurService;
+import com.adp.dto.PronostiqueDTO;
+import com.adp.entities.MatchEntity;
+import com.adp.entities.PronostiqueEntity;
+import com.adp.entities.UtilisateurEntity;
+import com.adp.exceptions.ADPException;
+import com.adp.utils.DateUtils;
+import com.adp.utils.MatchComparator;
+import com.adp.utils.StringUtil;
+
+
+public class ListPronosticAction extends AbstractAction{
+
+	private static final long serialVersionUID = -1L;
+	
+	@Autowired
+	private PronostiqueService pronostiqueService;
+	
+	@Autowired
+	private MatchService matchService;
+	
+	@Autowired
+	private UtilisateurService utilisateurService;
+	
+	private List<PronostiqueDTO> pronostiquesA;
+	private List<PronostiqueDTO> pronostiquesB;
+	private List<PronostiqueDTO> pronostiquesC;
+	private List<PronostiqueDTO> pronostiquesD;
+	private List<PronostiqueDTO> pronostiquesQF;
+	private List<PronostiqueDTO> pronostiquesDF;
+	private List<PronostiqueDTO> pronostiquesP;
+	private List<PronostiqueDTO> pronostiquesF;
+	
+	@SuppressWarnings("unchecked")
+	public String execute(){
+		
+		try {
+			
+			pronostiquesA = new ArrayList<PronostiqueDTO>();
+			pronostiquesB = new ArrayList<PronostiqueDTO>();
+			pronostiquesC = new ArrayList<PronostiqueDTO>();
+			pronostiquesD = new ArrayList<PronostiqueDTO>();
+			pronostiquesQF = new ArrayList<PronostiqueDTO>();
+			pronostiquesDF = new ArrayList<PronostiqueDTO>();
+			pronostiquesP = new ArrayList<PronostiqueDTO>();
+			pronostiquesF = new ArrayList<PronostiqueDTO>();
+			
+			List<MatchEntity> matchs = matchService.chargerMatchs();
+			Collections.sort(matchs, new MatchComparator());
+			
+			// Get user mail
+			String userMail = (String) ServletActionContext.getRequest().getSession().getAttribute("loggedInUserMail");
+			
+			for (MatchEntity matchEntity : matchs) {
+				
+				try {
+					PronostiqueEntity pronostiqueEntity = null;
+					if(StringUtil.isNotEmpty(userMail)){
+						pronostiqueEntity = pronostiqueService.chargerPronostiqueMatch(userMail, matchEntity.getId());
+					}
+					PronostiqueDTO pronostiqueDTO = pronostiqueEntity == null ? new PronostiqueDTO(matchEntity) : new PronostiqueDTO(pronostiqueEntity);
+					Field listField = this.getClass().getDeclaredField("pronostiques"+pronostiqueDTO.getMatch().getPool().getNom());
+					((List)((listField).get(this))).add(pronostiqueDTO);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			
+		} catch (ADPException e) {
+			addActionError("Une erreur est survenue !");
+			e.printStackTrace();
+		}
+		
+		return SUCCESS;
+	}
+	
+	public String valider(){
+		
+		try {
+			
+			// Get user mail
+			String userMail = (String) ServletActionContext.getRequest().getSession().getAttribute("loggedInUserMail");
+
+			// Save pronostique
+			if(userMail != null){
+				
+				UtilisateurEntity user = utilisateurService.chargerUtilisateur(userMail);
+				
+				List<MatchEntity> matchs = matchService.chargerMatchs();
+				
+				for (MatchEntity matchEntity : matchs) {
+					boolean isValid;
+					try{
+						Date d = DateUtils.getDateFromText(matchEntity.getDateDeb(), "dd/MM/yyyy HH:mm");
+						Calendar cal_now = Calendar.getInstance();
+						Calendar cal_match = Calendar.getInstance();
+						cal_match.setTime(d);
+						if(cal_match.compareTo(cal_now) > 0){
+							isValid = true;
+						}else{
+							isValid = false;
+						}
+					}catch (Exception e) {
+						isValid = false;
+					}
+					if(isValid){
+						String pronostique1 = ServletActionContext.getRequest().getParameter("pronostique_"+matchEntity.getId()+"_1");
+						String pronostique2 = ServletActionContext.getRequest().getParameter("pronostique_"+matchEntity.getId()+"_2");
+						
+						if(StringUtil.isNotEmpty(pronostique1) && StringUtil.isNotEmpty(pronostique2)){
+							try{
+								pronostique1 = String.valueOf(Integer.valueOf(pronostique1));
+								pronostique2 = String.valueOf(Integer.valueOf(pronostique2));
+							}catch (Exception e) {
+								pronostique1 = "";
+								pronostique2 = "";
+							}
+						}else if(StringUtil.isEmpty(pronostique1) && StringUtil.isEmpty(pronostique2)){
+							// Nothing
+						}else{
+							if(StringUtil.isEmpty(pronostique1)) pronostique1 = "0";
+							if(StringUtil.isEmpty(pronostique2)) pronostique2 = "0";
+						}
+						
+						pronostiqueService.sauvegarderPronostique(user, matchEntity, pronostique1, pronostique2);
+					}
+				}
+				
+				addActionMessage("Données sauvegardées avec succès !");
+				
+			}else{
+				addActionError("Erreur de sauvegarde !");
+			}
+			
+		} catch (Exception e) {
+			addActionError("Erreur de sauvegarde !");
+			e.printStackTrace();
+		}
+		return execute();
+	}
+
+	public List<PronostiqueDTO> getPronostiquesA() {
+		return pronostiquesA;
+	}
+
+	public void setPronostiquesA(List<PronostiqueDTO> pronostiquesA) {
+		this.pronostiquesA = pronostiquesA;
+	}
+
+	public List<PronostiqueDTO> getPronostiquesB() {
+		return pronostiquesB;
+	}
+
+	public void setPronostiquesB(List<PronostiqueDTO> pronostiquesB) {
+		this.pronostiquesB = pronostiquesB;
+	}
+
+	public List<PronostiqueDTO> getPronostiquesC() {
+		return pronostiquesC;
+	}
+
+	public void setPronostiquesC(List<PronostiqueDTO> pronostiquesC) {
+		this.pronostiquesC = pronostiquesC;
+	}
+
+	public List<PronostiqueDTO> getPronostiquesD() {
+		return pronostiquesD;
+	}
+
+	public void setPronostiquesD(List<PronostiqueDTO> pronostiquesD) {
+		this.pronostiquesD = pronostiquesD;
+	}
+
+	public List<PronostiqueDTO> getPronostiquesQF() {
+		return pronostiquesQF;
+	}
+
+	public void setPronostiquesQF(List<PronostiqueDTO> pronostiquesQF) {
+		this.pronostiquesQF = pronostiquesQF;
+	}
+
+	public List<PronostiqueDTO> getPronostiquesDF() {
+		return pronostiquesDF;
+	}
+
+	public void setPronostiquesDF(List<PronostiqueDTO> pronostiquesDF) {
+		this.pronostiquesDF = pronostiquesDF;
+	}
+
+	public List<PronostiqueDTO> getPronostiquesP() {
+		return pronostiquesP;
+	}
+
+	public void setPronostiquesP(List<PronostiqueDTO> pronostiquesP) {
+		this.pronostiquesP = pronostiquesP;
+	}
+
+	public List<PronostiqueDTO> getPronostiquesF() {
+		return pronostiquesF;
+	}
+
+	public void setPronostiquesF(List<PronostiqueDTO> pronostiquesF) {
+		this.pronostiquesF = pronostiquesF;
+	}
+	
+	
+
+}

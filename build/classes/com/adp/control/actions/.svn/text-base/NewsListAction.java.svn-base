@@ -1,0 +1,40 @@
+package com.adp.control.actions;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.adp.business.services.NewsService;
+import com.adp.entities.NewsEntity;
+import com.adp.exceptions.ADPException;
+
+
+public class NewsListAction extends AbstractAction{
+
+	private static final long serialVersionUID = -1L;
+	
+	@Autowired
+	private NewsService newsService;
+	
+	private List<NewsEntity> newsList;
+	
+	public String execute(){
+		
+		try {
+			newsList = newsService.chargerNews();
+		} catch (ADPException e) {
+			e.printStackTrace();
+		}
+		return SUCCESS;		
+	}
+
+	public List<NewsEntity> getNewsList() {
+		return newsList;
+	}
+
+	public void setNewsList(List<NewsEntity> newsList) {
+		this.newsList = newsList;
+	}
+
+	
+}

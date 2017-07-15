@@ -1,0 +1,48 @@
+/**
+ * 
+ */
+package com.adp.control.actions;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.adp.business.services.HistoriqueService;
+import com.adp.entities.HistoriqueEntity;
+import com.adp.exceptions.ADPException;
+
+
+/**
+ * @author M.BENAMOR
+ *
+ */
+public class AdministrationAction extends AbstractAction {
+
+	private static final long serialVersionUID = -3498273877470668895L;
+
+	@Autowired
+	HistoriqueService historiqueService;
+	
+	private List<HistoriqueEntity> historiqueList;
+	
+	public String execute() {  
+		try {
+			historiqueList = historiqueService.chargerHistorique();
+		} catch (ADPException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return SUCCESS;  
+  
+	}
+
+	public List<HistoriqueEntity> getHistoriqueList() {
+		return historiqueList;
+	}
+
+	public void setHistoriqueList(List<HistoriqueEntity> historiqueList) {
+		this.historiqueList = historiqueList;
+	} 
+	
+	
+}

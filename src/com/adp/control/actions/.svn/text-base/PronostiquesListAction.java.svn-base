@@ -1,0 +1,94 @@
+package com.adp.control.actions;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.adp.business.services.PoolService;
+import com.adp.business.services.PronostiqueService;
+import com.adp.entities.PoolEntity;
+import com.adp.entities.PronostiqueEntity;
+import com.adp.exceptions.ADPException;
+import com.adp.utils.StringUtil;
+
+
+public class PronostiquesListAction extends AbstractAction{
+
+	private static final long serialVersionUID = -1L;
+	
+	@Autowired
+	private PronostiqueService pronostiqueService;
+	
+	@Autowired
+	private PoolService poolService;
+	
+	private Long poolId;
+	
+	private List<PoolEntity> pools;
+	
+	private String mail;
+	
+	private String nom;
+	
+	private List<PronostiqueEntity> pronostiques;
+	
+	public String execute(){
+		
+		try {
+			pools = poolService.chargerPools();
+			
+			if(StringUtil.isNotEmpty(nom) || StringUtil.isNotEmpty(mail)){
+				pronostiques = pronostiqueService.chargerPronostiques(nom, mail, poolId);
+			}else{
+				addActionError("Veuillez choisir un utilisateur");
+				pronostiques = new ArrayList<PronostiqueEntity>();
+			}
+			
+		} catch (ADPException e) {
+			e.printStackTrace();
+		}
+		return SUCCESS;		
+	}
+
+	public List<PronostiqueEntity> getPronostiques() {
+		return pronostiques;
+	}
+
+	public void setPronostiques(List<PronostiqueEntity> pronostiques) {
+		this.pronostiques = pronostiques;
+	}
+
+	public String getMail() {
+		return mail;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public Long getPoolId() {
+		return poolId;
+	}
+
+	public void setPoolId(Long poolId) {
+		this.poolId = poolId;
+	}
+
+	public List<PoolEntity> getPools() {
+		return pools;
+	}
+
+	public void setPools(List<PoolEntity> pools) {
+		this.pools = pools;
+	}
+
+}

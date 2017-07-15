@@ -1,0 +1,160 @@
+/**
+ * 
+ */
+package com.adp.control.actions;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.adp.business.services.ConstanteService;
+import com.adp.business.services.UtilisateurService;
+import com.adp.entities.ConstanteEntity;
+import com.adp.exceptions.ADPException;
+import com.adp.utils.MailUtil;
+import com.adp.utils.StringUtil;
+
+
+/**
+ * @author M.BENAMOR
+ *
+ */
+public class InscriptionValidationAction extends AbstractAction {
+
+	private static final long serialVersionUID = -3498273877470668895L;
+
+	@Autowired
+	private UtilisateurService utilisateurService;
+	
+	@Autowired
+	private ConstanteService constanteService;
+	
+	private String message;
+	
+	private String name;
+	private String tel;
+	private String email;
+	private String password1;
+	private String password2;
+	
+	public String execute() {  
+		Long userId = null;
+		try {
+			if(!check()){
+				return "input";
+			}
+		
+			// Send mail to user
+			ConstanteEntity host = constanteService.chargerConstante("smtp.server.host");
+			ConstanteEntity from = constanteService.chargerConstante("smtp.from");
+			ConstanteEntity url = constanteService.chargerConstante("validationUrl");
+
+			if(host == null || from == null || url == null || StringUtil.isEmpty(host.getValeur()) || StringUtil.isEmpty(from.getValeur()) || StringUtil.isEmpty(url.getValeur())){
+				addActionError("Inscription impossible ! Veuillez contacter l'administrateur !");
+				return "input";
+			}
+
+			userId = utilisateurService.enregistrer(name, tel, email, password1);
+			
+			if(userId == null){
+				addActionError("Un utilisateur est déjà inscrit avec ce mail !");
+				return INPUT;
+			}
+			
+			// Send mail validation
+			int userHash = (userId.intValue() + email).hashCode();
+			MailUtil.sendValidationMail(host.getValeur(), from.getValeur(), url.getValeur(), email, userHash);
+			
+			
+		} catch (Exception e) {
+//			try {
+//				if(userId != null)
+//					utilisateurService.supprimer(userId);
+//			} catch (ADPException e1) {}
+			
+			addActionError("Inscription impossible ! Veuillez contacter l'administrateur !");
+			return "input";
+		}
+		
+		message = "Un mail de validation vous est envoyé.";
+		return SUCCESS;  
+  
+	}
+
+	private boolean check() {
+		if(StringUtil.isEmpty(name) || StringUtil.isEmpty(email) || StringUtil.isEmpty(tel) || StringUtil.isEmpty(password1) || StringUtil.isEmpty(password2)){
+			addActionError("Valeurs saisies incorrectes !");
+			return false;
+		}
+		
+		if(!email.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")){
+			addActionError("Email invalide !");
+			return false;
+		}
+		
+		if(!email.endsWith("adp.com")){
+			addActionError("Email invalide !");
+			return false;
+		}
+		
+		if(!password1.equals(password2)){
+			addActionError("Valeurs saisies incorrectes !");
+			return false;
+		}
+		
+		if(!password1.matches("\\w*")){
+			addActionError("Valeurs saisies incorrectes !");
+			addActionError("Le mot de passe ne doit contenir ques des caractères AlphaNumériques");
+			return false;
+		}
+		
+		return true;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getTel() {
+		return tel;
+	}
+
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword1() {
+		return password1;
+	}
+
+	public void setPassword1(String password1) {
+		this.password1 = password1;
+	}
+
+	public String getPassword2() {
+		return password2;
+	}
+
+	public void setPassword2(String password2) {
+		this.password2 = password2;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	} 
+	
+}

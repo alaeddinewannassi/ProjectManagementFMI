@@ -1,0 +1,96 @@
+package com.adp.control.actions;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.adp.business.services.PoolService;
+import com.adp.entities.PoolEntity;
+import com.adp.exceptions.ADPException;
+import com.adp.utils.StringUtil;
+
+
+public class PoolAction extends AbstractAction{
+
+	private static final long serialVersionUID = -1L;
+	
+	@Autowired
+	private PoolService poolService;
+	
+	private Long poolId;
+	
+	private String nom;
+	
+	public String execute(){
+		
+		try {
+			if(poolId != null){
+				PoolEntity pool = poolService.chargerPool(poolId);
+				nom = pool.getNom();
+			}
+		} catch (ADPException e) {
+			e.printStackTrace();
+		}
+		return SUCCESS;		
+	}
+	
+	public String modifier(){
+		try {
+			if(check()){
+				if(poolId != null){
+					poolService.modifier(poolId, nom);
+					addActionMessage("Opération OK !");
+					return SUCCESS;	
+				}else{
+					poolService.ajouter(nom);
+					return "list";	
+				}
+			}else{
+				addActionError("Données invalides !");
+				return SUCCESS;	
+			}
+		} catch (ADPException e) {
+			addActionError("Erreur !");
+			e.printStackTrace();
+			return "input";	
+		}
+		
+	}
+	
+	public String supprimer(){
+		if(poolId != null){
+			try {
+				poolService.supprimer(poolId);
+			}catch (Exception e) {
+				addActionError("Erreur de suppression, données liées à d'autres tables !");
+				e.printStackTrace();
+				return INPUT;
+			}
+		}
+		return SUCCESS;
+	}
+
+	private boolean check() {
+		if(StringUtil.isEmpty(nom)){
+			return false;
+		}
+		return true;
+	}
+
+	public Long getPoolId() {
+		return poolId;
+	}
+
+	public void setPoolId(Long poolId) {
+		this.poolId = poolId;
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+	
+	
+
+}

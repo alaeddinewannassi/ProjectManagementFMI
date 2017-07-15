@@ -1,0 +1,52 @@
+package com.adp.control.actions;
+
+import java.util.Collections;
+import java.util.List;
+
+import org.apache.struts2.ServletActionContext;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.adp.business.services.PronostiqueService;
+import com.adp.dto.PronostiqueDTO;
+import com.adp.exceptions.ADPException;
+import com.adp.utils.PronostiqueComparator;
+import com.adp.utils.StringUtil;
+
+
+public class ScoreAction extends AbstractAction{
+
+	private static final long serialVersionUID = -1L;
+	
+	@Autowired
+	private PronostiqueService pronostiqueService;
+	
+	private List<PronostiqueDTO> pronostiques;
+	
+	public String execute()
+	{
+		try {
+			// Get user mail
+			String userMail = (String) ServletActionContext.getRequest().getSession().getAttribute("loggedInUserMail");
+			
+			if(StringUtil.isNotEmpty(userMail)){
+				pronostiques = pronostiqueService.chargerPronostiques(userMail);
+				Collections.sort(pronostiques, new PronostiqueComparator());
+			}
+		} catch (ADPException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return SUCCESS;		
+	}
+
+	public List<PronostiqueDTO> getPronostiques() {
+		return pronostiques;
+	}
+
+	public void setPronostiques(List<PronostiqueDTO> pronostiques) {
+		this.pronostiques = pronostiques;
+	}
+	
+	
+
+}

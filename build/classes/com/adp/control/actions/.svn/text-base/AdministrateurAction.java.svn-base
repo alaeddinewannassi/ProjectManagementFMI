@@ -1,0 +1,103 @@
+package com.adp.control.actions;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.adp.business.services.UtilisateurService;
+import com.adp.entities.UtilisateurEntity;
+import com.adp.exceptions.ADPException;
+import com.adp.utils.StringUtil;
+
+
+public class AdministrateurAction extends AbstractAction{
+
+	private static final long serialVersionUID = -1L;
+	
+	@Autowired
+	private UtilisateurService utilisateurService;
+	
+	private Long utilisateurId;
+	
+	private String nom;
+	
+	private String mail;
+	
+	private String password;
+	
+	public String execute(){
+		
+		try {
+			if(utilisateurId != null){
+				UtilisateurEntity utilisateur = utilisateurService.chargerUtilisateur(utilisateurId);
+				nom = utilisateur.getNom();
+				mail = utilisateur.getMail();
+				password = utilisateur.getPassword();
+			}
+		} catch (ADPException e) {
+			e.printStackTrace();
+		}
+		return SUCCESS;		
+	}
+	
+	public String modifier(){
+		try {
+			if(check()){
+				if(utilisateurId != null){
+					utilisateurService.modifierAdmin(utilisateurId, nom, mail, password);
+					addActionMessage("Opération OK !");
+					return SUCCESS;	
+				}else{
+					utilisateurService.ajouterAdmin(nom, mail, password);
+					return "list";	
+				}
+			}else{
+				addActionError("Données invalides !");
+				return SUCCESS;	
+			}
+		} catch (ADPException e) {
+			addActionError("Erreur !");
+			e.printStackTrace();
+			return "input";	
+		}
+		
+	}
+	
+	private boolean check() {
+		if(StringUtil.isEmpty(nom) || StringUtil.isEmpty(mail) || StringUtil.isEmpty(password)){
+			return false;
+		}
+		return true;
+	}
+
+	public Long getUtilisateurId() {
+		return utilisateurId;
+	}
+
+	public void setUtilisateurId(Long utilisateurId) {
+		this.utilisateurId = utilisateurId;
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public String getMail() {
+		return mail;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+}

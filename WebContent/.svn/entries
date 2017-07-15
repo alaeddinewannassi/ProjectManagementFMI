@@ -1,0 +1,130 @@
+10
+
+dir
+48
+file:///C:/svn/svnrepo/ADPPronostics/trunk/CAN2013Pronostics/WebContent
+file:///C:/svn/svnrepo
+
+
+
+2012-11-07T22:09:03.294000Z
+48
+M.BENAMOR
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+d9d92363-d67d-b546-a861-26910c0d6cd3
+
+
+
+
+
+
+0
+
+META-INF
+dir
+
+WEB-INF
+dir
+
+admin
+dir
+
+css
+dir
+
+images
+dir
+
+index.html
+file
+70
+
+
+
+2012-11-24T17:55:49.343000Z
+edfa2ebcbf2831bff98515c7c5e46067
+2012-11-25T01:56:43.060000Z
+70
+M.BENAMOR
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+77
+
+index.jsp
+file
+50
+
+
+
+2012-11-11T22:52:47.034000Z
+edfa2ebcbf2831bff98515c7c5e46067
+2012-11-12T18:31:00.323000Z
+50
+M.BENAMOR
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+77
+
+js
+dir
+
+login
+dir
+
+site
+dir
+
+themes
+dir
+

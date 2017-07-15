@@ -1,0 +1,41 @@
+package com.adp.control.actions;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.adp.business.services.PoolService;
+import com.adp.entities.PoolEntity;
+import com.adp.exceptions.ADPException;
+
+
+public class PoolsAction extends AbstractAction{
+
+	private static final long serialVersionUID = -1L;
+	
+	@Autowired
+	private PoolService poolService;
+	
+	private List<PoolEntity> pools;
+	
+	public String execute(){
+		
+		try {
+			pools = poolService.chargerPools();
+		} catch (ADPException e) {
+			e.printStackTrace();
+		}
+		return SUCCESS;		
+	}
+
+	public List<PoolEntity> getPools() {
+		return pools;
+	}
+
+	public void setPools(List<PoolEntity> pools) {
+		this.pools = pools;
+	}
+	
+	
+
+}

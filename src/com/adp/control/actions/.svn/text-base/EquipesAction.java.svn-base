@@ -1,0 +1,41 @@
+package com.adp.control.actions;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.adp.business.services.EquipeService;
+import com.adp.entities.EquipeEntity;
+import com.adp.exceptions.ADPException;
+
+
+public class EquipesAction extends AbstractAction{
+
+	private static final long serialVersionUID = -1L;
+	
+	@Autowired
+	private EquipeService equipeService;
+	
+	private List<EquipeEntity> equipes;
+	
+	public String execute(){
+		
+		try {
+			equipes = equipeService.chargerEquipes();
+		} catch (ADPException e) {
+			e.printStackTrace();
+		}
+		return SUCCESS;		
+	}
+
+	public List<EquipeEntity> getEquipes() {
+		return equipes;
+	}
+
+	public void setEquipes(List<EquipeEntity> equipes) {
+		this.equipes = equipes;
+	}
+	
+	
+
+}

@@ -1,0 +1,182 @@
+package com.adp.control.actions;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.adp.business.services.ClassementEquipeService;
+import com.adp.business.services.MatchService;
+import com.adp.entities.ClassementEquipeEntity;
+import com.adp.entities.MatchEntity;
+import com.adp.exceptions.ADPException;
+import com.adp.utils.MatchComparator;
+
+
+public class MatchsResultsAction extends AbstractAction{
+
+	private static final long serialVersionUID = -1L;
+	
+	@Autowired
+	private MatchService matchService;
+	
+	@Autowired
+	private ClassementEquipeService classementEquipeService;
+	
+	private List<MatchEntity> matchsA;
+	private List<MatchEntity> matchsB;
+	private List<MatchEntity> matchsC;
+	private List<MatchEntity> matchsD;
+	
+	private List<ClassementEquipeEntity> classementEquipeA;
+	private List<ClassementEquipeEntity> classementEquipeB;
+	private List<ClassementEquipeEntity> classementEquipeC;
+	private List<ClassementEquipeEntity> classementEquipeD;
+	
+	private List<MatchEntity> matchsQF;
+	private List<MatchEntity> matchsDF;
+	private List<MatchEntity> matchsP;
+	private List<MatchEntity> matchsF;
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public String execute()
+	{
+		matchsA = new ArrayList<MatchEntity>();
+		matchsB = new ArrayList<MatchEntity>();
+		matchsC = new ArrayList<MatchEntity>();
+		matchsD = new ArrayList<MatchEntity>();
+		classementEquipeA = new ArrayList<ClassementEquipeEntity>();
+		classementEquipeB = new ArrayList<ClassementEquipeEntity>();
+		classementEquipeC = new ArrayList<ClassementEquipeEntity>();
+		classementEquipeD = new ArrayList<ClassementEquipeEntity>();
+		matchsQF = new ArrayList<MatchEntity>();
+		matchsDF = new ArrayList<MatchEntity>();
+		matchsP = new ArrayList<MatchEntity>();
+		matchsF = new ArrayList<MatchEntity>();
+		
+		try {
+			
+			classementEquipeA = classementEquipeService.chargerClassements("A");
+			classementEquipeB = classementEquipeService.chargerClassements("B");
+			classementEquipeC = classementEquipeService.chargerClassements("C");
+			classementEquipeD = classementEquipeService.chargerClassements("D");
+			
+			List<MatchEntity> matchs = matchService.chargerMatchs();
+			Collections.sort(matchs, new MatchComparator());
+			
+			for (MatchEntity matchEntity : matchs) {
+				try {
+					Field listField = this.getClass().getDeclaredField("matchs"+matchEntity.getPool().getNom());
+					((List)((listField).get(this))).add(matchEntity);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		} catch (ADPException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return SUCCESS;		
+	}
+
+	public List<MatchEntity> getMatchsA() {
+		return matchsA;
+	}
+
+	public void setMatchsA(List<MatchEntity> matchsA) {
+		this.matchsA = matchsA;
+	}
+
+	public List<MatchEntity> getMatchsB() {
+		return matchsB;
+	}
+
+	public void setMatchsB(List<MatchEntity> matchsB) {
+		this.matchsB = matchsB;
+	}
+
+	public List<MatchEntity> getMatchsC() {
+		return matchsC;
+	}
+
+	public void setMatchsC(List<MatchEntity> matchsC) {
+		this.matchsC = matchsC;
+	}
+
+	public List<MatchEntity> getMatchsD() {
+		return matchsD;
+	}
+
+	public void setMatchsD(List<MatchEntity> matchsD) {
+		this.matchsD = matchsD;
+	}
+
+	public List<ClassementEquipeEntity> getClassementEquipeA() {
+		return classementEquipeA;
+	}
+
+	public void setClassementEquipeA(List<ClassementEquipeEntity> classementEquipeA) {
+		this.classementEquipeA = classementEquipeA;
+	}
+
+	public List<ClassementEquipeEntity> getClassementEquipeB() {
+		return classementEquipeB;
+	}
+
+	public void setClassementEquipeB(List<ClassementEquipeEntity> classementEquipeB) {
+		this.classementEquipeB = classementEquipeB;
+	}
+
+	public List<ClassementEquipeEntity> getClassementEquipeC() {
+		return classementEquipeC;
+	}
+
+	public void setClassementEquipeC(List<ClassementEquipeEntity> classementEquipeC) {
+		this.classementEquipeC = classementEquipeC;
+	}
+
+	public List<ClassementEquipeEntity> getClassementEquipeD() {
+		return classementEquipeD;
+	}
+
+	public void setClassementEquipeD(List<ClassementEquipeEntity> classementEquipeD) {
+		this.classementEquipeD = classementEquipeD;
+	}
+
+	public List<MatchEntity> getMatchsQF() {
+		return matchsQF;
+	}
+
+	public void setMatchsQF(List<MatchEntity> matchsQF) {
+		this.matchsQF = matchsQF;
+	}
+
+	public List<MatchEntity> getMatchsDF() {
+		return matchsDF;
+	}
+
+	public void setMatchsDF(List<MatchEntity> matchsDF) {
+		this.matchsDF = matchsDF;
+	}
+
+	public List<MatchEntity> getMatchsP() {
+		return matchsP;
+	}
+
+	public void setMatchsP(List<MatchEntity> matchsP) {
+		this.matchsP = matchsP;
+	}
+
+	public List<MatchEntity> getMatchsF() {
+		return matchsF;
+	}
+
+	public void setMatchsF(List<MatchEntity> matchsF) {
+		this.matchsF = matchsF;
+	}
+
+	
+}

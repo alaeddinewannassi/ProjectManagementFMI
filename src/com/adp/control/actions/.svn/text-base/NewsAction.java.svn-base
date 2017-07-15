@@ -1,0 +1,191 @@
+package com.adp.control.actions;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.struts2.ServletActionContext;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.adp.business.services.NewsService;
+import com.adp.entities.NewsEntity;
+import com.adp.exceptions.ADPException;
+import com.adp.utils.DateUtils;
+import com.adp.utils.StringUtil;
+
+
+public class NewsAction extends AbstractAction{
+
+	private static final long serialVersionUID = -1L;
+	
+	@Autowired
+	private NewsService newsService;
+	
+	private Long newsId;
+	
+	private String titre;
+	private String texte;
+	private String dateEffet;
+	private File image;
+	private String imageContentType;
+	private String imageFileName;
+	
+	public String execute(){
+		
+		try {
+			if(newsId != null){
+				NewsEntity news = newsService.chargerNews(newsId);
+				if(news != null){
+					titre = news.getTitre();
+					texte = news.getTexte();
+					dateEffet = DateUtils.getFormattedDate(news.getDateEffet(), "dd/MM/yyyy");
+					imageFileName = news.getImage();
+				}
+			}
+			
+		} catch (ADPException e) {
+			e.printStackTrace();
+		}
+		return SUCCESS;		
+	}
+	
+	public String modifier(){
+		try {
+
+			if(check()){
+				
+				// Copy file
+				if(image != null){
+					String date = DateUtils.getFormattedDate(new Date(), "ddMMyyy_hhmmss");
+					imageFileName = imageFileName.replace(" ", "_");
+					imageFileName = date+"_"+imageFileName;
+					String filePath = ServletActionContext.getRequest().getSession().getServletContext().getRealPath("/");
+					File fileToUpload = new File(filePath+"images\\uploaded\\"+imageFileName);
+					FileUtils.copyFile(image, fileToUpload);
+				}
+				
+				if(newsId != null){
+					newsService.modifier(newsId, titre, texte, imageFileName);
+					addActionMessage("Opération OK !");
+					return SUCCESS;	
+				}else{
+					newsService.ajouter(titre, texte, imageFileName);
+					return "list";	
+				}
+			}else{
+				addActionError("Données invalides !");
+				return SUCCESS;	
+			}
+			
+		} catch (ADPException e) {
+			addActionError("Erreur !");
+			e.printStackTrace();
+			return "input";	
+		} catch (IOException e) {
+			addActionError("Erreur !");
+			e.printStackTrace();
+			return "input";	
+		}
+		
+	}
+	
+	public String supprimer(){
+		if(newsId != null){
+			try {
+				newsService.supprimer(newsId);
+			}catch (Exception e) {
+				addActionError("Erreur de suppression, données liées à d'autres tables !");
+				e.printStackTrace();
+				return INPUT;
+			}
+		}
+		return SUCCESS;
+	}
+	
+	public String supprimerImage(){
+		if(newsId != null){
+			try {
+				newsService.supprimerImage(newsId);
+			}catch (Exception e) {
+				addActionError("Erreur de suppression, données liées à d'autres tables !");
+				e.printStackTrace();
+				return INPUT;
+			}
+		}
+		return SUCCESS;
+	}
+
+	private boolean check() {
+		if(StringUtil.isEmpty(titre) || StringUtil.isEmpty(texte)){
+			return false;
+		}
+		
+		if(image != null && !"image/png".equals(imageContentType)
+				&& !"image/gif".equals(imageContentType)
+				&& !"image/jpeg".equals(imageContentType)
+				&& !"image/pjpeg".equals(imageContentType)){
+			return false;
+		}
+		
+		return true;
+	}
+
+	public Long getNewsId() {
+		return newsId;
+	}
+
+	public void setNewsId(Long newsId) {
+		this.newsId = newsId;
+	}
+
+	public String getTitre() {
+		return titre;
+	}
+
+	public void setTitre(String titre) {
+		this.titre = titre;
+	}
+
+	public String getTexte() {
+		return texte;
+	}
+
+	public void setTexte(String texte) {
+		this.texte = texte;
+	}
+
+	public String getDateEffet() {
+		return dateEffet;
+	}
+
+	public void setDateEffet(String dateEffet) {
+		this.dateEffet = dateEffet;
+	}
+
+	public File getImage() {
+		return image;
+	}
+
+	public void setImage(File image) {
+		this.image = image;
+	}
+
+	public String getImageContentType() {
+		return imageContentType;
+	}
+
+	public void setImageContentType(String imageContentType) {
+		this.imageContentType = imageContentType;
+	}
+
+	public String getImageFileName() {
+		return imageFileName;
+	}
+
+	public void setImageFileName(String imageFileName) {
+		this.imageFileName = imageFileName;
+	}
+
+
+}

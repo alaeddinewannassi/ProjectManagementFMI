@@ -1,0 +1,130 @@
+/**
+ * 
+ */
+package com.adp.control.actions;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.adp.business.services.AdsService;
+import com.adp.business.services.MatchService;
+import com.adp.business.services.PronostiqueService;
+import com.adp.business.services.ScoreService;
+import com.adp.business.services.UtilisateurService;
+import com.adp.control.interceptors.LoginInterceptor;
+import com.adp.entities.MatchEntity;
+import com.adp.entities.PronostiqueEntity;
+import com.adp.entities.UtilisateurEntity;
+import com.adp.exceptions.ADPException;
+
+
+/**
+ * @author M.BENAMOR
+ *
+ */
+public class CalculsAction extends AbstractAction {
+
+	private static final long serialVersionUID = -3498273877470668895L;
+	
+	@Autowired
+	private UtilisateurService utilisateurService;
+	
+	@Autowired
+	private MatchService matchService;
+	
+	@Autowired
+	private PronostiqueService pronostiqueService;
+	
+	@Autowired
+	private ScoreService scoreService;
+	
+	@Autowired
+	private AdsService adsService;
+	
+
+	public String execute() {  
+		
+		return SUCCESS;  
+  
+	} 
+	
+	public String valider() {  
+		
+		// Lock Site.
+		LoginInterceptor.calculating = true;
+		
+		try {
+			List<UtilisateurEntity> users = utilisateurService.chargerUtilisateurs();
+			
+			adsService.clearAutomoticAds();
+			
+			for (UtilisateurEntity utilisateurEntity : users) {
+				if("V".equals(utilisateurEntity.getValide())){
+					
+					int score = 0;
+					List<MatchEntity> matchs = matchService.chargerMatchs();
+					
+					for (MatchEntity matchEntity : matchs) {
+						if("T".equals(matchEntity.getStatut())){
+							PronostiqueEntity pronostique = pronostiqueService.chargerPronostiqueMatch(utilisateurEntity.getMail(), matchEntity.getId());
+							
+							if(pronostique != null){
+								int res1 = Integer.parseInt(matchEntity.getRes1());
+								int res2 = Integer.parseInt(matchEntity.getRes2());
+								int pronostique1 = Integer.parseInt(pronostique.getPronostique1());
+								int pronostique2 = Integer.parseInt(pronostique.getPronostique2());
+								
+								boolean createNews = false;
+								
+								int gain = 0;
+								
+								if(res1 == pronostique1 && res2 == pronostique2){
+									gain = 3;
+									createNews = true;
+																		
+								}else if((res1 > res2 && pronostique1 > pronostique2) || (res1 < res2 && pronostique1 < pronostique2) || (res1 == res2 && pronostique1 == pronostique2)){
+									gain = 1;
+								}else
+									gain = 0;
+								
+								if("O".equals(matchEntity.getBonus())){
+									gain = gain * 2;
+								}
+								
+								pronostique.setGain(gain);
+								
+								if(createNews){
+									// Add ads for user
+									adsService.ajouter("Félicitations "+utilisateurEntity.getNom()+" ! "+gain+" points gagnés au match "+matchEntity.getMatchAsString()+" ! Bonne chance pour les autres.");
+
+								}
+								
+								score+=pronostique.getGain();
+								
+								pronostiqueService.update(pronostique);
+							}
+						}
+					}
+					
+					scoreService.updateScore(utilisateurEntity, score);
+				}
+			}
+			
+		} catch (ADPException e) {
+			addActionError("Erreur de calcul !");
+			addActionError(e.getMessage());
+			
+			//Unlock Site.
+			LoginInterceptor.calculating = false;
+			return SUCCESS;  
+		}
+		
+		//Unlock Site.
+		LoginInterceptor.calculating = false;
+		
+		addActionMessage("Opération OK !");
+		return SUCCESS;  
+  
+	} 
+}

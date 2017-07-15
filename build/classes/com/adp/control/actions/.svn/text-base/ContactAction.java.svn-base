@@ -1,0 +1,91 @@
+package com.adp.control.actions;
+
+import org.apache.struts2.ServletActionContext;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.adp.business.services.ConstanteService;
+import com.adp.entities.ConstanteEntity;
+import com.adp.utils.MailUtil;
+import com.adp.utils.StringUtil;
+
+
+public class ContactAction extends AbstractAction{
+
+	private static final long serialVersionUID = -1L;
+	
+	@Autowired
+	private ConstanteService constanteService;
+	
+	private String object;
+	private String message;
+	private String actionResultMessage;
+	
+	public String execute()
+	{
+		return SUCCESS;
+	}
+	
+	public String send()
+	{
+		try {
+			if(check()){
+				// Send mail to user
+				ConstanteEntity host = constanteService.chargerConstante("smtp.server.host");
+				
+				// Get user mail
+				String userMail = (String) ServletActionContext.getRequest().getSession().getAttribute("loggedInUserMail");
+				
+				// Get admin mail
+				String to = "Mehdi.Ben-Amor@adp.com";
+				
+				if(StringUtil.isNotEmpty(host.getValeur()) && StringUtil.isNotEmpty(userMail)){
+					MailUtil.sendMail(host.getValeur(), userMail, to, object, message);
+					actionResultMessage = "Message envoyé avec succès. Nous traitons votre demande dans les brefs délais.";
+				}else{
+					addActionError("Serveur mail inaccessible ! Veuillez réessayer ultérieurement !");
+				}
+
+			
+			}else{
+				addActionError("Données invalides !");
+			}
+			
+		} catch (Exception e) {
+			addActionError("Erreur d'envoi du message ! Veuillez réessayer ultérieurement !");
+		}
+		
+		return SUCCESS;		
+	}
+
+	private boolean check() {
+		if(StringUtil.isEmpty(object) && StringUtil.isEmpty(message))
+			return false;
+		return true;
+	}
+
+	public String getObject() {
+		return object;
+	}
+
+	public void setObject(String object) {
+		this.object = object;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public String getActionResultMessage() {
+		return actionResultMessage;
+	}
+
+	public void setActionResultMessage(String actionResultMessage) {
+		this.actionResultMessage = actionResultMessage;
+	}
+
+	
+}

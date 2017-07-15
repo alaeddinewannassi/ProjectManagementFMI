@@ -1,0 +1,216 @@
+package com.adp.control.actions;
+
+import java.text.ParseException;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.adp.business.services.EquipeService;
+import com.adp.business.services.MatchService;
+import com.adp.business.services.PoolService;
+import com.adp.entities.EquipeEntity;
+import com.adp.entities.MatchEntity;
+import com.adp.entities.PoolEntity;
+import com.adp.exceptions.ADPException;
+import com.adp.utils.DateUtils;
+
+
+public class MatchAction extends AbstractAction{
+
+	private static final long serialVersionUID = -1L;
+	
+	@Autowired
+	private PoolService poolService;
+	
+	@Autowired
+	private EquipeService equipeService;
+	
+	@Autowired
+	private MatchService matchService;
+	
+	private Long matchId;
+	
+	private List<PoolEntity> pools;
+	private Long poolId;
+	
+	private List<EquipeEntity> equipes;
+	private Long equipeId1;
+	private Long equipeId2;
+	
+	private String dateDeb;
+	private String res1;
+	private String res2;
+	private String statut;
+	private String bonus;
+	
+	public String execute(){
+		
+		try {
+			if(matchId != null){
+				MatchEntity match = matchService.chargerMatch(matchId);
+				if(match != null){
+					poolId = match.getPool().getId();
+					if(match.getEq1() != null)
+						equipeId1 = match.getEq1().getId();
+					if(match.getEq2() != null)
+						equipeId2 = match.getEq2().getId();
+					dateDeb = match.getDateDeb();
+					res1 = match.getRes1();
+					res2 = match.getRes2();
+					statut = match.getStatut();
+					bonus = match.getBonus();
+				}
+			}
+			
+			pools = poolService.chargerPools();
+			equipes = equipeService.chargerEquipes();
+			
+		} catch (ADPException e) {
+			e.printStackTrace();
+		}
+		return SUCCESS;		
+	}
+	
+	public String modifier(){
+		try {
+			pools = poolService.chargerPools();
+			equipes = equipeService.chargerEquipes();
+
+			if(check()){
+				if(matchId != null){
+					matchService.modifier(matchId, poolId, equipeId1, equipeId2, dateDeb, res1, res2, statut, bonus);
+					addActionMessage("Opération OK !");
+					return SUCCESS;	
+				}else{
+					matchService.ajouter(poolId, equipeId1, equipeId2, dateDeb, res1, res2, statut, bonus);
+					return "list";	
+				}
+			}else{
+				addActionError("Données invalides !");
+				return SUCCESS;	
+			}
+			
+		} catch (ADPException e) {
+			addActionError("Erreur !");
+			e.printStackTrace();
+			return "input";	
+		}
+		
+	}
+	
+	public String supprimer(){
+		if(poolId != null || equipeId1 == null || equipeId2 == null){
+			try {
+				matchService.supprimer(matchId);
+			}catch (Exception e) {
+				addActionError("Erreur de suppression, données liées à d'autres tables !");
+				e.printStackTrace();
+				return INPUT;
+			}
+		}
+		return SUCCESS;
+	}
+
+	private boolean check() {
+		if(poolId == null){
+			return false;
+		}
+		try {
+			DateUtils.getDateFromText(dateDeb, "dd/MM/yyyy hh:mm");
+		} catch (ParseException e) {
+			return false;
+		}
+		return true;
+	}
+
+	public Long getMatchId() {
+		return matchId;
+	}
+
+	public void setMatchId(Long matchId) {
+		this.matchId = matchId;
+	}
+
+	public List<PoolEntity> getPools() {
+		return pools;
+	}
+
+	public void setPools(List<PoolEntity> pools) {
+		this.pools = pools;
+	}
+
+	public Long getPoolId() {
+		return poolId;
+	}
+
+	public void setPoolId(Long poolId) {
+		this.poolId = poolId;
+	}
+
+	public List<EquipeEntity> getEquipes() {
+		return equipes;
+	}
+
+	public void setEquipes(List<EquipeEntity> equipes) {
+		this.equipes = equipes;
+	}
+
+	public Long getEquipeId1() {
+		return equipeId1;
+	}
+
+	public void setEquipeId1(Long equipeId1) {
+		this.equipeId1 = equipeId1;
+	}
+
+	public Long getEquipeId2() {
+		return equipeId2;
+	}
+
+	public void setEquipeId2(Long equipeId2) {
+		this.equipeId2 = equipeId2;
+	}
+
+	public String getDateDeb() {
+		return dateDeb;
+	}
+
+	public void setDateDeb(String dateDeb) {
+		this.dateDeb = dateDeb;
+	}
+
+	public String getRes1() {
+		return res1;
+	}
+
+	public void setRes1(String res1) {
+		this.res1 = res1;
+	}
+
+	public String getRes2() {
+		return res2;
+	}
+
+	public void setRes2(String res2) {
+		this.res2 = res2;
+	}
+
+	public String getStatut() {
+		return statut;
+	}
+
+	public void setStatut(String statut) {
+		this.statut = statut;
+	}
+
+	public String getBonus() {
+		return bonus;
+	}
+
+	public void setBonus(String bonus) {
+		this.bonus = bonus;
+	}
+	
+	
+
+}

@@ -1,0 +1,40 @@
+package com.adp.control.actions;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.adp.business.services.AdsService;
+import com.adp.entities.AdsEntity;
+import com.adp.exceptions.ADPException;
+
+
+public class AdsListAction extends AbstractAction{
+
+	private static final long serialVersionUID = -1L;
+	
+	@Autowired
+	private AdsService adsService;
+	
+	private List<AdsEntity> adsList;
+	
+	public String execute(){
+		
+		try {
+			adsList = adsService.chargerAds();
+		} catch (ADPException e) {
+			e.printStackTrace();
+		}
+		return SUCCESS;		
+	}
+
+	public List<AdsEntity> getAdsList() {
+		return adsList;
+	}
+
+	public void setAdsList(List<AdsEntity> adsList) {
+		this.adsList = adsList;
+	}
+
+	
+}

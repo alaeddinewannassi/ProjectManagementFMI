@@ -1,0 +1,13 @@
+package com.adp.control.actions;
+
+
+public class RatingAction extends AbstractAction{
+
+	private static final long serialVersionUID = -1L;
+	
+	public String execute()
+	{
+		return SUCCESS;		
+	}
+
+}

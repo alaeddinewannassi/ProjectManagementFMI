@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+<!-- LOGIN -->
+	<definition name="loginBaseLayout" template="/login/loginBaseLayout.jsp">
+      <put-attribute name="header" value="/login/header.jsp"/>
+      <put-attribute name="body"   value="/login/body.jsp"/>
+      <put-attribute name="footer"   value="/login/footer.jsp"/>
+	</definition>
+	
+	<definition name="login" extends="loginBaseLayout">
+      <put-attribute name="body"   value="/login/login.jsp"/>      
+  </definition>
+  
+  <definition name="inscription" extends="loginBaseLayout">
+      <put-attribute name="body"   value="/login/inscription.jsp"/>      
+  </definition>
+  
+  <definition name="password" extends="loginBaseLayout">
+      <put-attribute name="body"   value="/login/password.jsp"/>      
+  </definition>
+  
+  <definition name="calculating" extends="loginBaseLayout">
+      <put-attribute name="body"   value="/site/calc.jsp"/>      
+  </definition>
+
+<!-- SITE -->
+  
+  <definition name="baseLayout" template="/site/baseLayout.jsp">
+      <put-attribute name="title"  value="ADP Pronostics"/>
+      <put-attribute name="header" value="/site/header.jsp"/>
+      <put-attribute name="menu"   value="/site/menu.jsp"/>
+      <put-attribute name="body"   value="/site/body.jsp"/>
+      <put-attribute name="footer"   value="/site/footer.jsp"/>
+  </definition>
+  
+  <definition name="matchPronostic" extends="baseLayout">
+      <put-attribute name="body"   value="/site/matchPronostic.jsp"/>      
+  </definition>
+  
+  <definition name="home" extends="baseLayout">
+      <put-attribute name="body"   value="/site/home.jsp"/>      
+  </definition>
+  
+  <definition name="matchPronostic" extends="baseLayout">
+      <put-attribute name="body"   value="/site/matchPronostic.jsp"/>      
+  </definition>
+  
+  <definition name="listPronostic" extends="baseLayout">
+      <put-attribute name="body"   value="/site/listPronostic.jsp"/>      
+  </definition>
+  
+  <definition name="matchsList" extends="baseLayout">
+      <put-attribute name="body"   value="/site/matchsList.jsp"/>      
+  </definition>
+  
+  <definition name="matchsResults" extends="baseLayout">
+      <put-attribute name="body"   value="/site/matchsResults.jsp"/>      
+  </definition>
+  
+  <definition name="rating" extends="baseLayout">
+      <put-attribute name="body"   value="/site/rating.jsp"/>      
+  </definition>
+  
+  <definition name="score" extends="baseLayout">
+      <put-attribute name="body"   value="/site/score.jsp"/>      
+  </definition>
+  
+  <definition name="contact" extends="baseLayout">
+      <put-attribute name="body"   value="/site/contact.jsp"/>      
+  </definition>
+  
+  <definition name="newsDetails" extends="baseLayout">
+      <put-attribute name="body"   value="/site/newsDetails.jsp"/>      
+  </definition>
+  
+  <!-- ADMINISTRATION -->
+  
+  <definition name="adminBaseLayout" template="/admin/adminBaseLayout.jsp">
+      <put-attribute name="header" value="/admin/header.jsp"/>
+      <put-attribute name="menu"   value="/admin/menu.jsp"/>
+  </definition>
+  
+  <definition name="adminHome" extends="adminBaseLayout">
+      <put-attribute name="body" value="/admin/home.jsp"/>      
+  </definition>
+  
+  <definition name="equipes" extends="adminBaseLayout">
+      <put-attribute name="body"   value="/admin/equipes.jsp"/>      
+  </definition>
+  
+  <definition name="equipe" extends="adminBaseLayout">
+      <put-attribute name="body"   value="/admin/equipe.jsp"/>      
+  </definition>
+  
+  <definition name="pools" extends="adminBaseLayout">
+      <put-attribute name="body"   value="/admin/pools.jsp"/>      
+  </definition>
+  
+  <definition name="pool" extends="adminBaseLayout">
+      <put-attribute name="body"   value="/admin/pool.jsp"/>      
+  </definition>
+  
+  <definition name="classements" extends="adminBaseLayout">
+      <put-attribute name="body"   value="/admin/classements.jsp"/>      
+  </definition>
+  
+  <definition name="classement" extends="adminBaseLayout">
+      <put-attribute name="body"   value="/admin/classement.jsp"/>      
+  </definition>
+  
+  <definition name="calculs" extends="adminBaseLayout">
+      <put-attribute name="body"   value="/admin/calculs.jsp"/>      
+  </definition>
+  
+  <definition name="matchs" extends="adminBaseLayout">
+      <put-attribute name="body"   value="/admin/matchs.jsp"/>      
+  </definition>
+  
+  <definition name="match" extends="adminBaseLayout">
+      <put-attribute name="body"   value="/admin/match.jsp"/>      
+  </definition>
+  
+  <definition name="utilisateurs" extends="adminBaseLayout">
+      <put-attribute name="body"   value="/admin/utilisateurs.jsp"/>      
+  </definition>
+  
+  <definition name="scores" extends="adminBaseLayout">
+      <put-attribute name="body"   value="/admin/scores.jsp"/>      
+  </definition>
+  
+  <definition name="administrateurs" extends="adminBaseLayout">
+      <put-attribute name="body"   value="/admin/administrateurs.jsp"/>      
+  </definition>
+  
+  <definition name="administrateur" extends="adminBaseLayout">
+      <put-attribute name="body"   value="/admin/administrateur.jsp"/>      
+  </definition>
+  
+  <definition name="pronostiques" extends="adminBaseLayout">
+      <put-attribute name="body"   value="/admin/pronostiques.jsp"/>      
+  </definition>
+  
+  <definition name="newsList" extends="adminBaseLayout">
+      <put-attribute name="body"   value="/admin/newsList.jsp"/>      
+  </definition>
+  
+  <definition name="news" extends="adminBaseLayout">
+      <put-attribute name="body"   value="/admin/news.jsp"/>      
+  </definition>
+  
+  <definition name="adsList" extends="adminBaseLayout">
+      <put-attribute name="body"   value="/admin/adsList.jsp"/>      
+  </definition>
+  
+  <definition name="ads" extends="adminBaseLayout">
+      <put-attribute name="body"   value="/admin/ads.jsp"/>      
+  </definition>
+  
+  <definition name="constants" extends="adminBaseLayout">
+      <put-attribute name="body"   value="/admin/constants.jsp"/>      
+  </definition>
+  
+</tiles-definitions>

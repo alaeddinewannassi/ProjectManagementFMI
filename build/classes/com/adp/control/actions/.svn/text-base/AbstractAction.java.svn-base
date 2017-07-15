@@ -1,0 +1,144 @@
+/**
+ * 
+ */
+package com.adp.control.actions;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.interceptor.SessionAware;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.adp.business.services.AdsService;
+import com.adp.business.services.NewsService;
+import com.adp.business.services.ScoreService;
+import com.adp.dto.AdsDTO;
+import com.adp.dto.NewsDTO;
+import com.adp.entities.ScoreEntity;
+import com.adp.exceptions.ADPException;
+import com.adp.utils.StringUtil;
+import com.opensymphony.xwork2.ActionSupport;
+
+/**
+ * @author M.BENAMOR
+ *
+ */
+public class AbstractAction extends ActionSupport implements SessionAware{
+
+	private static final long serialVersionUID = 1L;
+	
+	@Autowired
+	private ScoreService scoreService;
+	
+	@Autowired
+	private NewsService newsService;
+	
+	@Autowired
+	private AdsService adsService;
+	
+	// Session
+	private Map<String, Object> session;
+	
+	private String loggedInUser;
+	
+	private List<ScoreEntity> scores;
+	
+	private int userScore;
+	
+	private List<NewsDTO> news;
+	
+	private List<NewsDTO> newsForHeader;
+	
+	private List<AdsDTO> ads;
+	
+	public void setSession(Map<String, Object> session) {
+		this.session = session;
+	}
+
+	/**
+	 * @return the session
+	 */
+	public Map<String, Object> getSession() {
+		return session;
+	}
+
+	public String getLoggedInUser() {
+		if(ServletActionContext.getRequest().getSession().getAttribute("loggedInUser") != null){
+			loggedInUser = (String) ServletActionContext.getRequest().getSession().getAttribute("loggedInUser");
+		}
+		return loggedInUser;
+	}
+
+	public void setLoggedInUser(String loggedInUser) {
+		this.loggedInUser = loggedInUser;
+	}
+
+	public List<ScoreEntity> getScores() {
+		try {
+			scores = scoreService.chargerScores();
+		} catch (ADPException e) {
+			scores = new ArrayList<ScoreEntity>();
+		}
+		return scores;
+	}
+	
+	public int getUserScore() {
+		ScoreEntity entity = null;
+		try {
+			String userMail = (String) ServletActionContext.getRequest().getSession().getAttribute("loggedInUserMail");
+			if(StringUtil.isNotEmpty(userMail))
+				entity = scoreService.chargerScore(userMail);
+		} catch (ADPException e) {
+			e.printStackTrace();
+		}
+		userScore =  entity != null ? entity.getScore() : 0;
+		return userScore;
+	}
+
+	public void setScores(List<ScoreEntity> scores) {
+		this.scores = scores;
+	}
+
+	public List<NewsDTO> getNews() {
+		
+		try{
+			news = newsService.chargerNewsDTOForMenu();
+		}catch(Exception e){
+			news = new ArrayList<NewsDTO>();
+		}
+		return news;
+	}
+
+	public void setNews(List<NewsDTO> news) {
+		this.news = news;
+	}
+
+	public List<AdsDTO> getAds() {
+		try{
+			ads = adsService.chargerAdsDTOForMenu();
+		}catch(Exception e){
+			ads = new ArrayList<AdsDTO>();
+		}
+		return ads;
+	}
+
+	public void setAds(List<AdsDTO> ads) {
+		this.ads = ads;
+	}
+
+	public List<NewsDTO> getNewsForHeader() {
+		try{
+			newsForHeader = newsService.chargerNewsDTOForHeader();
+		}catch(Exception e){
+			newsForHeader = new ArrayList<NewsDTO>();
+		}
+		return newsForHeader;
+	}
+
+	public void setNewsForHeader(List<NewsDTO> newsForHeader) {
+		this.newsForHeader = newsForHeader;
+	}
+	
+}

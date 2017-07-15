@@ -1,0 +1,80 @@
+package com.adp.control.actions;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.adp.business.services.ClassementEquipeService;
+import com.adp.business.services.PoolService;
+import com.adp.entities.ClassementEquipeEntity;
+import com.adp.entities.PoolEntity;
+import com.adp.exceptions.ADPException;
+
+
+public class ClassementsAction extends AbstractAction{
+
+	private static final long serialVersionUID = -1L;
+	
+	@Autowired
+	private ClassementEquipeService classementService;
+	
+	@Autowired
+	private PoolService poolService;
+	
+	private List<ClassementEquipeEntity> classements;
+	
+	private Long poolId;
+	
+	private List<PoolEntity> pools;
+	
+	public String execute(){
+		
+		try {
+			pools = poolService.chargerPools();
+			
+			if(poolId != null){
+				classements = classementService.chargerClassements(poolId);
+			}else{
+				classements = classementService.chargerClassements();
+			}
+		} catch (ADPException e) {
+			e.printStackTrace();
+		}
+		return SUCCESS;		
+	}
+
+	public List<ClassementEquipeEntity> getClassements() {
+		return classements;
+	}
+
+	public void setClassements(List<ClassementEquipeEntity> classements) {
+		this.classements = classements;
+	}
+
+	public ClassementEquipeService getClassementService() {
+		return classementService;
+	}
+
+	public void setClassementService(ClassementEquipeService classementService) {
+		this.classementService = classementService;
+	}
+
+	public Long getPoolId() {
+		return poolId;
+	}
+
+	public void setPoolId(Long poolId) {
+		this.poolId = poolId;
+	}
+
+	public List<PoolEntity> getPools() {
+		return pools;
+	}
+
+	public void setPools(List<PoolEntity> pools) {
+		this.pools = pools;
+	}
+	
+	
+
+}

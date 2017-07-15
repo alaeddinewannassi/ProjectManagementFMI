@@ -1,0 +1,113 @@
+package com.adp.control.actions;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.adp.business.services.AdsService;
+import com.adp.entities.AdsEntity;
+import com.adp.exceptions.ADPException;
+import com.adp.utils.DateUtils;
+import com.adp.utils.StringUtil;
+
+
+public class AdsAction extends AbstractAction{
+
+	private static final long serialVersionUID = -1L;
+	
+	@Autowired
+	private AdsService adsService;
+	
+	private Long adsId;
+	
+	private String titre;
+	private String dateEffet;
+	
+	public String execute(){
+		
+		try {
+			if(adsId != null){
+				AdsEntity ads = adsService.chargerAds(adsId);
+				if(ads != null){
+					titre = ads.getTitre();
+					dateEffet = DateUtils.getFormattedDate(ads.getDateEffet(), "dd/MM/yyyy");
+				}
+			}
+			
+		} catch (ADPException e) {
+			e.printStackTrace();
+		}
+		return SUCCESS;		
+	}
+	
+	public String modifier(){
+		try {
+
+			if(check()){
+				// Copy file
+				if(adsId != null){
+					adsService.modifier(adsId, titre);
+					addActionMessage("Opération OK !");
+					return SUCCESS;	
+				}else{
+					adsService.ajouter(titre);
+					return "list";	
+				}
+			}else{
+				addActionError("Données invalides !");
+				return SUCCESS;	
+			}
+			
+		} catch (ADPException e) {
+			addActionError("Erreur !");
+			e.printStackTrace();
+			return "input";	
+		}
+		
+	}
+	
+	public String supprimer(){
+		if(adsId != null){
+			try {
+				adsService.supprimer(adsId);
+			}catch (Exception e) {
+				addActionError("Erreur de suppression, données liées à d'autres tables !");
+				e.printStackTrace();
+				return INPUT;
+			}
+		}
+		return SUCCESS;
+	}
+	
+	private boolean check() {
+		if(StringUtil.isEmpty(titre)){
+			return false;
+		}
+		
+		return true;
+	}
+
+	public Long getAdsId() {
+		return adsId;
+	}
+
+	public void setAdsId(Long adsId) {
+		this.adsId = adsId;
+	}
+
+	public String getTitre() {
+		return titre;
+	}
+
+	public void setTitre(String titre) {
+		this.titre = titre;
+	}
+
+	public String getDateEffet() {
+		return dateEffet;
+	}
+
+	public void setDateEffet(String dateEffet) {
+		this.dateEffet = dateEffet;
+	}
+
+
+}

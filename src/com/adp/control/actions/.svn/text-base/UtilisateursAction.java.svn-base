@@ -1,0 +1,54 @@
+package com.adp.control.actions;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.adp.business.services.UtilisateurService;
+import com.adp.entities.UtilisateurEntity;
+import com.adp.exceptions.ADPException;
+
+
+public class UtilisateursAction extends AbstractAction{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Autowired
+	private UtilisateurService utilisateurService;
+	
+	private List<UtilisateurEntity> utilisateurs;
+	
+	public String execute(){
+		
+		try {
+			utilisateurs = utilisateurService.chargerUtilisateurs();
+		} catch (ADPException e) {
+			e.printStackTrace();
+		}
+		return SUCCESS;		
+	}
+	
+	public String admin(){
+		
+		try {
+			utilisateurs = utilisateurService.chargerUtilisateursAdmin();
+		} catch (ADPException e) {
+			e.printStackTrace();
+		}
+		return SUCCESS;		
+	}
+
+	public List<UtilisateurEntity> getUtilisateurs() {
+		return utilisateurs;
+	}
+
+	public void setUtilisateurs(List<UtilisateurEntity> utilisateurs) {
+		this.utilisateurs = utilisateurs;
+	}
+	
+	
+
+}

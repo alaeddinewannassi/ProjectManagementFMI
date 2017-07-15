@@ -1,0 +1,21 @@
+/**
+ * 
+ */
+package com.adp.control.actions;
+
+
+
+/**
+ * @author M.BENAMOR
+ *
+ */
+public class InscriptionAction extends AbstractAction {
+
+	private static final long serialVersionUID = -3498273877470668895L;
+
+	public String execute() {  
+	    
+		return SUCCESS;  
+  
+	} 
+}

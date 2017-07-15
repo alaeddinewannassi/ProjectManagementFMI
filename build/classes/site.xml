@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="site" extends="struts-default,json-default"
+		namespace="/">
+
+		<result-types>
+			<result-type name="tiles"
+				class="org.apache.struts2.views.tiles.TilesResult" />
+		</result-types>
+
+		<interceptors>
+			<interceptor class="com.adp.control.interceptors.LoginInterceptor"
+				name="loginInterceptor" />
+			<interceptor-stack name="defaultSiteStack">
+				<interceptor-ref name="loginInterceptor" />
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="defaultSiteStack" />
+
+		<global-results>
+			<result name="login" type="tiles">login</result>
+			<result name="logout" type="redirectAction">logout</result>
+		</global-results>
+
+		<!-- LOGIN ACTIONS -->
+		<action name="login" class="com.adp.control.actions.LoginAction">
+			<result name="success" type="tiles">login</result>
+		</action>
+
+		<action name="logout" class="com.adp.control.actions.LogoutAction">
+			<result name="success" type="tiles">login</result>
+		</action>
+
+		<action name="subscribe" class="com.adp.control.actions.SubscribeAction">
+			<result name="success" type="tiles">subscribe</result>
+		</action>
+
+		<action name="confirm" class="com.adp.control.actions.ConfirmAction">
+			<result name="success" type="tiles">confirm</result>
+		</action>
+
+		<action name="loginAuth" class="com.adp.control.actions.LoginAuthAction">
+			<result name="success" type="tiles">site</result>
+		</action>
+
+		<action name="lostPassword" class="com.adp.control.actions.LostPasswordAction">
+			<result name="success" type="tiles">lostPassword</result>
+		</action>
+
+		<action name="resetPassword" class="com.adp.control.actions.LostPasswordAction"
+			method="reset">
+			<result name="success" type="tiles">login</result>
+		</action>
+
+		<action name="confirmReset" class="com.adp.control.actions.LostPasswordAction"
+			method="confirmReset">
+			<result name="success" type="tiles">confirmReset</result>
+		</action>
+
+		<action name="finalReset" class="com.adp.control.actions.LostPasswordAction"
+			method="finalReset">
+			<result name="success" type="tiles">login</result>
+		</action>
+		<!-- END LOGIN ACTIONS -->
+
+		<!-- SAVE ACTIONS -->
+
+
+		<action name="addProject" class="com.adp.control.actions.ProjectAction"
+			method="addProject">
+			<result name="success" type="tiles">addProject</result>
+		</action>
+
+		<action name="addMission" class="com.adp.control.actions.MissionAction"
+			method="addMission">
+			<result name="success" type="tiles">addMission</result>
+		</action>
+
+		<action name="addFunction" class="com.adp.control.actions.FunctionAction"
+			method="addFunction">
+			<result name="success" type="tiles">addFunction</result>
+		</action>
+
+		<action name="addTeam" class="com.adp.control.actions.TeamAction"
+			method="addTeam">
+			<result name="success" type="tiles">addTeam</result>
+		</action>
+
+		<action name="addThirdParty" class="com.adp.control.actions.ThirdPartyAction"
+			method="addThirdParty">
+			<result name="success" type="tiles">addThirdParty</result>
+		</action>
+
+		<action name="saveProject" class="com.adp.control.actions.ProjectUtilAction"
+			method="saveProject">
+			<result name="success" type="tiles">saveProject</result>
+		</action>
+
+		<action name="saveMission" class="com.adp.control.actions.MissionUtilAction"
+			method="saveMission">
+			<result name="success" type="tiles">saveMission</result>
+		</action>
+
+		<action name="saveFunction" class="com.adp.control.actions.FunctionUtilAction"
+			method="saveFunction">
+			<result name="success" type="tiles">saveFunction</result>
+		</action>
+
+		<action name="saveTeam" class="com.adp.control.actions.TeamUtilAction"
+			method="saveTeam">
+			<result name="success" type="tiles">saveTeam</result>
+		</action>
+
+		<action name="saveThirdParty" class="com.adp.control.actions.ThirdPartyUtilAction"
+			method="saveThirdParty">
+			<result name="success" type="tiles">saveThirdParty</result>
+		</action>
+
+		<!-- END SAVE ACTIONS -->
+
+
+		<!-- VIEW ACTIONS -->
+		<action name="viewProjects" class="com.adp.control.actions.ProjectAction"
+			method="viewProjects">
+			<result name="success" type="tiles">viewProjects</result>
+		</action>
+
+		<action name="viewTeams" class="com.adp.control.actions.TeamAction"
+			method="viewTeams">
+			<result name="success" type="tiles">viewTeams</result>
+		</action>
+
+
+		<action name="showMissions" class="com.adp.control.actions.MissionAction"
+			method="showMissions">
+			<result name="success" type="tiles">showMissions</result>
+		</action>
+
+		<action name="showFunctions" class="com.adp.control.actions.FunctionAction"
+			method="showFunctions">
+			<result name="success" type="tiles">showFunctions</result>
+		</action>
+
+		<action name="viewMissions" class="com.adp.control.actions.MissionUtilAction"
+			method="viewMissions">
+			<result name="success" type="tiles">viewMissions</result>
+		</action>
+
+		<action name="viewFunctions" class="com.adp.control.actions.FunctionUtilAction"
+			method="viewFunctions">
+			<result name="success" type="tiles">viewFunctions</result>
+		</action>
+		<!-- END VIEW ACTIONS -->
+
+		<!-- MODIFY ACTIONS JspToJsp -->
+		<action name="modifyProject" class="com.adp.control.actions.ProjectAction"
+			method="modifyProject">
+			<result name="success" type="tiles">modifyProject</result>
+		</action>
+
+		<action name="modifyTeam" class="com.adp.control.actions.TeamAction"
+			method="modifyTeam">
+			<result name="success" type="tiles">modifyTeam</result>
+		</action>
+
+		<action name="modifyMission" class="com.adp.control.actions.MissionAction"
+			method="modifyMission">
+			<result name="success" type="tiles">modifyMission</result>
+		</action>
+
+		<action name="modifyFunction" class="com.adp.control.actions.FunctionAction"
+			method="modifyFunction">
+			<result name="success" type="tiles">modifyFunction</result>
+		</action>
+		<!-- END MODIFY ACTIONS -->
+
+		<!-- REMOVE ACTIONS -->
+		<action name="removeProject" class="com.adp.control.actions.ProjectAction"
+			method="removeProject">
+			<result name="success" type="tiles">removeProject</result>
+		</action>
+
+		<action name="removeTeam" class="com.adp.control.actions.TeamAction"
+			method="removeTeam">
+			<result name="success" type="tiles">removeTeam</result>
+		</action>
+
+		<action name="removeMission" class="com.adp.control.actions.MissionAction"
+			method="removeMission">
+			<result name="success" type="tiles">removeMission</result>
+		</action>
+
+		<action name="removeFunction" class="com.adp.control.actions.FunctionAction"
+			method="removeFunction">
+			<result name="success" type="tiles">removeFunction</result>
+		</action>
+		<!-- END REMOVE ACTIONS -->
+
+		<!-- EDIT ACTIONS -->
+		<action name="editProject" class="com.adp.control.actions.ProjectUtilAction"
+			method="updateProject">
+			<result name="success" type="tiles">editProject</result>
+		</action>
+
+		<action name="editMission" class="com.adp.control.actions.MissionUtilAction"
+			method="updateMission">
+			<result name="success" type="tiles">editMission</result>
+		</action>
+
+		<action name="editFunction" class="com.adp.control.actions.FunctionUtilAction"
+			method="updateFunction">
+			<result name="success" type="tiles">editFunction</result>
+		</action>
+		<!-- END EDIT ACTIONS -->
+
+		<!-- DETAIL ACTIONS -->
+		<action name="detailProject" class="com.adp.control.actions.ProjectAction"
+			method="detailProject">
+			<result name="success" type="tiles">detailProject</result>
+		</action>
+
+		<action name="detailMission" class="com.adp.control.actions.MissionAction"
+			method="detailMission">
+			<result name="success" type="tiles">detailMission</result>
+		</action>
+		<!-- END DETAIL ACTIONS -->
+
+		<action name="timeSheet" class="com.adp.control.actions.FileUploadAction"
+			method="upload">
+			<result name="success" type="tiles">timeSheet</result>
+		</action>
+
+		<action name="timeSheetreport" class="com.adp.control.actions.FileUploadAction"
+			method="doUpload">
+			<interceptor-ref name="defaultStack">
+				<param name="fileUpload.maximumSize">10485760</param>
+				<param name="fileUpload.allowedTypes">text/plain,image/jpeg</param>
+			</interceptor-ref>
+			<param name="filesPath">uploads/timesheet</param>
+			<result name="input">timeSheet</result>
+			<result name="success" type="tiles">timeSheetreport</result>
+		</action>
+
+
+
+	</package>
+
+</struts>

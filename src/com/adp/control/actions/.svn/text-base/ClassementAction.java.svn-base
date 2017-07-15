@@ -1,0 +1,225 @@
+package com.adp.control.actions;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.adp.business.services.ClassementEquipeService;
+import com.adp.business.services.EquipeService;
+import com.adp.business.services.PoolService;
+import com.adp.entities.ClassementEquipeEntity;
+import com.adp.entities.EquipeEntity;
+import com.adp.entities.PoolEntity;
+import com.adp.exceptions.ADPException;
+
+
+public class ClassementAction extends AbstractAction{
+
+	private static final long serialVersionUID = -1L;
+	
+	@Autowired
+	private PoolService poolService;
+	
+	@Autowired
+	private EquipeService equipeService;
+	
+	@Autowired
+	private ClassementEquipeService classementEquipeService;
+	
+	private Long classementId;
+	
+	private List<PoolEntity> pools;
+	private Long poolId;
+	
+	private List<EquipeEntity> equipes;
+	private Long equipeId;
+	
+	private int points;
+	private int rang;
+	private int j;
+	private int g;
+	private int n;
+	private int p;
+	private int bp;
+	private int bc;
+	
+	public String execute(){
+		
+		try {
+			if(classementId != null){
+				ClassementEquipeEntity classement = classementEquipeService.chargerClassement(classementId);
+				if(classement != null){
+					poolId = classement.getPool().getId();
+					equipeId = classement.getEquipe().getId();
+					points = classement.getPoints();
+					rang = classement.getRang();
+					j = classement.getJ();
+					g = classement.getG();
+					n = classement.getN();
+					p = classement.getP();
+					bp = classement.getBp();
+					bc = classement.getBc();
+				}
+			}
+			
+			pools = poolService.chargerPools();
+			equipes = equipeService.chargerEquipes();
+			
+		} catch (ADPException e) {
+			e.printStackTrace();
+		}
+		return SUCCESS;		
+	}
+	
+	public String modifier(){
+		try {
+			pools = poolService.chargerPools();
+			equipes = equipeService.chargerEquipes();
+
+			if(check()){
+				if(classementId != null){
+					classementEquipeService.modifier(classementId, poolId, equipeId, points, rang, j, g, n, p, bp, bc);
+					addActionMessage("Opération OK !");
+					return SUCCESS;	
+				}else{
+					classementEquipeService.ajouter(poolId, equipeId, points, rang, j, g, n, p, bp, bc);
+					return "list";	
+				}
+			}else{
+				addActionError("Données invalides !");
+				return SUCCESS;	
+			}
+			
+		} catch (ADPException e) {
+			addActionError("Erreur !");
+			e.printStackTrace();
+			return "input";	
+		}
+		
+	}
+	
+	public String supprimer(){
+		if(classementId != null){
+			try {
+				classementEquipeService.supprimer(classementId);
+			}catch (Exception e) {
+				addActionError("Erreur de suppression, données liées à d'autres tables !");
+				e.printStackTrace();
+				return INPUT;
+			}
+		}
+		return SUCCESS;
+	}
+
+	private boolean check() {
+		if(equipeId == null || poolId == null){
+			return false;
+		}
+		return true;
+	}
+
+	public Long getClassementId() {
+		return classementId;
+	}
+
+	public void setClassementId(Long classementId) {
+		this.classementId = classementId;
+	}
+
+	public List<PoolEntity> getPools() {
+		return pools;
+	}
+
+	public void setPools(List<PoolEntity> pools) {
+		this.pools = pools;
+	}
+
+	public Long getPoolId() {
+		return poolId;
+	}
+
+	public void setPoolId(Long poolId) {
+		this.poolId = poolId;
+	}
+
+	public List<EquipeEntity> getEquipes() {
+		return equipes;
+	}
+
+	public void setEquipes(List<EquipeEntity> equipes) {
+		this.equipes = equipes;
+	}
+
+	public Long getEquipeId() {
+		return equipeId;
+	}
+
+	public void setEquipeId(Long equipeId) {
+		this.equipeId = equipeId;
+	}
+
+	public int getPoints() {
+		return points;
+	}
+
+	public void setPoints(int points) {
+		this.points = points;
+	}
+
+	public int getRang() {
+		return rang;
+	}
+
+	public void setRang(int rang) {
+		this.rang = rang;
+	}
+
+	public int getJ() {
+		return j;
+	}
+
+	public void setJ(int j) {
+		this.j = j;
+	}
+
+	public int getG() {
+		return g;
+	}
+
+	public void setG(int g) {
+		this.g = g;
+	}
+
+	public int getN() {
+		return n;
+	}
+
+	public void setN(int n) {
+		this.n = n;
+	}
+
+	public int getP() {
+		return p;
+	}
+
+	public void setP(int p) {
+		this.p = p;
+	}
+
+	public int getBp() {
+		return bp;
+	}
+
+	public void setBp(int bp) {
+		this.bp = bp;
+	}
+
+	public int getBc() {
+		return bc;
+	}
+
+	public void setBc(int bc) {
+		this.bc = bc;
+	}
+
+}

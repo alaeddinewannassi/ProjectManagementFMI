@@ -1,0 +1,70 @@
+package com.adp.control.actions;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.adp.business.services.NewsService;
+import com.adp.entities.NewsEntity;
+import com.adp.exceptions.ADPException;
+
+
+public class NewsDetailsAction extends AbstractAction{
+
+	private static final long serialVersionUID = -1L;
+	
+	@Autowired
+	private NewsService newsService;
+	private Long newsId;
+	private String title;
+	private String messageBody;
+	private String image;
+	
+	public String execute(){
+		
+		try {
+			if(newsId != null){
+				NewsEntity news = newsService.chargerNews(newsId);
+				title = news.getTitre();
+				messageBody = news.getTexte();
+				image = news.getImage();
+			}
+		} catch (ADPException e) {
+			e.printStackTrace();
+		}
+		return SUCCESS;		
+	}
+
+	public Long getNewsId() {
+		return newsId;
+	}
+
+	public void setNewsId(Long newsId) {
+		this.newsId = newsId;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getMessageBody() {
+		return messageBody;
+	}
+
+	public void setMessageBody(String messageBody) {
+		this.messageBody = messageBody;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+	
+	
+
+}

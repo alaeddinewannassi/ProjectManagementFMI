@@ -1,0 +1,105 @@
+package com.adp.control.actions;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.adp.business.services.UtilisateurService;
+import com.adp.entities.UtilisateurEntity;
+import com.adp.exceptions.ADPException;
+import com.adp.utils.StringUtil;
+
+
+public class UtilisateurAction extends AbstractAction{
+
+	private static final long serialVersionUID = -1L;
+	
+	@Autowired
+	private UtilisateurService utilisateurService;
+	
+	private Long utilisateurId;
+	
+	public String execute(){
+		
+		return SUCCESS;		
+	}
+	
+	public String desactiver(){
+		try {
+			if(utilisateurId != null){
+				utilisateurService.desactiver(utilisateurId);
+			}
+		} catch (ADPException e) {
+			addActionError("Erreur !");
+			e.printStackTrace();
+			return ERROR;	
+		}
+		
+		return SUCCESS;	
+		
+	}
+	
+	public String desactiverAdmin(){
+		try {
+			if(utilisateurId != null){
+				utilisateurService.desactiverAdmin(utilisateurId);
+			}
+		} catch (ADPException e) {
+			addActionError("Erreur !");
+			e.printStackTrace();
+			return ERROR;	
+		}
+		
+		return SUCCESS;	
+		
+	}
+	
+	public String activer(){
+		try {
+			if(utilisateurId != null){
+				utilisateurService.activer(utilisateurId);
+			}
+		} catch (ADPException e) {
+			addActionError("Erreur !");
+			e.printStackTrace();
+			return ERROR;	
+		}
+		
+		return SUCCESS;	
+	}
+	
+	public String activerAdmin(){
+		try {
+			if(utilisateurId != null){
+				utilisateurService.activerAdmin(utilisateurId);
+			}
+		} catch (ADPException e) {
+			addActionError("Erreur !");
+			e.printStackTrace();
+			return ERROR;	
+		}
+		
+		return SUCCESS;	
+	}
+	
+	public String supprimer(){
+		if(utilisateurId != null){
+			try {
+				utilisateurService.supprimer(utilisateurId);
+			}catch (Exception e) {
+				addActionError("Erreur de suppression, données liées à d'autres tables !");
+				e.printStackTrace();
+				return ERROR;
+			}
+		}
+		return SUCCESS;
+	}
+
+	public Long getUtilisateurId() {
+		return utilisateurId;
+	}
+
+	public void setUtilisateurId(Long utilisateurId) {
+		this.utilisateurId = utilisateurId;
+	}
+
+	
+}

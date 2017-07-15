@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+
+	<definition name="loginBaseLayout" template="/login/loginBaseLayout.jsp">
+      <put-attribute name="header" value="/login/header.jsp"/>
+      <put-attribute name="body"   value="/login/body.jsp"/>
+      <put-attribute name="footer"   value="/login/footer.jsp"/>
+	</definition>
+	
+	<definition name="siteBaseLayout" template="/production/siteBaseLayout.jsp">
+      <put-attribute name="header" value="/login/header.jsp"/>
+      <put-attribute name="body"   value="/production/index.jsp"/>
+      <put-attribute name="footer"   value="/login/footer.jsp"/>
+	</definition>
+	
+	<definition name="login" extends="loginBaseLayout">
+      <put-attribute name="body"   value="/login/login.jsp"/>      
+  </definition>
+  
+  
+  <definition name="site" extends="siteBaseLayout">
+      <put-attribute name="body"   value="/production/index.jsp"/>      
+  </definition>
+  
+  	<definition name="subscribe" extends="loginBaseLayout">
+      <put-attribute name="body"   value="/login/login.jsp"/>      
+  </definition>
+  
+  <definition name="confirm" extends="loginBaseLayout">
+      <put-attribute name="body"   value="/login/login.jsp"/>      
+  </definition>
+  
+  <definition name="addProject" extends="siteBaseLayout">
+      <put-attribute name="body"   value="/project/addProject.jsp"/>      
+  </definition>
+  
+  <definition name="addTeam" extends="siteBaseLayout">
+      <put-attribute name="body"   value="/team/addTeam.jsp"/>      
+  </definition>
+  
+  
+    <definition name="addThirdParty" extends="siteBaseLayout">
+      <put-attribute name="body"   value="/thirdParty/addThirdParty.jsp"/>      
+  </definition>
+  
+   <definition name="addMission" extends="siteBaseLayout">
+      <put-attribute name="body"   value="/mission/addMission.jsp"/>      
+  </definition>
+  
+   <definition name="addFunction" extends="siteBaseLayout">
+      <put-attribute name="body"   value="/function/addFunction.jsp"/>      
+  </definition>
+  
+  
+    <definition name="viewProjects" extends="siteBaseLayout">
+      <put-attribute name="body"   value="/project/viewProjects.jsp"/>      
+  </definition>
+  
+   <definition name="viewTeams" extends="siteBaseLayout">
+      <put-attribute name="body"   value="/team/viewTeams.jsp"/>      
+  </definition>
+  
+    <definition name="viewMissions" extends="siteBaseLayout">
+      <put-attribute name="body"   value="/mission/viewMissions.jsp"/>      
+  </definition>
+  
+  <definition name="viewFunctions" extends="siteBaseLayout">
+      <put-attribute name="body"   value="/function/viewFunctions.jsp"/>      
+  </definition>
+  
+      <definition name="saveProject" extends="siteBaseLayout" >
+      <put-attribute name="body" value="/project/resultProject.jsp"/>      
+ 	 </definition>
+ 	 
+ 	     <definition name="saveTeam" extends="siteBaseLayout" >
+      <put-attribute name="body" value="/team/resultTeam.jsp"/>      
+ 	 </definition>
+ 	 
+ 	 <definition name="saveMission" extends="siteBaseLayout" >
+      <put-attribute name="body" value="/mission/resultMission.jsp"/>      
+ 	 </definition>
+ 	 
+ 	  <definition name="saveFunction" extends="siteBaseLayout" >
+      <put-attribute name="body" value="/function/resultFunction.jsp"/>      
+ 	 </definition>
+ 	 
+ 	 <definition name="modifyProject" extends="siteBaseLayout" >
+      <put-attribute name="body" value="/project/editProject.jsp"/>      
+ 	 </definition>
+ 	 
+ 	  <definition name="modifyProject" extends="siteBaseLayout" >
+      <put-attribute name="body" value="/project/editProject.jsp"/>      
+ 	 </definition>
+ 	 
+ 	   <definition name="modifyTeam" extends="siteBaseLayout" >
+      <put-attribute name="body" value="/team/editTeam.jsp"/>      
+ 	 </definition>
+ 	 
+ 	  <definition name="modifyMission" extends="siteBaseLayout" >
+      <put-attribute name="body" value="/mission/editMission.jsp"/>      
+ 	 </definition>
+ 	 
+ 	   <definition name="modifyFunction" extends="siteBaseLayout" >
+      <put-attribute name="body" value="/function/editFunction.jsp"/>      
+ 	 </definition>
+ 	 
+ 	 <definition name="removeProject" extends="siteBaseLayout" >
+      <put-attribute name="body" value="/project/resultProject.jsp"/>      
+ 	 </definition>
+ 	 
+ 	 <definition name="removeTeam" extends="siteBaseLayout" >
+      <put-attribute name="body" value="/team/resultTeam.jsp"/>      
+ 	 </definition>
+ 	 
+ 	  <definition name="removeMission" extends="siteBaseLayout" >
+      <put-attribute name="body" value="/mission/resultMission.jsp"/>      
+ 	 </definition>
+ 	 
+ 	 <definition name="removeFunction" extends="siteBaseLayout" >
+      <put-attribute name="body" value="/function/resultFunction.jsp"/>      
+ 	 </definition>
+ 	 
+ 	   <definition name="editProject" extends="siteBaseLayout" >
+      <put-attribute name="body" value="/project/resultProject.jsp"/>      
+ 	 </definition>
+ 	 
+ 	    <definition name="editTeam" extends="siteBaseLayout" >
+      <put-attribute name="body" value="/project/resultTeam.jsp"/>      
+ 	 </definition>
+ 	
+ 	  <definition name="editMission" extends="siteBaseLayout" >
+      <put-attribute name="body" value="/mission/resultMission.jsp"/>      
+ 	 </definition>
+ 	 
+ 	 <definition name="editFunction" extends="siteBaseLayout" >
+      <put-attribute name="body" value="/function/resultFunction.jsp"/>      
+ 	 </definition>
+ 	 
+ 	  <definition name="showMissions" extends="siteBaseLayout" >
+      <put-attribute name="body" value="/mission/showMissions.jsp"/>      
+ 	 </definition>
+ 	 
+ 	  <definition name="showFunctions" extends="siteBaseLayout" >
+      <put-attribute name="body" value="/function/showFunctions.jsp"/>      
+ 	 </definition>
+ 	 
+ 	  <definition name="detailProject" extends="siteBaseLayout" >
+      <put-attribute name="body" value="/project/projectDetail.jsp"/>      
+ 	 </definition>
+ 	 
+ 	  <definition name="detailTeam" extends="siteBaseLayout" >
+      <put-attribute name="body" value="/team/teamDetail.jsp"/>      
+ 	 </definition>
+ 	 
+ 	 <definition name="detailMission" extends="siteBaseLayout" >
+      <put-attribute name="body" value="/mission/missionDetail.jsp"/>      
+ 	 </definition>
+ 	 
+ 	  <definition name="lostPassword" extends="loginBaseLayout" >
+      <put-attribute name="body" value="/reset/resetPassword.jsp"/>      
+ 	 </definition>
+ 	 
+ 	
+ 	   <definition name="confirmReset" extends="loginBaseLayout" >
+      <put-attribute name="body" value="/reset/form.jsp"/>      
+ 	 </definition>
+ 	 
+
+ 	 <definition name="timeSheet" extends="siteBaseLayout" >
+      <put-attribute name="body" value="/uploads/timesheetUpload.jsp"/>      
+ 	 </definition>
+
+	 <definition name="timeSheetreport" extends="siteBaseLayout" >
+      <put-attribute name="body" value="/uploads/timesheetReport.jsp"/>      
+ 	 </definition>
+ 	 
+ 	 
+
+ 	
+</tiles-definitions>
+

@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="site" extends="struts-default,json-default" namespace="/">
+    
+		<result-types>
+			<result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult" />
+		</result-types>
+		
+		<interceptors>  
+   			<interceptor class="com.adp.control.interceptors.LoginInterceptor" name="loginInterceptor"/>  
+   			<interceptor class="com.adp.control.interceptors.LoginAdminInterceptor" name="loginAdminInterceptor"/>
+   			
+	   		<interceptor-stack name="adminStack">
+	    		<interceptor-ref name="loginAdminInterceptor"/>   
+	    		<interceptor-ref name="defaultStack"/>
+	   		</interceptor-stack> 
+	   		
+	   		<interceptor-stack name="defaultSiteStack">
+	    		<interceptor-ref name="loginInterceptor"/>   
+	    		<interceptor-ref name="defaultStack"/>
+	   		</interceptor-stack>
+   		</interceptors>
+  		
+  		<default-interceptor-ref name="defaultSiteStack"/>  
+  		
+  		<global-results>    
+		    <result name="login" type="tiles">login</result>
+		    <result name="admin" type="redirectAction">administration</result>
+		    <result name="home" type="redirectAction">login</result>  
+		    <result name="logout" type="redirectAction">logout</result>  
+		    <result name="logoutCalc" type="tiles">calculating</result>
+		</global-results>
+		
+		<action name="loginAuthentification" class="com.adp.control.actions.LoginAuthentificationAction">  
+			<result name="siteHome" type="redirectAction">home</result>
+			<result name="siteAdministration" type="redirectAction">administration</result>  
+			<result name="input" type="tiles">login</result>  
+		</action> 
+		
+		<action name="login" class="com.adp.control.actions.LoginAction">  
+			<result name="success" type="tiles">login</result> 
+		</action>
+		
+		<action name="logout" class="com.adp.control.actions.LogoutAction">  
+			<result name="logout" type="tiles">login</result> 
+		</action>
+		
+		<action name="logoutCalc" class="com.adp.control.actions.LogoutCalcAction">  
+			<result name="success" type="tiles">calculating</result> 
+		</action>
+		
+		<action name="inscription" class="com.adp.control.actions.InscriptionAction">  
+			<result name="success" type="tiles">inscription</result>  
+		</action>  
+		
+		<action name="accountValidation" class="com.adp.control.actions.AccountValidationAction">  
+			<result name="success" type="tiles">login</result>  
+		</action>
+		
+		<action name="inscriptionValidation" class="com.adp.control.actions.InscriptionValidationAction">  
+			<result name="success" type="tiles">login</result>
+			<result name="input" type="tiles">inscription</result>  
+		</action>
+		
+		<action name="password" class="com.adp.control.actions.PasswordAction">  
+			<result name="success" type="tiles">password</result>  
+		</action>
+		
+		<action name="getPassword" class="com.adp.control.actions.PasswordAction" method="getPassword">  
+			<result name="success" type="tiles">password</result>
+		</action>
+		
+		<action name="home" class="com.adp.control.actions.HomeAction">
+			<result name="success" type="tiles">home</result>
+		</action>
+		
+		<action name="matchPronostic" class="com.adp.control.actions.MatchPronosticAction">
+			<result name="success" type="tiles">matchPronostic</result>
+		</action>
+		
+		<action name="validatePronostic" class="com.adp.control.actions.MatchPronosticAction" method="valider">
+			<result name="success" type="tiles">matchPronostic</result>
+		</action>
+		
+		<action name="listPronostic" class="com.adp.control.actions.ListPronosticAction">
+			<result name="success" type="tiles">listPronostic</result>
+		</action>
+		
+		<action name="validatePronostics" class="com.adp.control.actions.ListPronosticAction" method="valider">
+			<result name="success" type="tiles">listPronostic</result>
+		</action>
+		
+		<action name="matchsList" class="com.adp.control.actions.MatchsListAction">
+			<result name="success" type="tiles">matchsList</result>
+		</action>
+		
+		<action name="matchsResults" class="com.adp.control.actions.MatchsResultsAction">
+			<result name="success" type="tiles">matchsResults</result>
+		</action>
+		
+		<action name="rating" class="com.adp.control.actions.RatingAction">
+			<result name="success" type="tiles">rating</result>
+		</action>
+		
+		<action name="score" class="com.adp.control.actions.ScoreAction">
+			<result name="success" type="tiles">score</result>
+		</action>
+		
+		<action name="contact" class="com.adp.control.actions.ContactAction">
+			<result name="success" type="tiles">contact</result>
+		</action>
+		
+		<action name="sendMessage" class="com.adp.control.actions.ContactAction" method="send">
+			<result name="success" type="tiles">contact</result>
+		</action>
+		
+		<action name="newsDetails" class="com.adp.control.actions.NewsDetailsAction">
+			<result name="success" type="tiles">newsDetails</result>
+		</action>
+		
+		<!-- ADMINISTRATION -->
+		
+		<action name="administration" class="com.adp.control.actions.AdministrationAction">  
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="tiles">adminHome</result> 
+		</action>
+		
+		<action name="equipes" class="com.adp.control.actions.EquipesAction">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="tiles">equipes</result>
+		</action>
+		
+		<action name="equipe" class="com.adp.control.actions.EquipeAction">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="tiles">equipe</result>
+		</action>
+		
+		<action name="modifierEquipe" class="com.adp.control.actions.EquipeAction" method="modifier">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="tiles">equipe</result>
+			<result name="list" type="redirectAction">equipes</result>
+			<result name="input" type="tiles">equipe</result>
+		</action>
+		
+		<action name="supprimerEquipe" class="com.adp.control.actions.EquipeAction" method="supprimer">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="redirectAction">equipes</result>
+			<result name="input" type="tiles">equipes</result>
+		</action>
+		
+		<action name="pools" class="com.adp.control.actions.PoolsAction">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="tiles">pools</result>
+		</action>
+		
+		<action name="pool" class="com.adp.control.actions.PoolAction">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="tiles">pool</result>
+		</action>
+		
+		<action name="modifierPool" class="com.adp.control.actions.PoolAction" method="modifier">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="tiles">pool</result>
+			<result name="list" type="redirectAction">pools</result>
+			<result name="input" type="tiles">pool</result>
+		</action>
+		
+		<action name="supprimerPool" class="com.adp.control.actions.PoolAction" method="supprimer">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="redirectAction">pools</result>
+			<result name="input" type="tiles">pools</result>
+		</action>
+		
+		<action name="classements" class="com.adp.control.actions.ClassementsAction">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="tiles">classements</result>
+		</action>
+		
+		<action name="classement" class="com.adp.control.actions.ClassementAction">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="tiles">classement</result>
+		</action>
+		
+		<action name="modifierClassement" class="com.adp.control.actions.ClassementAction" method="modifier">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="tiles">classement</result>
+			<result name="list" type="redirectAction">classements</result>
+			<result name="input" type="tiles">classement</result>
+		</action>
+		
+		<action name="supprimerClassement" class="com.adp.control.actions.ClassementAction" method="supprimer">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="redirectAction">classements</result>
+			<result name="input" type="tiles">classements</result>
+		</action>
+		
+		<action name="calculs" class="com.adp.control.actions.CalculsAction">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="tiles">calculs</result>
+		</action>
+		
+		<action name="lancerCalculs" class="com.adp.control.actions.CalculsAction" method="valider">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="tiles">calculs</result>
+		</action>
+		
+		<action name="matchs" class="com.adp.control.actions.MatchsAction">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="tiles">matchs</result>
+		</action>
+		
+		<action name="match" class="com.adp.control.actions.MatchAction">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="tiles">match</result>
+		</action>
+		
+		<action name="modifierMatch" class="com.adp.control.actions.MatchAction" method="modifier">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="tiles">match</result>
+			<result name="list" type="redirectAction">matchs</result>
+			<result name="input" type="tiles">match</result>
+		</action>
+		
+		<action name="supprimerMatch" class="com.adp.control.actions.MatchAction" method="supprimer">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="redirectAction">matchs</result>
+			<result name="input" type="tiles">matchs</result>
+		</action>
+
+		<action name="utilisateurList" class="com.adp.control.actions.UtilisateursAction">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="tiles">utilisateurs</result>
+		</action>
+		
+		<action name="desactiverUtilisateur" class="com.adp.control.actions.UtilisateurAction" method="desactiver">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="redirectAction">utilisateurList</result>
+			<result name="error" type="tiles">utilisateurs</result>
+		</action>
+		
+		<action name="activerUtilisateur" class="com.adp.control.actions.UtilisateurAction" method="activer">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="redirectAction">utilisateurList</result>
+			<result name="error" type="tiles">utilisateurs</result>
+		</action>
+		
+		<action name="supprimerUtilisateur" class="com.adp.control.actions.UtilisateurAction" method="supprimer">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="redirectAction">utilisateurList</result>
+			<result name="error" type="tiles">utilisateurs</result>
+		</action>
+		
+		<action name="supprimerAdministrateur" class="com.adp.control.actions.UtilisateurAction" method="supprimer">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="redirectAction">administrateurList</result>
+			<result name="error" type="tiles">administrateurs</result>
+		</action>
+		
+		<action name="scores" class="com.adp.control.actions.ScoresAction">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="tiles">scores</result>
+		</action>
+		
+		<action name="administrateurList" class="com.adp.control.actions.UtilisateursAction" method="admin">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="tiles">administrateurs</result>
+		</action>
+		
+		<action name="activerAdministrateur" class="com.adp.control.actions.UtilisateurAction" method="activerAdmin">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="redirectAction">administrateurList</result>
+			<result name="error" type="tiles">administrateurs</result>
+		</action>
+		
+		<action name="desactiverAdministrateur" class="com.adp.control.actions.UtilisateurAction" method="desactiverAdmin">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="redirectAction">administrateurList</result>
+			<result name="error" type="tiles">administrateurs</result>
+		</action>
+		
+		<action name="administrator" class="com.adp.control.actions.AdministrateurAction">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="tiles">administrateur</result>
+		</action>
+		
+		<action name="modifierAdministrateur" class="com.adp.control.actions.AdministrateurAction" method="modifier">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="tiles">administrateur</result>
+			<result name="list" type="redirectAction">administrateurList</result>
+			<result name="error" type="tiles">administrateur</result>
+		</action>
+		
+		<action name="pronosticsList" class="com.adp.control.actions.PronostiquesListAction">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="tiles">pronostiques</result>
+		</action>
+		
+		<action name="newsList" class="com.adp.control.actions.NewsListAction">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="tiles">newsList</result>
+		</action>
+		
+		<action name="news" class="com.adp.control.actions.NewsAction">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="tiles">news</result>
+		</action>
+		
+		<action name="modifierNews" class="com.adp.control.actions.NewsAction" method="modifier">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="tiles">news</result>
+			<result name="list" type="redirectAction">newsList</result>
+			<result name="error" type="tiles">news</result>
+		</action>
+		
+		<action name="supprimerNews" class="com.adp.control.actions.NewsAction" method="supprimer">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="redirectAction">newsList</result>
+			<result name="error" type="tiles">newsList</result>
+		</action>
+		
+		<action name="adsList" class="com.adp.control.actions.AdsListAction">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="tiles">adsList</result>
+		</action>
+		
+		<action name="ads" class="com.adp.control.actions.AdsAction">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="tiles">ads</result>
+		</action>
+		
+		<action name="modifierAds" class="com.adp.control.actions.AdsAction" method="modifier">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="tiles">ads</result>
+			<result name="list" type="redirectAction">adsList</result>
+			<result name="error" type="tiles">ads</result>
+		</action>
+		
+		<action name="supprimerAds" class="com.adp.control.actions.AdsAction" method="supprimer">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="redirectAction">adsList</result>
+			<result name="error" type="tiles">adsList</result>
+		</action>
+		
+		<action name="supprimerNewsImage" class="com.adp.control.actions.NewsAction" method="supprimerImage">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="redirectAction">newsList</result>
+			<result name="error" type="tiles">newsList</result>
+		</action>
+		
+		<action name="constants" class="com.adp.control.actions.ConstantsAction">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="tiles">constants</result>
+		</action>
+		
+		<action name="validateConstants" class="com.adp.control.actions.ConstantsAction" method="modifier">
+			<interceptor-ref name="adminStack" />
+			<result name="success" type="tiles">constants</result>
+		</action>
+		
+		
+    </package>
+    
+</struts>

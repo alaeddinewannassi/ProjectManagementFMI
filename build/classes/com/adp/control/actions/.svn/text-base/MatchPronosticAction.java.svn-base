@@ -1,0 +1,189 @@
+package com.adp.control.actions;
+
+import java.util.Calendar;
+import java.util.Date;
+
+import org.apache.struts2.ServletActionContext;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.adp.business.services.MatchService;
+import com.adp.business.services.PronostiqueService;
+import com.adp.business.services.UtilisateurService;
+import com.adp.entities.MatchEntity;
+import com.adp.entities.PronostiqueEntity;
+import com.adp.entities.UtilisateurEntity;
+import com.adp.utils.DateUtils;
+import com.adp.utils.StringUtil;
+
+
+public class MatchPronosticAction extends AbstractAction{
+
+	private static final long serialVersionUID = -1L;
+	
+	@Autowired
+	private PronostiqueService pronostiqueService;
+	
+	@Autowired
+	private MatchService matchService;
+	
+	@Autowired
+	private UtilisateurService utilisateurService;
+	
+	private Long matchId;
+	private Boolean isValid;
+	
+	private String pronostique1;
+	private String pronostique2;
+	
+	private PronostiqueEntity pronostique;
+	
+	public String execute()
+	{
+		try {
+		// Get user mail
+		String userMail = (String) ServletActionContext.getRequest().getSession().getAttribute("loggedInUserMail");
+		
+		if(matchId != null && checkMatch()){
+			// Get pronostic instance from DB
+			pronostique = pronostiqueService.chargerPronostiqueMatch(userMail, matchId);
+			
+			if(pronostique == null){
+				MatchEntity match = matchService.chargerMatch(matchId);
+				
+				String dateDeb = match.getDateDeb();
+				Date d = DateUtils.getDateFromText(dateDeb, "dd/MM/yyyy HH:mm");
+				if(d != null){
+					Calendar cal_now = Calendar.getInstance();
+					Calendar cal_match = Calendar.getInstance();
+					cal_match.setTime(d);
+					if(cal_match.compareTo(cal_now) > 0){
+						isValid = true;
+					}else{
+						isValid = false;
+					}
+				}
+					
+				pronostique = new PronostiqueEntity();
+				pronostique.setMatch(match);
+			}else{
+				pronostique1 = pronostique.getPronostique1();
+				pronostique2 = pronostique.getPronostique2();
+			}
+		}
+		
+		} catch (Exception e) {
+			isValid = false;
+			e.printStackTrace();
+		}
+		
+		return SUCCESS;		
+	}
+
+	private boolean checkMatch() {
+		if(matchId == null)
+			return false;
+		return true;
+	}
+	
+	private boolean checkData() {
+		if(StringUtil.isNotEmpty(pronostique1) && StringUtil.isNotEmpty(pronostique2)){
+			try{
+				pronostique1 = String.valueOf(Integer.parseInt(pronostique1));
+				pronostique2 = String.valueOf(Integer.parseInt(pronostique2));
+			}catch (Exception e) {
+				pronostique1 = "";
+				pronostique2 = "";
+				return false;
+			}
+		}else if(StringUtil.isEmpty(pronostique1) && StringUtil.isEmpty(pronostique2)){
+			// Nothing
+		}else{
+			if(StringUtil.isEmpty(pronostique1)) pronostique1 = "0";
+			if(StringUtil.isEmpty(pronostique2)) pronostique2 = "0";
+		}
+		
+		return true;
+	}
+	
+	public String valider(){
+		
+		if(checkMatch() && checkData()){
+			
+			try{
+				// Get user mail
+				String userMail = (String) ServletActionContext.getRequest().getSession().getAttribute("loggedInUserMail");
+
+				// Save pronostique
+				if(userMail != null){
+					
+					MatchEntity match = matchService.chargerMatch(matchId);
+					UtilisateurEntity user = utilisateurService.chargerUtilisateur(userMail);
+					
+					if(user != null){
+						String dateDeb = match.getDateDeb();
+						Date d = DateUtils.getDateFromText(dateDeb, "dd/MM/yyyy HH:mm");
+						if(d != null){
+							Calendar cal_now = Calendar.getInstance();
+							Calendar cal_match = Calendar.getInstance();
+							cal_match.setTime(d);
+							if(cal_match.compareTo(cal_now) > 0){
+								pronostiqueService.sauvegarderPronostique(user, match, pronostique1, pronostique2);
+								addActionMessage("Pronostique sauvegardée avec succès ! Bonne chance.");
+							}else{
+								addActionError("Le match a déjà commencé. Saisie impossible !");
+							}
+						}
+					}
+				}
+
+			}catch(Exception e){
+				addActionError("Erreur de sauvegarde des données !");
+			}
+		}else{
+			addActionError("Erreur de sauvegarde ! Données invalides !");
+		}
+		
+		return execute();
+	}
+
+	public Long getMatchId() {
+		return matchId;
+	}
+
+	public void setMatchId(Long matchId) {
+		this.matchId = matchId;
+	}
+
+	public Boolean getIsValid() {
+		return isValid;
+	}
+
+	public void setIsValid(Boolean isValid) {
+		this.isValid = isValid;
+	}
+
+	public String getPronostique1() {
+		return pronostique1;
+	}
+
+	public void setPronostique1(String pronostique1) {
+		this.pronostique1 = pronostique1;
+	}
+
+	public String getPronostique2() {
+		return pronostique2;
+	}
+
+	public void setPronostique2(String pronostique2) {
+		this.pronostique2 = pronostique2;
+	}
+
+	public PronostiqueEntity getPronostique() {
+		return pronostique;
+	}
+
+	public void setPronostique(PronostiqueEntity pronostique) {
+		this.pronostique = pronostique;
+	}
+
+}

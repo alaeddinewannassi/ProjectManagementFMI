@@ -1,0 +1,40 @@
+/**
+ * 
+ */
+package com.adp.control.actions;
+
+import org.apache.struts2.ServletActionContext;
+
+/**
+ * @author M.BENAMOR
+ *
+ */
+public class LogoutAction extends AbstractAction {
+
+	private String message;
+	
+	private static final long serialVersionUID = -3498273877470668895L;
+
+	public String execute() {  
+		ServletActionContext.getRequest().getSession().invalidate();
+		message = "Dernière session déconnectée.";
+		return "logout";  
+  
+	}
+	
+	public String calcul() {  
+		ServletActionContext.getRequest().getSession().invalidate();
+		return SUCCESS;  
+  
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	} 
+	
+	
+}

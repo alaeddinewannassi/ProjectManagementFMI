@@ -1,0 +1,106 @@
+package com.adp.control.actions;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.adp.business.services.EquipeService;
+import com.adp.entities.EquipeEntity;
+import com.adp.exceptions.ADPException;
+import com.adp.utils.StringUtil;
+
+
+public class EquipeAction extends AbstractAction{
+
+	private static final long serialVersionUID = -1L;
+	
+	@Autowired
+	private EquipeService equipeService;
+	
+	private Long equipeId;
+	
+	private String nom;
+	
+	private String code;
+	
+	public String execute(){
+		
+		try {
+			if(equipeId != null){
+				EquipeEntity equipe = equipeService.chargerEquipe(equipeId);
+				nom = equipe.getNom();
+				code = equipe.getCode();
+			}
+		} catch (ADPException e) {
+			e.printStackTrace();
+		}
+		return SUCCESS;		
+	}
+	
+	public String modifier(){
+		try {
+			if(check()){
+				if(equipeId != null){
+					equipeService.modifier(equipeId, nom, code);
+					addActionMessage("Opération OK !");
+					return SUCCESS;	
+				}else{
+					equipeService.ajouter(nom, code);
+					return "list";	
+				}
+			}else{
+				addActionError("Données invalides !");
+				return SUCCESS;	
+			}
+		} catch (ADPException e) {
+			addActionError("Erreur !");
+			e.printStackTrace();
+			return "input";	
+		}
+		
+	}
+	
+	public String supprimer(){
+		if(equipeId != null){
+			try {
+				equipeService.supprimer(equipeId);
+			}catch (Exception e) {
+				addActionError("Erreur de suppression, données liées à d'autres tables !");
+				e.printStackTrace();
+				return INPUT;
+			}
+		}
+		return SUCCESS;
+	}
+
+	private boolean check() {
+		if(StringUtil.isEmpty(nom) || StringUtil.isEmpty(code)){
+			return false;
+		}
+		return true;
+	}
+
+	public Long getEquipeId() {
+		return equipeId;
+	}
+
+	public void setEquipeId(Long equipeId) {
+		this.equipeId = equipeId;
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+	
+	
+}
