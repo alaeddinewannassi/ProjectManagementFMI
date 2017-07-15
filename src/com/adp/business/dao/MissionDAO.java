@@ -15,4 +15,5 @@ public interface MissionDAO extends GenericDAO<MissionEntity> {
 	List<MissionEntity> getMissionsByProject(Long projectId) throws ADPException;
 	public MissionEntity getMissionByName(String name)throws ADPException ;
 	
+	
 }

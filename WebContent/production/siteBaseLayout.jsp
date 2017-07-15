@@ -26,6 +26,9 @@
     <!-- iCheck -->
     <link href="vendors/iCheck/skins/flat/green.css" rel="stylesheet">
 	
+	<!--  bootstrap select -->
+	<link rel="stylesheet" type="text/css" href="dist/css/bootstrap-select.css">
+	
     <!-- bootstrap-progressbar -->
     <link href="vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
     <!-- JQVMap -->
@@ -103,13 +106,13 @@
                   <li><a><i class="fa fa-table"></i> Third Parties <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="addThirdParty.action">Add Third Party </a></li>
-                      <li><a href="viewThirdParties.action">View Third Parties</a></li>
+                      <li><a href="viewThirdParty.action">View Third Parties</a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-bar-chart-o"></i> Timesheets <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-bar-chart-o"></i> Time Sheets <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="chartjs.html">Upload timesheet </a></li>
-                      <li><a href="chartjs2.html">View reports </a></li>
+                      <li><a href="timesheetUpload.action">Upload Time Sheet </a></li>
+                      <li><a href="viewReports.action">View Reports </a></li>
                     
                     </ul>
                   </li>
@@ -291,6 +294,11 @@
 
     <!-- Custom Theme Scripts -->
     <script src="build/js/custom.min.js"></script>
+    
+    <!--  Bootstrap Select Scripts -->
+    <script type="text/javascript" src="dist/js/bootstrap-select.js"></script>
+	
+    
 	
   </body>
 </html>

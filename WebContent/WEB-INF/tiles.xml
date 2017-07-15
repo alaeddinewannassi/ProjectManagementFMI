@@ -66,6 +66,10 @@
       <put-attribute name="body"   value="/team/viewTeams.jsp"/>      
   </definition>
   
+  <definition name="viewThirdParty" extends="siteBaseLayout">
+      <put-attribute name="body"   value="/thirdParty/viewThirdParty.jsp"/>      
+  </definition>
+  
     <definition name="viewMissions" extends="siteBaseLayout">
       <put-attribute name="body"   value="/mission/viewMissions.jsp"/>      
   </definition>
@@ -172,12 +176,12 @@
  	 </definition>
  	 
 
- 	 <definition name="timeSheet" extends="siteBaseLayout" >
-      <put-attribute name="body" value="/uploads/timesheetUpload.jsp"/>      
+ 	 <definition name="timesheetUpload" extends="siteBaseLayout" >
+      <put-attribute name="body" value="/upload/timesheetUpload.jsp"/>      
  	 </definition>
 
 	 <definition name="timeSheetreport" extends="siteBaseLayout" >
-      <put-attribute name="body" value="/uploads/timesheetReport.jsp"/>      
+      <put-attribute name="body" value="/upload/timesheetReport.jsp"/>      
  	 </definition>
  	 
  	 

@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.adp.business.services.MissionService;
 import com.adp.business.services.TeamService;
 import com.adp.business.services.ThirdPartyService;
+import com.adp.entities.MissionEntity;
 import com.adp.entities.TeamEntity;
 import com.adp.entities.ThirdPartyEntity;
 import com.adp.exceptions.ADPException;
@@ -20,11 +22,25 @@ public class ThirdPartyAction extends AbstractAction {
 	@Autowired
 	ThirdPartyService thirdPartyService ;
 	
+	@Autowired
+	MissionService missionService ;
+	
 	private ThirdPartyEntity thirdParty ;
 	
 	private List<TeamEntity> teams ;
 	
+	private List<MissionEntity> missions ;
 	
+	
+	
+
+	public List<MissionEntity> getMissions() {
+		return missions;
+	}
+
+	public void setMissions(List<MissionEntity> missions) {
+		this.missions = missions;
+	}
 
 	public ThirdPartyEntity getThirdParty() {
 		return thirdParty;
@@ -46,10 +62,9 @@ public class ThirdPartyAction extends AbstractAction {
 
 	public String addThirdParty() throws ADPException  {
 		teams = teamService.getAllTeams() ;
+		missions = missionService.getAllMissions();
 		return SUCCESS ;
 	}
-	
-	
 	
 	private Long id ;
 	
@@ -76,7 +91,7 @@ public class ThirdPartyAction extends AbstractAction {
 		
 		return SUCCESS ;
 	}
-	public String viewThirdPartys() throws ADPException {
+	public String viewThirdParty() throws ADPException {
 		
 		try {
 			teams = teamService.getAllTeams() ;

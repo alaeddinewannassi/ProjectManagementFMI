@@ -97,11 +97,35 @@
                           <input id="jobTitle" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
                         </div>
                       </div>
-                    </br>
-                       <s:select cssStyle="padding:10px ; margin-left: 193px; margin-top: -120px;" name="teamName" list="teams" listKey="teamName" listValue="teamName" 
+                      </br>
+                	     <s:select  cssStyle="padding:10px ; margin-left: 193px; margin-top: -120px;" name="teamName" list="teams" listKey="teamName" listValue="teamName" 
 	                         headerKey="0" headerValue="Select a team" label="Select a team" />
                  		    </br>
+                 		    </br>
+					          
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Telephone  <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input id="phone" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
+                        </div>
+                      </div>
                       
+                    </br>
+                  
+                    <div class="form-group">
+			    <label style="margin-left: 160px" for="exampleInputFile">Profile Image  <span class="required">*</span> </label>
+			    <input style="padding:10px ; margin-left: 300px; margin-top: -30px" type="file" name="thirdPartyImage" class="form-control-file" id="thirdPartyImage" aria-describedby="fileHelp">
+			    <small style="padding:10px ; margin-left: 300px; id="fileHelp" class="form-text text-muted">FMI supports images in JPEG, PNG and Adobe Illustrator (AI) formats</small>
+			  </div>  
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Missions  <span class="required">*</span>
+                        </label> 
+                           <div style="margin-right: 470px">  
+                      <s:select  cssClass="selectpicker" multiple="true" list="missions" listKey="missionName" listValue="missionName" headerValue="select missions"
+                      label="Select missions" headerKey="0" name="selectedMissions"/>
+                  </div>
+                  </div>
                     
                       <div class="ln_solid"></div>
                       <div class="form-group">
@@ -120,7 +144,11 @@
 		
 	
       
-            
+  	 <script>
+  		$(document).ready(function () {
+    	$('.selectpicker').selectpicker();
+  			});
+	</script>  
             
            
             

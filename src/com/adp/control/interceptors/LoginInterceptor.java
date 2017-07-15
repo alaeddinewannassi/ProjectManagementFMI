@@ -11,8 +11,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.StrutsStatics;
 
+import com.adp.control.actions.ConfirmAction;
 import com.adp.control.actions.LoginAction;
 import com.adp.control.actions.LoginAuthAction;
+import com.adp.control.actions.SubscribeAction;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
@@ -46,7 +48,7 @@ public class LoginInterceptor extends AbstractInterceptor implements StrutsStati
 		
 		// Is there a "user" object stored in the user's HttpSession?  
 		Object user = session.getAttribute(USER_HANDLE);  
-		
+		Object action = invocation.getAction();
 		if (user == null) {  
 			// The user has not logged in yet.  
 				  
@@ -54,14 +56,14 @@ public class LoginInterceptor extends AbstractInterceptor implements StrutsStati
 			String loginAttempt = request.getParameter(LOGIN_ATTEMPT);  
 				  
 			/* The user is attempting to log in. */  
-			if (!StringUtils.isBlank(loginAttempt)) {
+			if (!StringUtils.isBlank(loginAttempt) || action instanceof SubscribeAction || action instanceof ConfirmAction) {
 				return invocation.invoke();  
 			}
 			
 			return "login";  
 		
 		} else {  
-			Object action = invocation.getAction();
+			
 			if(action instanceof LoginAction || action instanceof LoginAuthAction){
 				return "logout";
 			}

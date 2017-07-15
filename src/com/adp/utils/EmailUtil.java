@@ -16,8 +16,8 @@ import javax.mail.internet.MimeMessage;
 
 public class EmailUtil {
 
-	 final String username = "alaxwannassi@gmail.com";
-		final String password = "121212bh";
+	 final String username = "managementfmi@gmail.com";
+		final String password = "managementfmi123";
 	
 	 public void sendEmail(String login ,String email,String link) {
 		 

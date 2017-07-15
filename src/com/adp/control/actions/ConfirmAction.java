@@ -37,7 +37,7 @@ public class ConfirmAction extends AbstractAction{
 				addActionError("Oops you have a problem with your confirmation link ! ");
 			}
 			else {
-			user.setVerified(false);
+			user.setVerified(true);
 			userService.updateUser(user) ;
 			addActionMessage("account activated succefully ! ");
 			}

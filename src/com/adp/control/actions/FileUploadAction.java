@@ -19,7 +19,7 @@ public class FileUploadAction extends ActionSupport implements ServletContextAwa
 		
 		return SUCCESS ;
 	}
-	public String execute(){
+	public String doUpload(){
 		System.out.println("File Name is:"+getFileFileName());
 		System.out.println("File ContentType is:"+getFileContentType());
 		System.out.println("Files Directory is:"+filesPath);

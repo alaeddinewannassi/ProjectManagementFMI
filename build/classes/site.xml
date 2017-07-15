@@ -135,7 +135,11 @@
 			<result name="success" type="tiles">viewTeams</result>
 		</action>
 
-
+		<action name="viewThirdParty" class="com.adp.control.actions.ThirdPartyAction"
+			method="viewThirdParty">
+			<result name="success" type="tiles">viewThirdParty</result>
+		</action>
+		
 		<action name="showMissions" class="com.adp.control.actions.MissionAction"
 			method="showMissions">
 			<result name="success" type="tiles">showMissions</result>
@@ -235,9 +239,9 @@
 		</action>
 		<!-- END DETAIL ACTIONS -->
 
-		<action name="timeSheet" class="com.adp.control.actions.FileUploadAction"
+		<action name="timesheetUpload" class="com.adp.control.actions.FileUploadAction"
 			method="upload">
-			<result name="success" type="tiles">timeSheet</result>
+			<result name="success" type="tiles">timesheetUpload</result>
 		</action>
 
 		<action name="timeSheetreport" class="com.adp.control.actions.FileUploadAction"
@@ -246,8 +250,8 @@
 				<param name="fileUpload.maximumSize">10485760</param>
 				<param name="fileUpload.allowedTypes">text/plain,image/jpeg</param>
 			</interceptor-ref>
-			<param name="filesPath">uploads/timesheet</param>
-			<result name="input">timeSheet</result>
+			<param name="filesPath">upload/timesheet</param>
+			<result name="input">timesheetUpload</result>
 			<result name="success" type="tiles">timeSheetreport</result>
 		</action>
 
