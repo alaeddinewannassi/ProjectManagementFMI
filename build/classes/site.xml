@@ -206,6 +206,11 @@
 			method="updateProject">
 			<result name="success" type="tiles">editProject</result>
 		</action>
+		
+		<action name="editTeam" class="com.adp.control.actions.TeamUtilAction"
+			method="updateTeam">
+			<result name="success" type="tiles">editTeam</result>
+		</action>
 
 		<action name="editMission" class="com.adp.control.actions.MissionUtilAction"
 			method="updateMission">

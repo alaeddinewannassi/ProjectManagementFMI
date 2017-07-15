@@ -131,7 +131,7 @@
  	 </definition>
  	 
  	    <definition name="editTeam" extends="siteBaseLayout" >
-      <put-attribute name="body" value="/project/resultTeam.jsp"/>      
+      <put-attribute name="body" value="/team/resultTeam.jsp"/>      
  	 </definition>
  	
  	  <definition name="editMission" extends="siteBaseLayout" >

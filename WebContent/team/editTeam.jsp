@@ -9,9 +9,6 @@
                   <div class="x_title">
                     <h2> Edit Team </h2>
                     
-
-				
-                    
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -31,7 +28,7 @@
                   </div>
                   <div class="x_content">
                     <br>
-                    <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="" method="post" action="editProject.action">
+                    <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="" method="post" action="editTeam.action">
 						
 						
 					<p style="color: red;">
@@ -58,30 +55,28 @@
 					</p>	
                  	 	
                  	 	<div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="projectName">Team ID :<span class="required">*</span>
-                        </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                        		
-                          <input type="text" name="id" value="<s:property value="id" />"  required="required" class="form-control col-md-7 col-xs-12">
+                          <input type="hidden" name="id" value="<s:property value="id" />"  required="required" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                  	 
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="projectName">Team Name :<span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="teamName">Team Name :<span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                        		
-                          <input type="text" name="teamName" value="<s:property value="team.teamName" />"  required="required" class="form-control col-md-7 col-xs-12">
+                          <input type="text" name="teamName" value="<s:property value="team.teamName"/>"  required="required" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
-                     
-                      <input type="hidden" value="<s:property value="team.projectName"/>" name="selected"/>
-                         <s:select cssStyle="padding:10px ; margin-left: 180px; margin-top: -120px;" value="selected" name="projectName"  list="projects" listKey="projectName" listValue="projectName" 
-	                         headerKey="0" headerValue="Select a project" label="Select a project" />
+                      <br/>
+                      
+                  <input type="hidden" id="selectedTeamProject" value="<s:property value="team.project.projectName"/> " />
+                        <s:select cssStyle="padding:10px ; margin-left: 180px; margin-top: -120px;" value="%{selectedTeamProject}"  name="selectedProject"  list="projects" listKey="projectName" listValue="projectName" 
+	                         headerKey="0" label="Select a project" />
                  		    </br>
                       
                       
-                    
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">

@@ -57,11 +57,9 @@
 						</s:elseif>
 					</p>	
                  	 <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="id">Mission ID :<span class="required">*</span>
-                        </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                        
-                          <input type="text" name="id" value="<s:property value="id"/>"  required="required" class="form-control col-md-7 col-xs-12" hidden>
+                          <input type="hidden" name="id" value="<s:property value="id"/>"  required="required" class="form-control col-md-7 col-xs-12" hidden>
                         </div>
                       </div> 
                       <div class="form-group">

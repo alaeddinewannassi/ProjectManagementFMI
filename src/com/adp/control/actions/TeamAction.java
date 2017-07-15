@@ -79,6 +79,7 @@ public class TeamAction extends AbstractAction  {
 	public String modifyTeam() throws ADPException {
 		
 		team = teamService.getTeam(id);
+		projects = projectService.getAllProjects() ;
 		
 		return SUCCESS ;
 	}
