@@ -14,6 +14,7 @@ import org.apache.struts2.StrutsStatics;
 import com.adp.control.actions.ConfirmAction;
 import com.adp.control.actions.LoginAction;
 import com.adp.control.actions.LoginAuthAction;
+import com.adp.control.actions.LostPasswordAction;
 import com.adp.control.actions.SubscribeAction;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
@@ -56,7 +57,9 @@ public class LoginInterceptor extends AbstractInterceptor implements StrutsStati
 			String loginAttempt = request.getParameter(LOGIN_ATTEMPT);  
 				  
 			/* The user is attempting to log in. */  
-			if (!StringUtils.isBlank(loginAttempt) || action instanceof SubscribeAction || action instanceof ConfirmAction) {
+			if (!StringUtils.isBlank(loginAttempt) || action instanceof SubscribeAction || 
+					action instanceof ConfirmAction|| action instanceof LostPasswordAction) {
+				
 				return invocation.invoke();  
 			}
 			

@@ -3,12 +3,16 @@
 
 <script type="text/javascript">
 function check_pass() {
-    if (document.getElementById('password').value ==
-            document.getElementById('confirm_password').value) {
-        document.getElementById('submit').disabled = false;
-    } else {
-        document.getElementById('submit').disabled = true;
-    }
+	 var pass1 = document.getElementById("password").value;
+	    var pass2 = document.getElementById("confirm_password").value;
+	    var ok = true;
+	    if (pass1 != pass2) {
+	        //alert("Passwords Do not match");
+	        document.getElementById("pass1").style.borderColor = "#E34234";
+	        document.getElementById("pass2").style.borderColor = "#E34234";
+	        ok = false;
+	    }
+		return ok ;	    
 }
 
 </script>
@@ -24,7 +28,7 @@ function check_pass() {
 			<section class="login_content">
 				
 				<input type="hidden" value="<s:property value="token" />" name="token" />
-				<form id="loginForm" action="finalReset.action" method="post">
+				<form id="loginForm" action="finalReset.action" method="post" onsubmit="return check_pass()">
 					<h1> Login Form </h1>
 					
 					<p style="color: red;">

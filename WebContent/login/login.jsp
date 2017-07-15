@@ -44,7 +44,7 @@
 					</div>
 					<div>
 						<button type="submit">Log in</button>
-						<a class="reset_pass" href="lostPassword">Lost your password?</a>
+						<a class="reset_pass" href="lostPassword.action">Lost your password?</a>
 					</div>
 
 					<div class="clearfix"></div>
