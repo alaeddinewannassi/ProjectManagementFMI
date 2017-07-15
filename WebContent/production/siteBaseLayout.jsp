@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<%@page import="com.adp.entities.ProjectEntity"%>
+<%@page import="org.springframework.web.context.request.SessionScope"%>
+<%@page import="org.hibernate.Session"%>
+<%@page import="com.adp.entities.UserEntity"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib prefix="s" uri="/struts-tags"%>  
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -59,7 +63,8 @@
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2> <%=session.getServletContext().getAttribute("loggedInUser")%> </h2>
+                <% UserEntity user = (UserEntity) session.getAttribute("loggedInUser"); %>
+                <h2>  <%= user.getLogin() %> </h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -143,7 +148,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="production/images/img.jpg" alt="">Manager
+                    <img src="production/images/img.jpg" alt=""><%= user.getLogin() %> 
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
