@@ -27,9 +27,9 @@ function check_pass() {
 		<div class="animate form login_form">
 			<section class="login_content">
 				
-				<input type="hidden" value="<s:property value="token" />" name="token" />
-				<form id="loginForm" action="finalReset.action" method="post" onsubmit="return check_pass()">
-					<h1> Login Form </h1>
+				
+				<form id="loginForm" action="finalReset.action" method="post" >
+					<h1> Reset &nbsp; Form </h1>
 					
 					<p style="color: red;">
 						<s:if test="hasActionErrors()">
@@ -54,17 +54,16 @@ function check_pass() {
 						</s:elseif>
 					</p>
 
-					
-					
-					
+
+			<input type="hidden" name="token" value="<s:property value="token" />"  required="required" class="form-control col-md-7 col-xs-12">
 					<div>
 					
 					
-					new Password :	<input id="password" name="password" type="password" class="form-control" onchange='check_pass();' />
+					New Password :	<input id="password" name="password" type="password" class="form-control"  />
 					</div>
 					
 					<div>
-					retype Password :	<input id="confirm_password" name="confirm_password" type="password" class="form-control" onchange='check_pass();' />
+					Retype Password :	<input id="confirm_password" name="confirm_password" type="password" class="form-control"  />
 					</div>
 					
 					<div>
