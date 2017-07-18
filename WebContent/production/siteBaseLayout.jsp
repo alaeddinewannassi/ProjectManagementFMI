@@ -106,7 +106,7 @@
                   <li><a><i class="fa fa-table"></i> Third Parties <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="addThirdParty.action">Add Third Party </a></li>
-                      <li><a href="viewThirdParty.action">View Third Parties</a></li>
+                      <li><a href="viewContributors.action">View Third Parties</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-bar-chart-o"></i> Time Sheets <span class="fa fa-chevron-down"></span></a>

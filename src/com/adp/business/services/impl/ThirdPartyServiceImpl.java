@@ -38,15 +38,17 @@ public class ThirdPartyServiceImpl implements ThirdPartyService {
 		return thirdPartyDAO.getAllThirdPartys();
 	}
 
-	public ThirdPartyEntity getThirdPartyByName(String name) throws ADPException {
-		// TODO Auto-generated method stub
-		return thirdPartyDAO.getThirdPartyByName(name);
-	}
 
 	@Override
 	public List<ThirdPartyEntity> getThirdPartysByTeam(Long teamId) throws ADPException {
 		// TODO Auto-generated method stub
 		return thirdPartyDAO.getThirdPartysByTeam(teamId);
+	}
+
+	@Override
+	public ThirdPartyEntity getThirdPartyByAdresse(String adresse) throws ADPException {
+		// TODO Auto-generated method stub
+		return thirdPartyDAO.getThirdPartyByAdresse(adresse);
 	}
 
 }

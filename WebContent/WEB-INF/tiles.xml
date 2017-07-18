@@ -66,7 +66,8 @@
       <put-attribute name="body"   value="/team/viewTeams.jsp"/>      
   </definition>
   
-  <definition name="viewThirdParty" extends="siteBaseLayout">
+  
+  <definition name="viewContributors" extends="siteBaseLayout">
       <put-attribute name="body"   value="/thirdParty/viewThirdParty.jsp"/>      
   </definition>
   
@@ -92,6 +93,10 @@
  	 
  	  <definition name="saveFunction" extends="siteBaseLayout" >
       <put-attribute name="body" value="/function/resultFunction.jsp"/>      
+ 	 </definition>
+ 	 
+ 	   <definition name="saveThirdParty" extends="siteBaseLayout" >
+      <put-attribute name="body" value="/thirdParty/result.jsp"/>      
  	 </definition>
  	 
  	 <definition name="modifyProject" extends="siteBaseLayout" >

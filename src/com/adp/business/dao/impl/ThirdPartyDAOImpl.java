@@ -33,24 +33,29 @@ public class ThirdPartyDAOImpl extends GenericDAOImpl<ThirdPartyEntity> implemen
 		return findAll();
 	}
 
-	public ThirdPartyEntity getThirdPartyByName(String name) throws ADPException {
-String query = "from ThirdPartyEntity where ThirdPartyName= :x";
-		
-		
-        @SuppressWarnings("rawtypes")
-		List result = getHibernateTemplate().findByNamedParam(query, "x",name);
 
-		if(CollectionsUtil.isNotEmpty(result)) {
-			return (ThirdPartyEntity)result.get(0);
-		}
-		else return null;
-	}
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<ThirdPartyEntity> getThirdPartysByTeam(Long teamId)throws ADPException {
 		String q =" from MissionEntity m where m.project.id = ? " ;
 		return getHibernateTemplate().find(q,teamId);
 	}
+
+	@Override
+	public ThirdPartyEntity getThirdPartyByAdresse(String adresse) throws ADPException {
+		String query = "from ThirdPartyEntity where adresse= :x";
+		
+		
+        @SuppressWarnings("rawtypes")
+		List result = getHibernateTemplate().findByNamedParam(query, "x",adresse);
+
+		if(CollectionsUtil.isNotEmpty(result)) {
+			return (ThirdPartyEntity)result.get(0);
+		}
+		else return null;
+	}
+
+
 
 
 	

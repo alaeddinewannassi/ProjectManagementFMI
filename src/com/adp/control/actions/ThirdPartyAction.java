@@ -1,5 +1,6 @@
 package com.adp.control.actions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ public class ThirdPartyAction extends AbstractAction {
 	@Autowired
 	MissionService missionService ;
 	
+	List<String> interests ;
+	
 	private ThirdPartyEntity thirdParty ;
 	
 	private List<TeamEntity> teams ;
@@ -32,7 +35,15 @@ public class ThirdPartyAction extends AbstractAction {
 	private List<MissionEntity> missions ;
 	
 	
-	
+
+	public List<String> getInterests() {
+		return interests;
+	}
+
+	public void setInterests(List<String> interests) {
+		this.interests = interests;
+	}
+
 
 	public List<MissionEntity> getMissions() {
 		return missions;
@@ -50,7 +61,6 @@ public class ThirdPartyAction extends AbstractAction {
 		this.thirdParty = thirdParty;
 	}
 
-	
 
 	public List<TeamEntity> getTeams() {
 		return teams;
@@ -61,14 +71,23 @@ public class ThirdPartyAction extends AbstractAction {
 	}
 
 	public String addThirdParty() throws ADPException  {
-		teams = teamService.getAllTeams() ;
-		missions = missionService.getAllMissions();
+		//teams = teamService.getAllTeams() ;
+		//missions = missionService.getAllMissions();
+		
+		
+    	//Interests list
+    	interests = new ArrayList<String>() ;
+		interests.add("Web Designer");
+		interests.add("UX");
+		interests.add("Graphic Artist");
+		interests.add("Coffee Lover");
+		interests.add("Gaming Addict");
+		interests.add("Body builder");
+		
 		return SUCCESS ;
 	}
 	
 	private Long id ;
-	
-	
 	
 	public Long getId() {
 		return id;
@@ -91,10 +110,12 @@ public class ThirdPartyAction extends AbstractAction {
 		
 		return SUCCESS ;
 	}
-	public String viewThirdParty() throws ADPException {
+	public String viewContibutor() throws ADPException {
 		
 		try {
 			teams = teamService.getAllTeams() ;
+			
+			
 		} catch (ADPException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

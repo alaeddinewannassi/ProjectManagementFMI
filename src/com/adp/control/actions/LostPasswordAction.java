@@ -96,7 +96,7 @@ public class LostPasswordAction extends AbstractAction{
 		
 		return SUCCESS ;
 	}
-
+	
 	
 	
 }

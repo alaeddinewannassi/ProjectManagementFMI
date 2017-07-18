@@ -11,6 +11,6 @@ public interface ThirdPartyService {
 	public void updateThirdParty(ThirdPartyEntity p) throws ADPException ;
 	public void deleteThirdParty(Long idThirdParty) throws ADPException ;
 	List<ThirdPartyEntity> getAllThirdPartys()throws ADPException ;
-	public ThirdPartyEntity getThirdPartyByName(String name)throws ADPException ;
 	public List<ThirdPartyEntity> getThirdPartysByTeam(Long teamId)throws ADPException ;
+	public ThirdPartyEntity getThirdPartyByAdresse(String adresse) throws ADPException ;
 }

@@ -1,6 +1,5 @@
 package com.adp.entities;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -8,9 +7,11 @@ import java.util.UUID;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 
 @Entity
 @Table(name="FMI_THIRDPARTY")
@@ -23,20 +24,20 @@ public class ThirdPartyEntity extends AbstractEntity {
 	private String firstName ;
 	private String lastName ;
 	private String jobTitle ;
-	private Date birthday; 
-	private String gender ;
 	private String phone ;
+	private String adresse ;
 	private String matricule ;
-
+	private String gender;
+	@Lob
+	@Column(name="profileImage", nullable=false, columnDefinition="blob")
+	private byte[] profileImage ;
 	
 	@OneToMany(mappedBy="thirdParty",fetch=FetchType.EAGER)
-	private Set<AffectationEntity> association = new HashSet<AffectationEntity>()  ;
+	private Set<AffectationEntity> association = new HashSet<AffectationEntity>() ;
 	
 	@ManyToOne
 	@JoinColumn(name="teamId")
 	private TeamEntity team ;
-	
-	
 	
 	
 	public String getGender() {
@@ -45,19 +46,25 @@ public class ThirdPartyEntity extends AbstractEntity {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	public Date getBirthday() {
-		return birthday;
+	public byte[] getProfileImage() {
+		return profileImage;
 	}
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
+	public void setProfileImage(byte[] profileImage) {
+		this.profileImage = profileImage;
 	}
+	public String getAdresse() {
+		return adresse;
+	}
+	public void setAdresse(String adresse) {
+		this.adresse = adresse;
+	}
+
 	public String getMatricule() {
 		return matricule;
 	}
 	public void setMatricule(String matricule) {
 		this.matricule = matricule;
 	}
-	
 	
 	
 	
@@ -103,15 +110,16 @@ public class ThirdPartyEntity extends AbstractEntity {
 	public void setAssociation(Set<AffectationEntity> association) {
 		this.association = association;
 	}
-	public ThirdPartyEntity(String firstName, String lastName, String jobTitle, Date birthday, String gender,
-			String phone) {
+	public ThirdPartyEntity(String firstName, String lastName,String gender ,String jobTitle,
+			String phone,String adresse, byte[] profileImage) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.gender = gender ;
 		this.jobTitle = jobTitle;
-		this.birthday = birthday;
-		this.gender = gender;
 		this.phone = phone;
+		this.adresse = adresse ;
+		this.profileImage = profileImage ;
 		this.matricule=  UUID.randomUUID().toString();
 	}
 	

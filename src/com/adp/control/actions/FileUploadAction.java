@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import javax.servlet.ServletContext;
 
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.util.ServletContextAware;
 
 import com.adp.utils.FilesUtil;
@@ -24,7 +25,7 @@ public class FileUploadAction extends ActionSupport implements ServletContextAwa
 		System.out.println("File ContentType is:"+getFileContentType());
 		System.out.println("Files Directory is:"+filesPath);
 		try {
-			FilesUtil.saveFile(getFile(), getFileFileName(), context.getRealPath("") + File.separator + filesPath);
+			FilesUtil.saveFile(getFile(), getFileFileName(), ServletActionContext.getServletContext().getRealPath("") + File.separator + filesPath);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return INPUT;
@@ -37,7 +38,6 @@ public class FileUploadAction extends ActionSupport implements ServletContextAwa
 	private String fileContentType;
 	private String fileFileName;
 	private String filesPath;
-	private ServletContext context;
 
 	public File getFile() {
 		return file;
@@ -66,12 +66,14 @@ public class FileUploadAction extends ActionSupport implements ServletContextAwa
 	public void setFilesPath(String filesPath) {
 		this.filesPath = filesPath;
 	}
+	@Override
+	public void setServletContext(ServletContext arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	
-	public void setServletContext(ServletContext ctx) {
-		this.context=ctx;
-	}
-	
+
 }
 	
 	

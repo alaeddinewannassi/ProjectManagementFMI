@@ -1,7 +1,7 @@
 package com.adp.control.actions;
 
-import java.util.Collection;
-import java.util.Date;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.adp.business.services.ThirdPartyService;
 import com.adp.business.services.TeamService;
 import com.adp.entities.ThirdPartyEntity;
-import com.adp.entities.TeamEntity;
 import com.adp.exceptions.ADPException;
 import com.adp.utils.StringUtil;
 
@@ -23,24 +22,53 @@ public class ThirdPartyUtilAction extends AbstractAction{
 	@Autowired
 	TeamService teamService ;
 	
-	private List<ThirdPartyEntity> thirdPartys ;
 	
-	private String selectedTeam ;
+	private List<ThirdPartyEntity> thirdPartys ;
+
 	
 	private String firstName ;
 	
 	private String lastName ;
 	
-	private String gender ;
-	
 	private String phone ;
 	
-	private Date birthday ;
+	private String adresse ;
+	
+	private String gender ;
 
 	private String jobTitle ;
 	
+	private File profileImage ;
+	
+	//private List<String> selectedMissions ;
+	
+	
+	public File getProfileImage() {
+		return profileImage;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public void setProfileImage(File profileImage) {
+		this.profileImage = profileImage;
+	}
+
 	private Long id ;
 	
+
+	public String getAdresse() {
+		return adresse;
+	}
+
+	public void setAdresse(String adresse) {
+		this.adresse = adresse;
+	}
 
 	public String getPhone() {
 		return phone;
@@ -58,14 +86,7 @@ public class ThirdPartyUtilAction extends AbstractAction{
 		this.thirdPartys = thirdPartys;
 	}
 
-	public String getSelectedTeam() {
-		return selectedTeam;
-	}
-
-	public void setSelectedTeam(String selectedTeam) {
-		this.selectedTeam = selectedTeam;
-	}
-
+	
 	public String getFirstName() {
 		return firstName;
 	}
@@ -82,21 +103,6 @@ public class ThirdPartyUtilAction extends AbstractAction{
 		this.lastName = lastName;
 	}
 
-	public String getGender() {
-		return gender;
-	}
-
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
-
-	public Date getBirthday() {
-		return birthday;
-	}
-
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
-	}
 
 	public String getJobTitle() {
 		return jobTitle;
@@ -120,7 +126,6 @@ public class ThirdPartyUtilAction extends AbstractAction{
 		// TODO Auto-generated constructor stub
 	}
 
-
 	public String saveThirdParty() throws ADPException {
 		
 		try {
@@ -128,22 +133,21 @@ public class ThirdPartyUtilAction extends AbstractAction{
 			addActionError("verify ThirdParty fields (*)!");
 			return "addThirdParty" ;
 		}
-		 	TeamEntity team = teamService.getTeamByName(selectedTeam);
-			ThirdPartyEntity t = new ThirdPartyEntity(firstName, lastName, jobTitle, birthday, gender, phone);
-			t.setTeam(team);
-			
-				Collection<ThirdPartyEntity> ThirdPartys = team.getEmployees() ;
-				ThirdPartys.add(t);
-				team.setEmployees(ThirdPartys);
 
-				ThirdPartyService.addThirdParty(t);
-
-				teamService.updateTeam(team);
-				
-			
-			addActionMessage("the ThirdParty "+firstName+" was added successefully ! ");
+		 byte[] imageFile = new byte[(int) profileImage.length()];
+		 
+	        try {
+	            FileInputStream fileInputStream = new FileInputStream(profileImage);
+	            fileInputStream.read(imageFile);
+	            fileInputStream.close();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	 
+	        ThirdPartyEntity t = new ThirdPartyEntity(firstName, lastName, gender , jobTitle, phone, adresse,imageFile);
+			ThirdPartyService.addThirdParty(t);
+			addActionMessage("the Contributor "+firstName+" was added successefully ! ");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -151,15 +155,13 @@ public class ThirdPartyUtilAction extends AbstractAction{
 		return SUCCESS ;
 	}
 	
-	public String viewThirdPartys() throws ADPException{
-		try {
-			TeamEntity team = teamService.getTeamByName(selectedTeam);
-			thirdPartys = ThirdPartyService.getThirdPartysByTeam(team.getId());
+	public String viewContributors() throws ADPException{
+		
+		//	TeamEntity team = teamService.getTeamByName(selectedTeam);
+			thirdPartys = ThirdPartyService.getAllThirdPartys();
 			
-		} catch (ADPException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			
+			
 		
 		return SUCCESS ;
 	
@@ -167,14 +169,15 @@ public class ThirdPartyUtilAction extends AbstractAction{
 	
 	public String updateThirdParty() throws ADPException {
 		
-		TeamEntity team = teamService.getTeamByName(selectedTeam);
+		//TeamEntity team = teamService.getTeamByName(selectedTeam);
 		ThirdPartyEntity m = ThirdPartyService.getThirdParty(id);
-		m.setBirthday(birthday);
 		m.setFirstName(firstName);
+		m.setLastName(lastName);
 		m.setGender(gender);
 		m.setJobTitle(jobTitle);
 		m.setPhone(phone);
-		m.setTeam(team);
+		m.setAdresse(adresse);
+		//m.setTeam(team);
 		ThirdPartyService.updateThirdParty(m);
 		
 		addActionMessage("the ThirdParty "+firstName+" was updated successefully ! ");
@@ -183,7 +186,8 @@ public class ThirdPartyUtilAction extends AbstractAction{
 	}
 	
 
-
+	
+	
 	
 	private boolean check() {
 		if(StringUtil.isEmpty(firstName) ||StringUtil.isEmpty(lastName) ){

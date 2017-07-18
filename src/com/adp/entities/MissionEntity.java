@@ -31,7 +31,7 @@ public class MissionEntity extends AbstractEntity {
 	private Collection<FunctionEntity> functions ;
 	
 	@OneToMany(mappedBy="mission")
-	private Set<AffectationEntity> affectation  = new HashSet<AffectationEntity>();
+	private Set<AffectationEntity> affectation = new HashSet<AffectationEntity>();
 	
 	
 	

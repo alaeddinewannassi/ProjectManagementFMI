@@ -7,7 +7,7 @@
       <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2> Add a Third Party </h2>
+                    <h2> Add a Contributor </h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -27,7 +27,7 @@
                   </div>
                   <div class="x_content">
                     
-                    <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="" method="post" action="saveThirdParty.action">
+                    <s:form theme="simple" id="demo-form2" cssClass="form-horizontal form-label-left"  method="post" action="saveThirdParty.action" enctype="multipart/form-data">
 						
 						
 					<p style="color: red;">
@@ -54,88 +54,66 @@
 					</p>	
                  	
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="firstName">First Name <span class="required">*</span>
-                        </label>
+                        <s:label  cssClass="control-label col-md-3 col-sm-3 col-xs-12" value="First Name" for="firstName"/>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="firstName" name="firstName" required="required" class="form-control col-md-7 col-xs-12">
+                          <s:textfield  id="firstName" name="firstName" cssClass="form-control col-md-7 col-xs-12"/>
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lastName">Last Name <span class="required">*</span>
-                        </label>
+                       <s:label  cssClass="control-label col-md-3 col-sm-3 col-xs-12" value="Last Name" for="lastName"/>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="lastName" name="lastName" required="required" class="form-control col-md-7 col-xs-12">
+                         <s:textfield  id="lastName" name="lastName" cssClass="form-control col-md-7 col-xs-12"/>
                         </div>
                       </div>
-             
                       
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
+                        <label style="padding-left:100px" class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <div id="gender" class="btn-group" data-toggle="buttons">
-                            <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                              <input type="radio" name="gender" value="male"> &nbsp; Male &nbsp;
-                            </label>
-                            <label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                              <input type="radio" name="gender" value="female"> Female
-                            </label>
+                          <label class="btn btn-default" style="text-align: center ; padding-left: 20px ; padding-right: 20px" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+							<s:radio id="gender" name="gender" title="male"  list="#{'Male' : 'Male'}"/>
+							</label>
+							<label class="btn btn-primary" style="text-align: center ; padding-left: 20px ; padding-right: 20px" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+							<s:radio id="gender" name="gender" title="female" list="#{ 'Female' : 'Female'}"/>
+							</label>
                           </div>
                         </div>
                       </div>
+                      
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="birthday">Date Of Birth <span class="required">*</span>
-                        </label>
+                        <s:label name="jobTitle" cssClass="control-label col-md-3 col-sm-3 col-xs-12" value="Job title" for="jobTitle"/>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="birthday" name="birthday" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
+                          <s:textfield id="jobTitle" name="jobTitle" cssClass="date-picker form-control col-md-7 col-xs-12" />
+                        </div>
+                      </div>
+					    <div class="form-group">
+                        <s:label name="adresse" cssClass="control-label col-md-3 col-sm-3 col-xs-12" value="Adresse" for="adresse"/>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <s:textfield id="adresse" name="adresse" cssClass="date-picker form-control col-md-7 col-xs-12" />
+                        </div>
+                      </div>       
+                      <div class="form-group">
+                        <s:label cssClass="control-label col-md-3 col-sm-3 col-xs-12" value="Telephone" for="phone"/> 
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <s:textfield id="phone" name="phone" cssClass="date-picker form-control col-md-7 col-xs-12" />
                         </div>
                       </div>
                       
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Job title <span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="jobTitle" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
-                        </div>
-                      </div>
-                      </br>
-                	     <s:select  cssStyle="padding:10px ; margin-left: 193px; margin-top: -120px;" name="teamName" list="teams" listKey="teamName" listValue="teamName" 
-	                         headerKey="0" headerValue="Select a team" label="Select a team" />
-                 		    </br>
-                 		    </br>
-					          
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Telephone  <span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="phone" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
-                        </div>
-                      </div>
-                      
-                    </br>
                   
-                    <div class="form-group">
-			    <label style="margin-left: 160px" for="exampleInputFile">Profile Image  <span class="required">*</span> </label>
-			    <input style="padding:10px ; margin-left: 300px; margin-top: -30px" type="file" name="thirdPartyImage" class="form-control-file" id="thirdPartyImage" aria-describedby="fileHelp">
-			    <small style="padding:10px ; margin-left: 300px; id="fileHelp" class="form-text text-muted">FMI supports images in JPEG, PNG and Adobe Illustrator (AI) formats</small>
+               <div class="form-group">
+			    <s:label cssStyle="margin-left: 160px" value="Profile Image :*" for="upload"  />
+			  <s:file cssStyle="padding:10px ; margin-left: 300px; margin-top: -30px" id="upload" name="profileImage"  />
+			   <small style="padding:10px ; margin-left: 300px;" id="fileHelp" class="form-text text-muted">FMI supports images in JPEG, PNG and Adobe Illustrator (AI) formats</small>
 			  </div>  
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Missions  <span class="required">*</span>
-                        </label> 
-                           <div style="margin-right: 470px">  
-                      <s:select  cssClass="selectpicker" multiple="true" list="missions" listKey="missionName" listValue="missionName" headerValue="select missions"
-                      label="Select missions" headerKey="0" name="selectedMissions"/>
-                  </div>
-                  </div>
                     
-                      <div class="ln_solid"></div>
-                      <div class="form-group">
-                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-						  <button class="btn btn-primary" type="reset">Reset</button>
-                          <button type="submit" class="btn btn-success">Submit</button>
-                        </div>
-                      </div>
+                <div class="ln_solid"></div>
+                <div class="form-group">
+                  <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+  					<s:submit cssClass="btn btn-success" value="Submit"/>
+                  </div>
+                </div>
 				
-                    </form>
+                    </s:form>
                   </div>
                 </div>
               </div>  	
@@ -149,9 +127,4 @@
     	$('.selectpicker').selectpicker();
   			});
 	</script>  
-            
-           
-            
-            
-            
             
