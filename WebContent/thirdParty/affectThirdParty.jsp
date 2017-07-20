@@ -9,7 +9,7 @@
       <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2> Contact Contributor </h2>
+                    <h2> Affect Contributor </h2>
                     
                     
                     <ul class="nav navbar-right panel_toolbox">
@@ -76,13 +76,10 @@
         				</thead>
         				
         				<tbody>
-            				<tr id='addr0' data-id="0" class="hidden">
+            				<tr id='addr0' data-id="0" >
         						<td data-name="selectedMission">
-        						  <div>
         						    <s:select id="missionSelect" theme="simple"  list="missions" listKey="missionName" listValue="missionName" 
                       headerKey="0" headerValue="Select a mission"  name="selectedMission" />
-                      				<input type="hidden" value="%{selectedMission}"/>
-        						  </div>
         						</td>
                                 <td data-name="startDate">
                                     <input type="date" name="startDate" />
