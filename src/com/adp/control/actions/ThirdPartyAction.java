@@ -2,12 +2,15 @@ package com.adp.control.actions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.adp.business.services.InterestService;
 import com.adp.business.services.MissionService;
 import com.adp.business.services.TeamService;
 import com.adp.business.services.ThirdPartyService;
+import com.adp.entities.InterestEntity;
 import com.adp.entities.MissionEntity;
 import com.adp.entities.TeamEntity;
 import com.adp.entities.ThirdPartyEntity;
@@ -24,26 +27,37 @@ public class ThirdPartyAction extends AbstractAction {
 	ThirdPartyService thirdPartyService ;
 	
 	@Autowired
-	MissionService missionService ;
+	InterestService interestService ;
 	
-	List<String> interests ;
+	@Autowired
+	MissionService missionService ;
 	
 	private ThirdPartyEntity thirdParty ;
 	
 	private List<TeamEntity> teams ;
+
+	private List<InterestEntity> interests = new ArrayList<InterestEntity>() ;
+	
+	private List<String> oldInterests = new ArrayList<String>();
 	
 	private List<MissionEntity> missions ;
-	
-	
 
-	public List<String> getInterests() {
+	
+	public List<String> getOldInterests() {
+		return oldInterests;
+	}
+
+	public void setOldInterests(List<String> oldInterests) {
+		this.oldInterests = oldInterests;
+	}
+
+	public List<InterestEntity> getInterests() {
 		return interests;
 	}
 
-	public void setInterests(List<String> interests) {
+	public void setInterests(List<InterestEntity> interests) {
 		this.interests = interests;
 	}
-
 
 	public List<MissionEntity> getMissions() {
 		return missions;
@@ -73,16 +87,7 @@ public class ThirdPartyAction extends AbstractAction {
 	public String addThirdParty() throws ADPException  {
 		//teams = teamService.getAllTeams() ;
 		//missions = missionService.getAllMissions();
-		
-		
-    	//Interests list
-    	interests = new ArrayList<String>() ;
-		interests.add("Web Designer");
-		interests.add("UX");
-		interests.add("Graphic Artist");
-		interests.add("Coffee Lover");
-		interests.add("Gaming Addict");
-		interests.add("Body builder");
+		interests = interestService.getAllInterests() ;
 		
 		return SUCCESS ;
 	}
@@ -98,23 +103,30 @@ public class ThirdPartyAction extends AbstractAction {
 	}
 
 	public String detailThirdParty() throws ADPException {
+		thirdParty = thirdPartyService.getThirdParty(id);
+		
 		
 		return SUCCESS ;
 		
 	}
 	public String modifyThirdParty() throws ADPException {
 		
-		
+		missions = missionService.getAllMissions() ;
 		thirdParty = thirdPartyService.getThirdParty(id);
+		teams = teamService.getAllTeams();
+		interests = interestService.getAllInterests() ;
+		Set<InterestEntity> collection = thirdParty.getInterests() ;
+		for(InterestEntity interest : collection){
+			oldInterests.add(interest.getInterestName()) ;
+		}
 		
-		
+		 
 		return SUCCESS ;
 	}
 	public String viewContibutor() throws ADPException {
 		
 		try {
 			teams = teamService.getAllTeams() ;
-			
 			
 		} catch (ADPException e) {
 			// TODO Auto-generated catch block
@@ -124,6 +136,14 @@ public class ThirdPartyAction extends AbstractAction {
 		return SUCCESS ;
 		
 	}
+	
+	public String affectThirdParty() throws ADPException {
+		missions = missionService.getAllMissions() ;
+		return SUCCESS ;
+		
+	}
+	
+
 	
 	public String removeThirdParty() throws ADPException {
 		

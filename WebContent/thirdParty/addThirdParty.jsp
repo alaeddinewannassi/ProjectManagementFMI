@@ -66,6 +66,13 @@
                         </div>
                       </div>
                       
+                       <div class="form-group">
+                        <s:label  cssClass="control-label col-md-3 col-sm-3 col-xs-12" value="Email " for="firstName"/>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <s:textfield  id="email" name="email" cssClass="form-control col-md-7 col-xs-12"/>
+                        </div>
+                      </div>
+                      
                       <div class="form-group">
                         <label style="padding-left:100px" class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -79,7 +86,14 @@
                           </div>
                         </div>
                       </div>
-                      
+                      </br>
+                     <div class="form-group" style="margin-left: 200px">
+                      <s:label for="interestSelect" value= "Interests "/> &nbsp; &nbsp;   
+                      <s:select id="interestSelect" cssStyle="padding:10px ; margin-left:100px ; margin-top: -120px;" cssClass="selectpicker" list="interests"  listKey="interestName" listValue="interestName" 
+                      headerKey="0" headerValue="Select interests" label="Select interests" multiple="true"  name="selectedInterests" />
+                      </br>
+                      </br>
+                      </div>
                       <div class="form-group">
                         <s:label name="jobTitle" cssClass="control-label col-md-3 col-sm-3 col-xs-12" value="Job title" for="jobTitle"/>
                         <div class="col-md-6 col-sm-6 col-xs-12">

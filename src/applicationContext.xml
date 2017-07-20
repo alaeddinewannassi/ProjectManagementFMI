@@ -59,6 +59,7 @@
 				<value>com.adp.entities.ThirdPartyEntity</value>
 				<value>com.adp.entities.TeamEntity</value>
 				<value>com.adp.entities.AffectationEntity</value>
+				<value>com.adp.entities.InterestEntity</value>
 			</list>
 		</property>
 
@@ -98,6 +99,8 @@
 	<bean id="ThirdPartyDAO" class="com.adp.business.dao.impl.ThirdPartyDAOImpl" parent="genericDAO">
 	</bean>
 	<bean id="TeamDAO" class="com.adp.business.dao.impl.TeamDAOImpl" parent="genericDAO">
+	</bean>
+	<bean id="InterestDAO" class="com.adp.business.dao.impl.InterestDAOImpl" parent="genericDAO">
 	</bean>
 	
 	

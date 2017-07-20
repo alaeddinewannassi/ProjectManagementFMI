@@ -48,21 +48,40 @@
 
                       <div class="clearfix"></div>
 
-		<s:iterator value="thirdPartys" status="rowstatus">
+		<s:iterator value="thirdPartys" var="thirdParty" status="rowstatus">
                       <div class="col-md-4 col-sm-4 col-xs-12 profile_details">
                         <div class="well profile_view">
                           <div class="col-sm-12">
                             <h4 class="brief"><i> <s:property value="jobTitle"/> </i></h4>
                             <div class="left col-xs-7">
-                              <h2><s:property value="firstName"/> <s:property value="lastName"/></h2>
-                              <p><strong>About: </strong> Web Designer / UX / Graphic Artist / Coffee Lover </p>
+                            <input type="hidden" value="<s:property value="id" />" />
+                           <s:url id="viewURL" action="modifyThirdParty.action" >
+                          <s:param name="id" value="%{id}"></s:param>
+                          </s:url>
+                           <s:url id="profileURL" action="detailThirdParty.action" >
+                          <s:param name="id" value="%{id}"></s:param>
+                          </s:url>
+                            <h2> <s:a href="%{viewURL}"> <s:property value="firstName"/> <s:property value="lastName"/></s:a></h2>
+                              <p><strong>About: 	
+                              
+                              <s:iterator value="#thirdParty.interests" var="interest"  >
+                             
+                              <s:property value="#interest.interestName" /> </br> 
+                        
+                              </s:iterator>
+						
+							</strong>                              
+                              
+                              </p>
                               <ul class="list-unstyled">
+                              
                                 <li><i class="fa fa-building"></i> Address: <s:property value="adresse"/>  </li>
                                 <li><i class="fa fa-phone"></i> Phone #: <s:property value="phone"/> </li>
                               </ul>
                             </div>
                             <div class="right col-xs-5 text-center">
-                              <img src="images/img.jpg" alt="" class="img-circle img-responsive">
+                           
+                              <img src="images/<s:property value="firstName"/>.jpg" alt="" class="img-circle img-responsive">
                             </div>
                           </div>
                           <div class="col-xs-12 bottom text-center">
@@ -80,7 +99,7 @@
                               <button type="button" class="btn btn-success btn-xs"> <i class="fa fa-user">
                                 </i> <i class="fa fa-comments-o"></i> </button>
                               <button type="button" class="btn btn-primary btn-xs">
-                                <i class="fa fa-user"> </i> View Profile
+                                <i  class="fa fa-user"> </i> <s:a cssStyle="color:inherit" href="%{profileURL}"> View Profile </s:a>
                               </button>
                             </div>
                           </div>

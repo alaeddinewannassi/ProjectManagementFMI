@@ -16,7 +16,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>PM FMI | </title>
-
+	
+	<link rel="stylesheet" type="text/css" href="dist/css/style.css">
     <!-- Bootstrap -->
     <link href="vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -298,7 +299,7 @@
     <!--  Bootstrap Select Scripts -->
     <script type="text/javascript" src="dist/js/bootstrap-select.js"></script>
 	
-    
+    <script type="text/javascript" src="dist/js/script.js"></script>
 	
   </body>
 </html>

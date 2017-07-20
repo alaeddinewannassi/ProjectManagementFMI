@@ -122,7 +122,7 @@
 			method="saveThirdParty">
 			<interceptor-ref name="defaultStack">
 			
-				<param name="fileUpload.maximumSize">10485760</param>
+				<param name="fileUpload.maximumSize">100485760</param>
 			</interceptor-ref>
 			<result name="success" type="tiles">saveThirdParty</result>
 			<result name="input" type="tiles">addThirdParty</result>
@@ -151,6 +151,12 @@
 			method="viewContributors">
 			<result name="success" type="tiles">viewContributors</result>
 		</action>
+		
+		<action name="detailThirdParty" class="com.adp.control.actions.ThirdPartyAction"
+			method="detailThirdParty">
+			<result name="success" type="tiles">detailThirdParty</result>
+		</action>
+		
 		
 		<action name="showMissions" class="com.adp.control.actions.MissionAction"
 			method="showMissions">
@@ -193,6 +199,11 @@
 			method="modifyFunction">
 			<result name="success" type="tiles">modifyFunction</result>
 		</action>
+		
+		<action name="modifyThirdParty" class="com.adp.control.actions.ThirdPartyAction"
+			method="modifyThirdParty">
+			<result name="success" type="tiles">modifyThirdParty</result>
+		</action>
 		<!-- END MODIFY ACTIONS -->
 
 		<!-- REMOVE ACTIONS -->
@@ -211,6 +222,16 @@
 			<result name="success" type="tiles">removeMission</result>
 		</action>
 
+		<action name="affectThirdParty" class="com.adp.control.actions.ThirdPartyAction"
+			method="affectThirdParty">
+			<result name="success" type="tiles">affectThirdParty</result>
+		</action>
+		
+		<action name="doAffectThirdParty" class="com.adp.control.actions.ThirdPartyUtilAction"
+			method="affectThirdParty">
+			<result name="success" type="tiles">affectThirdParty</result>
+		</action>
+		
 		<action name="removeFunction" class="com.adp.control.actions.FunctionAction"
 			method="removeFunction">
 			<result name="success" type="tiles">removeFunction</result>
@@ -237,6 +258,13 @@
 			method="updateFunction">
 			<result name="success" type="tiles">editFunction</result>
 		</action>
+		
+		<action name="editThirdParty" class="com.adp.control.actions.ThirdPartyUtilAction"
+			method="updateThirdParty">
+			<result name="success" type="tiles">editThirdParty</result>
+		</action>
+		
+		
 		<!-- END EDIT ACTIONS -->
 
 		<!-- DETAIL ACTIONS -->
