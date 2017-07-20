@@ -175,6 +175,10 @@
       <put-attribute name="body" value="/mission/missionDetail.jsp"/>      
  	 </definition>
  	 
+ 	 <definition name="detailThirdParty" extends="siteBaseLayout" >
+      <put-attribute name="body" value="/thirdParty/profile.jsp"/>      
+ 	 </definition>
+ 	 
  	  <definition name="lostPassword" extends="loginBaseLayout" >
       <put-attribute name="body" value="/reset/resetPassword.jsp"/>      
  	 </definition>

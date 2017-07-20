@@ -49,7 +49,7 @@
                       <div class="profile_img">
                         <div id="crop-avatar">
                           <!-- Current avatar -->
-                          <img class="img-responsive avatar-view" src="production/images/<s:property value="thirdPartyirstName"/>.jpg" alt="Avatar" title="Change the avatar">
+                          <img class="img-responsive avatar-view" src="images/<s:property value="thirdParty.firstName"/>.jpg" alt="Avatar" title="Change the avatar">
                         </div>
                       </div>
                       <h3> <s:property value="thirdParty.firstName"/> <s:property value="thirdParty.lastName"/> </h3>
