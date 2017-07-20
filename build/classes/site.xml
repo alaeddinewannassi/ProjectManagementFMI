@@ -264,6 +264,10 @@
 			<result name="success" type="tiles">editThirdParty</result>
 		</action>
 		
+		<action name="contactThirdParty" class="com.adp.control.actions.ThirdPartyAction"
+			method="contactThirdParty">
+			<result name="success" type="tiles">contactThirdParty</result>
+		</action>
 		
 		<!-- END EDIT ACTIONS -->
 

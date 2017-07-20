@@ -91,31 +91,26 @@ function confirmation(id){
                           <th> Mission Name </th>
                           <th> Description </th>
                           <th>Function Progress</th>
-                          <th>Status</th>
                           <th style="width: 20%">#Edit</th>
                         </tr>
                       </thead>
                       <tbody>
-                      <s:iterator value="functions" status="rowstatus">
+                      <s:iterator value="functions" var="function" status="rowstatus">
                         <tr>
-                          <td><s:property value="id"/></td>
+                          <td><s:property value="#function.id"/></td>
                           <td>
-                            <a><s:property value="functionName"/></a>
+                            <a><s:property value="#function.functionName"/></a>
                           </td>
                           <td> <s:property value="selectedMission"/> </td>
                           
                           
-                          <td> <s:property value="description"/> </td>
-                         <s:hidden property="status"/>
+                          <td> <s:property value="#function.description"/> </td>
                           <td class="project_progress">
                             <div class="progress progress_sm">
-                              <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="status"></div>
+                              <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="<s:property value="#function.status"/>"></div>
                             </div>
                             <s:property value="status"/>
                             <small> Complete</small>
-                          </td>
-                          <td>
-                            <button type="button" class="btn btn-success btn-xs">Success</button>
                           </td>
                           
                           <td>

@@ -92,43 +92,30 @@ function confirmation(id){
                           <th> Period </th>
                           <th> Client </th>
                           <th>Project Progress</th>
-                          <th>Status</th>
+                         
                           <th style="width: 20%">#Edit</th>
                         </tr>
                       </thead>
                       <tbody>
-                      <s:iterator value="projects" status="rowstatus">
+                      <s:iterator value="projects" var="project" status="rowstatus">
                         <tr>
-                          <td><s:property value="id"/></td>
+                          <td><s:property value="#project.id"/></td>
                           <td>
-                            <a><s:property value="projectName"/></a>
+                            <a><s:property value="#project.projectName"/></a>
                             <br />
-                            <small>Created <s:property value="creationDate"/></small>
+                            <small>Created <s:property value="#project.creationDate"/></small>
                           </td>
                           
-                          <td>
-                            <ul class="list-inline">
-                              <li>
-                                <img src="images/user.png" class="avatar" alt="Avatar">
-                              </li>
-                              <li>
-                                <img src="images/user.png" class="avatar" alt="Avatar">
-                              </li>
-                             
-                            </ul>
-                          </td>
-                          <td> <s:property value="period"/> </td>
-                          <td> <s:property value="client"/> </td>
-                         <s:hidden property="status"/>
+                          <td> <s:property value="#project.team.teamName"/> </td>
+                          <td> <s:property value="#project.period"/> </td>
+                          <td> <s:property value="#project.client"/> </td>
+                         
                           <td class="project_progress">
                             <div class="progress progress_sm">
-                              <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="status"></div>
+                              <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="<s:property value="#project.status"/>"></div>
                             </div>
-                            <s:property value="status"/>
+                            <s:property value="#project.status"/>
                             <small> Complete</small>
-                          </td>
-                          <td>
-                            <button type="button" class="btn btn-success btn-xs">Success</button>
                           </td>
                           
                           <td>

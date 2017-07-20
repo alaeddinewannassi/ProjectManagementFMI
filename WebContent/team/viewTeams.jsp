@@ -94,22 +94,24 @@ function confirmation(id){
                         </tr>
                       </thead>
                       <tbody>
-                      <s:iterator value="teams" status="rowstatus">
+                      <s:iterator value="teams" var="team" status="rowstatus">
                         <tr>
-                          <td><s:property value="id"/></td>
+                          <td><s:property value="#team.id"/></td>
                           <td>
-                            <a><s:property value="teamName"/></a>
+                            <a><s:property value="#team.teamName"/></a>
                           </td>
                           <td>
                             <ul class="list-inline">
+                            <s:iterator value="#team.employees" var="thirdParty" >
                               <li>
-                                <img src="images/user.png" class="avatar" alt="Avatar">
+                                <img src="images/<s:property value="#thirdParty.firstName"/>.jpg" class="avatar" alt="Avatar">
                                 <br/>
-                                <small> username </small>
+                                <small> <s:property value="#thirdParty.lastName"/> </small>
                               </li>
+                              </s:iterator>
                             </ul>
                           </td>
-                          <td> <s:property value="project.projectName"/> </td>
+                          <td> <s:property value="#team.project.projectName"/> </td>
                          <td>
                           
                             <!--  VIEW TEAM -->

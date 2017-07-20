@@ -23,6 +23,7 @@ public class MissionEntity extends AbstractEntity {
 	private String missionName ;
 	private String description ;
 	private float budget ;
+	private String status ;
 	@ManyToOne
 	@JoinColumn(name="projectId")
 	private ProjectEntity project ;
@@ -35,6 +36,12 @@ public class MissionEntity extends AbstractEntity {
 	
 	
 	
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	public Collection<FunctionEntity> getFunctions() {
 		return functions;
 	}

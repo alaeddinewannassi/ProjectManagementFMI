@@ -55,13 +55,11 @@
                             <h4 class="brief"><i> <s:property value="jobTitle"/> </i></h4>
                             <div class="left col-xs-7">
                             <input type="hidden" value="<s:property value="id" />" />
-                           <s:url id="viewURL" action="modifyThirdParty.action" >
+                          
+                           <s:url id="affectURL" action="affectThirdParty.action" >
                           <s:param name="id" value="%{id}"></s:param>
                           </s:url>
-                           <s:url id="profileURL" action="detailThirdParty.action" >
-                          <s:param name="id" value="%{id}"></s:param>
-                          </s:url>
-                            <h2> <s:a href="%{viewURL}"> <s:property value="firstName"/> <s:property value="lastName"/></s:a></h2>
+                            <h2> <s:a href="%{affectURL}"> <s:property value="firstName"/> <s:property value="lastName"/> </s:a></h2>
                               <p><strong>About: 	
                               
                               <s:iterator value="#thirdParty.interests" var="interest"  >
@@ -96,9 +94,15 @@
                               </p>
                             </div>
                             <div class="col-xs-12 col-sm-6 emphasis">
-                              <button type="button" class="btn btn-success btn-xs"> <i class="fa fa-user">
-                                </i> <i class="fa fa-comments-o"></i> </button>
+                             <s:url id="contactURL" action="contactThirdParty.action" >
+	                          <s:param name="id" value="%{id}"></s:param>
+	                          </s:url>
+                             <s:a href="%{contactURL}"> <button   type="button" class="btn btn-success btn-xs"> <i class="fa fa-user"> 
+                                </i> <i class="fa fa-comments-o"></i> </button></s:a>
                               <button type="button" class="btn btn-primary btn-xs">
+                              <s:url id="profileURL" action="detailThirdParty.action" >
+	                          <s:param name="id" value="%{id}"></s:param>
+	                          </s:url>
                                 <i  class="fa fa-user"> </i> <s:a cssStyle="color:inherit" href="%{profileURL}"> View Profile </s:a>
                               </button>
                             </div>

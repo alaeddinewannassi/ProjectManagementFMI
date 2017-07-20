@@ -123,6 +123,10 @@
       <put-attribute name="body" value="/thirdParty/editThirdParty.jsp"/>      
  	 </definition>
  	 
+ 	 <definition name="contactThirdParty" extends="siteBaseLayout" >
+      <put-attribute name="body" value="/thirdParty/contactThirdParty.jsp"/>      
+ 	 </definition>
+ 	 
  	 <definition name="removeProject" extends="siteBaseLayout" >
       <put-attribute name="body" value="/project/resultProject.jsp"/>      
  	 </definition>
@@ -153,6 +157,10 @@
  	 
  	 <definition name="editFunction" extends="siteBaseLayout" >
       <put-attribute name="body" value="/function/resultFunction.jsp"/>      
+ 	 </definition>
+ 	 
+ 	 <definition name="editThirdParty" extends="siteBaseLayout" >
+      <put-attribute name="body" value="/thirdParty/result.jsp"/>      
  	 </definition>
  	 
  	  <definition name="showMissions" extends="siteBaseLayout" >

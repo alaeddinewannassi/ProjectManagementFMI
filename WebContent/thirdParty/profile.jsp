@@ -67,8 +67,10 @@
                           <a href="http://www.vermeg.com" target="_blank">www.vermeg.com</a>
                         </li>
                       </ul>
-
-                      <a class="btn btn-success"><i class="fa fa-edit m-right-xs"></i>Edit Profile</a>
+						 <s:url id="editURL" action="modifyThirdParty.action" >
+                          <s:param name="id" value="%{thirdParty.id}"></s:param>
+                          </s:url>
+                      <i class="fa fa-edit m-right-xs"></i> <s:a theme="simple" href="%{editURL}" cssClass="btn btn-success">Edit Profile</s:a>
                       <br />
 
                       <!-- start skills -->

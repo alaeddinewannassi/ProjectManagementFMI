@@ -7,6 +7,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -22,8 +23,8 @@ public class ProjectEntity extends AbstractEntity {
 	
 	private int period ;
 	
-	@OneToMany(mappedBy="project")
-	private Collection<TeamEntity> teams ;
+	@OneToOne(mappedBy="project")
+	private TeamEntity team ;
 	
 	private float budget ;
 	
@@ -34,23 +35,17 @@ public class ProjectEntity extends AbstractEntity {
 //	@ManyToOne
 	//@JoinColumn(name="projectId")
 	//private ManagerEntity projectManager ;
-	
-	
-	public Collection<TeamEntity> getTeams() {
-		return teams;
-	}
-	public void setTeams(Collection<TeamEntity> teams) {
-		this.teams = teams;
-	}
-
-
-
 
 	@OneToMany(targetEntity=MissionEntity.class, mappedBy="project", fetch=FetchType.EAGER)
 	private Collection<MissionEntity> missions ;
 	
 	
-	
+	public TeamEntity getTeam() {
+		return team;
+	}
+	public void setTeam(TeamEntity team) {
+		this.team = team;
+	}
 	/*public ManagerEntity getProjectManager() {
 		return projectManager;
 	}

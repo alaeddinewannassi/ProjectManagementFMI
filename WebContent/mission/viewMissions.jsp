@@ -97,22 +97,22 @@ function confirmation(id){
                         </tr>
                       </thead>
                       <tbody>
-                      <s:iterator value="missions" status="rowstatus">
+                      <s:iterator value="missions" var="mission" status="rowstatus">
                         <tr>
-                          <td><s:property value="id"/></td>
+                          <td><s:property value="#mission.id"/></td>
                           <td>
-                            <a><s:property value="missionName"/></a>
+                            <a><s:property value="#mission.missionName"/></a>
                           </td>
-                          <td> <s:property value="selectedProject"/> </td>
+                          <td> <s:property value="#mission.selectedProject"/> </td>
                           
-                          <td> <s:property value="budget"/> </td>
-                          <td> <s:property value="description"/> </td>
-                         <s:hidden property="status"/>
+                          <td> <s:property value="#mission.budget"/> </td>
+                          <td> <s:property value="#mission.description"/> </td>
+                         
                           <td class="project_progress">
                             <div class="progress progress_sm">
-                              <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="status"></div>
+                              <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="<s:property value="#mission.status"/>"></div>
                             </div>
-                            <s:property value="status"/>
+                            <s:property value="#mission.status"/>
                             <small> Complete</small>
                           </td>
                          

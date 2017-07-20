@@ -92,6 +92,11 @@ public class ThirdPartyAction extends AbstractAction {
 		return SUCCESS ;
 	}
 	
+	public String contactThirdParty() throws ADPException  {
+		
+		return SUCCESS ;
+	}
+	
 	private Long id ;
 	
 	public Long getId() {
