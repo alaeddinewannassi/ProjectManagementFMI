@@ -5,6 +5,8 @@ package com.adp.control.actions;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
 
@@ -40,6 +42,10 @@ public class AbstractAction extends ActionSupport implements SessionAware{
 			loggedInUser = (String) ServletActionContext.getRequest().getSession().getAttribute("loggedInUser");
 		}
 		return loggedInUser;
+	}
+	
+	protected HttpServletRequest getRequest(){
+		return ServletActionContext.getRequest();
 	}
 
 	public void setLoggedInUser(String loggedInUser) {

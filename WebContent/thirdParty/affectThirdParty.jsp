@@ -33,7 +33,7 @@
                     <br>
                     <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="" method="get" action="doAffectThirdParty.action">
 						
-						
+					<input type="hidden" name="id" value="<s:property value="id"/>" />	
 					<p style="color: red;">
 						<s:if test="hasActionErrors()">
 							<div id="loginMsg"
@@ -70,27 +70,29 @@
         							End Date
         						</th>
         						
-                				<th class="text-center" style="border-top: 1px solid #ffffff; border-right: 1px solid #ffffff;">
+                				<th class="text-center" style=" border-top: 1px solid #ffffff; border-right: 1px solid #ffffff;">
         						</th>
         					</tr>
         				</thead>
         				
         				<tbody>
+        				
             				<tr id='addr0' data-id="0" >
-        						<td data-name="selectedMission">
+        						<td data-name="selectedMission0">
         						    <s:select id="missionSelect" theme="simple"  list="missions" listKey="missionName" listValue="missionName" 
-                      headerKey="0" headerValue="Select a mission"  name="selectedMission" />
+                      headerKey="0" headerValue="Select a mission"  name="selectedMission0"/>
         						</td>
                                 <td data-name="startDate">
-                                    <input type="date" name="startDate" />
+                                    <input type="date" name="startDate0" />
         						</td>
         						<td data-name="endDate">
-                                    <input type="date" name="endDate" />
+                                    <input type="date" name="endDate0" />
         						</td>
                                 <td data-name="del">
-                                    <button name="del0" class='btn btn-danger glyphicon glyphicon-remove row-remove'></button>
+                                    <button name="del0"  class=' glyphicon glyphicon-remove row-remove'></button>
                                 </td>
         					</tr>
+        			
         				</tbody>
         			</table>
         			<input type="submit"  class="btn btn-success" value="Submit" />

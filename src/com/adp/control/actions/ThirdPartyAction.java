@@ -124,7 +124,6 @@ public class ThirdPartyAction extends AbstractAction {
 		for(InterestEntity interest : collection){
 			oldInterests.add(interest.getInterestName()) ;
 		}
-		
 		 
 		return SUCCESS ;
 	}
@@ -144,6 +143,7 @@ public class ThirdPartyAction extends AbstractAction {
 	
 	public String affectThirdParty() throws ADPException {
 		missions = missionService.getAllMissions() ;
+		
 		return SUCCESS ;
 		
 	}

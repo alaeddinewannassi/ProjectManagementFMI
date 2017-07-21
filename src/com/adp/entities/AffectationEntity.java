@@ -1,9 +1,7 @@
 package com.adp.entities;
 
-import java.util.Collection;
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -12,7 +10,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.CollectionOfElements;
 
 @Entity
 @Table(name="FMI_AFFECTATION")
@@ -32,12 +29,26 @@ public class AffectationEntity extends AbstractEntity{
     @JoinColumn(name = "missionId",nullable = false) 
 	private MissionEntity mission ; 
 	 
-	@CollectionOfElements
-	private Collection<Integer> month ;
+	@Temporal(TemporalType.DATE)
+	private Date startDate ;
+	@Temporal(TemporalType.DATE)
+	private Date endDate ;
 	
-	 @Column(name = "REGISTERED_DATE")
-	    @Temporal(TemporalType.DATE)
-	private Date affectationDate ;
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
 
 	public ThirdPartyEntity getThirdParty() {
 		return thirdParty;
@@ -55,23 +66,24 @@ public class AffectationEntity extends AbstractEntity{
 		this.mission = mission;
 	}
 
-
-	public Collection<Integer> getMonth() {
-		return month;
+	public AffectationEntity() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	public void setMonth(Collection<Integer> month) {
-		this.month = month;
+	public AffectationEntity(ThirdPartyEntity thirdParty, MissionEntity mission, Date startDate, Date endDate) {
+		super();
+		this.thirdParty = thirdParty;
+		this.mission = mission;
+		this.startDate = startDate;
+		this.endDate = endDate;
 	}
 
-	public Date getAffectationDate() {
-		return affectationDate;
-	}
+	
+	
 
-	public void setAffectationDate(Date affectationDate) {
-		this.affectationDate = affectationDate;
-	}
-	 
+
+	
 	 
 	
 	

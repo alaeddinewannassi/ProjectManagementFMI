@@ -45,7 +45,7 @@ public class ThirdPartyEntity extends AbstractEntity {
 	@Column(name="profileImage", nullable=false, columnDefinition="blob")
 	private byte[] profileImage ;
 	
-	@OneToMany(mappedBy="thirdParty",fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="thirdParty",fetch=FetchType.EAGER,cascade=CascadeType.ALL)
 	private Set<AffectationEntity> association = new HashSet<AffectationEntity>();
 	
 	@ManyToOne

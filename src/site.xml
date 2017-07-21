@@ -229,7 +229,7 @@
 		
 		<action name="doAffectThirdParty" class="com.adp.control.actions.ThirdPartyUtilAction"
 			method="affectThirdParty">
-			<result name="success" type="tiles">affectThirdParty</result>
+			<result name="success" type="tiles">doAffectThirdParty</result>
 		</action>
 		
 		<action name="removeFunction" class="com.adp.control.actions.FunctionAction"
