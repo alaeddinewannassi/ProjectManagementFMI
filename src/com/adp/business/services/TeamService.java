@@ -14,6 +14,6 @@ public interface TeamService {
 	public TeamEntity getTeam(Long idTeam) throws ADPException ;
 	public void updateTeam(TeamEntity p) throws ADPException ;
 	public void deleteTeam(Long idTeam) throws ADPException ;
-	List<TeamEntity> getAllTeams()throws ADPException ;
+	public List<TeamEntity> getAllTeams()throws ADPException ;
 	public TeamEntity getTeamByName(String name)throws ADPException ;
 }

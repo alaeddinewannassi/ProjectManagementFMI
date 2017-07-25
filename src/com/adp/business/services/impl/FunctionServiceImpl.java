@@ -45,4 +45,10 @@ public class FunctionServiceImpl implements FunctionService{
 		return FunctionDAO.getFunctionsByMission(missionId);
 	}
 
+	@Override
+	public FunctionEntity getFunctionsByName(String functionName) throws ADPException {
+		// TODO Auto-generated method stub
+		return FunctionDAO.getFunctionsByName(functionName);
+	}
+
 }

@@ -41,6 +41,9 @@ public class ThirdPartyEntity extends AbstractEntity {
     inverseJoinColumns = @JoinColumn( name="Interest_id") )
 	private Set<InterestEntity> interests = new HashSet<>();
 	
+	@OneToMany(mappedBy="humanRessource")
+	Set<TimesheetInputLineEntity> timesheetLines = new HashSet<TimesheetInputLineEntity>() ;
+	
 	@Lob
 	@Column(name="profileImage", nullable=false, columnDefinition="blob")
 	private byte[] profileImage ;
@@ -100,6 +103,18 @@ public class ThirdPartyEntity extends AbstractEntity {
 	}
 	public String getFirstName() {
 		return firstName;
+	}
+	
+	
+	
+	
+
+
+	public Set<TimesheetInputLineEntity> getTimesheetLines() {
+		return timesheetLines;
+	}
+	public void setTimesheetLines(Set<TimesheetInputLineEntity> timesheetLines) {
+		this.timesheetLines = timesheetLines;
 	}
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;

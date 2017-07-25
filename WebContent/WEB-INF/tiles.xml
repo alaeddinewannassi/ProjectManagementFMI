@@ -201,7 +201,7 @@
       <put-attribute name="body" value="/upload/timesheetUpload.jsp"/>      
  	 </definition>
 
-	 <definition name="timeSheetreport" extends="siteBaseLayout" >
+	 <definition name="timesheetReport" extends="siteBaseLayout" >
       <put-attribute name="body" value="/upload/timesheetReport.jsp"/>      
  	 </definition>
  	 

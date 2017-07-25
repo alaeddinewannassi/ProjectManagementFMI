@@ -60,6 +60,10 @@
 				<value>com.adp.entities.TeamEntity</value>
 				<value>com.adp.entities.AffectationEntity</value>
 				<value>com.adp.entities.InterestEntity</value>
+				<value>com.adp.entities.TimesheetInputEntity</value>
+				<value>com.adp.entities.TimesheetInputLineEntity</value>
+				<value>com.adp.entities.TimesheetErrorEntity</value>
+				
 			</list>
 		</property>
 
@@ -101,6 +105,8 @@
 	<bean id="TeamDAO" class="com.adp.business.dao.impl.TeamDAOImpl" parent="genericDAO">
 	</bean>
 	<bean id="InterestDAO" class="com.adp.business.dao.impl.InterestDAOImpl" parent="genericDAO">
+	</bean>
+	<bean id="TimesheetDAO" class="com.adp.business.dao.impl.TimesheetDAOImpl" parent="genericDAO">
 	</bean>
 	
 	

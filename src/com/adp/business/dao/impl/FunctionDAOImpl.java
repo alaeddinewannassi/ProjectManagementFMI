@@ -5,6 +5,7 @@ import java.util.List;
 import com.adp.business.dao.FunctionDAO;
 import com.adp.entities.FunctionEntity;
 import com.adp.exceptions.ADPException;
+import com.adp.utils.CollectionsUtil;
 
 public class FunctionDAOImpl extends GenericDAOImpl<FunctionEntity> implements FunctionDAO {
 
@@ -37,8 +38,25 @@ public class FunctionDAOImpl extends GenericDAOImpl<FunctionEntity> implements F
 		return getHibernateTemplate().find(q,missionId);	
 		}
 
+	@Override
+	public FunctionEntity getFunctionsByName(String functionName) throws ADPException {
+		String query = "from FunctionEntity where functionName= :x";
+		
+		
+        @SuppressWarnings("rawtypes")
+		List result = getHibernateTemplate().findByNamedParam(query, "x",functionName);
+
+		if(CollectionsUtil.isNotEmpty(result)) {
+			return (FunctionEntity)result.get(0);
+		}
+		else return null;
+	}
+	
+
+}
+
 
 	
 	
 	
-}
+

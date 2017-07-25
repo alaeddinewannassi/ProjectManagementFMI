@@ -75,8 +75,8 @@
 					</form>
 
 
-						<s:form action="timeSheetreport.action" method="post" enctype="multipart/form-data">
-						<s:file label="File" name="file"></s:file>
+						<s:form action="timesheetReport.action" method="post" enctype="multipart/form-data">
+						<s:file label="File" name="timesheet"></s:file>
 						<s:submit value="Upload"></s:submit>
 						</s:form>
 						

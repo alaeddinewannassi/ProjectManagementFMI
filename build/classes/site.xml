@@ -26,6 +26,7 @@
 			<result name="login" type="tiles">login</result>
 			<result name="logout" type="redirectAction">logout</result>
 			<result name="addThirdParty" type="tiles">addThirdParty</result>
+			<result name="timesheetUpload" type="tiles">timesheetUpload</result>
 		</global-results>
 
 		<!-- LOGIN ACTIONS -->
@@ -288,14 +289,9 @@
 			<result name="success" type="tiles">timesheetUpload</result>
 		</action>
 
-		<action name="timeSheetreport" class="com.adp.control.actions.FileUploadAction"
+		<action name="timesheetReport" class="com.adp.control.actions.FileUploadAction"
 			method="doUpload">
-			<interceptor-ref name="defaultStack">
-				<param name="fileUpload.maximumSize">10485760</param>
-				<param name="fileUpload.allowedTypes">application/ms-excel,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</param>
-			</interceptor-ref>
-			<result name="input">timesheetUpload</result>
-			<result name="success" type="tiles">timeSheetreport</result>
+			<result name="success" type="tiles">timesheetReport</result>
 		</action>
 
 

@@ -14,6 +14,6 @@ public interface ProjectService {
 	public ProjectEntity getProject(Long idProject) throws ADPException ;
 	public void updateProject(ProjectEntity p) throws ADPException ;
 	public void deleteProject(Long idProject) throws ADPException ;
-	List<ProjectEntity> getAllProjects()throws ADPException ;
+	public List<ProjectEntity> getAllProjects()throws ADPException ;
 	public ProjectEntity getProjectByName(String name)throws ADPException ;
 }

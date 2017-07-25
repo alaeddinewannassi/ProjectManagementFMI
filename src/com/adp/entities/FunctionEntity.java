@@ -1,8 +1,10 @@
 package com.adp.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -16,6 +18,10 @@ public class FunctionEntity extends AbstractEntity {
 	
 	private String functionName ;
 	private String description ;
+	
+	@OneToOne(mappedBy="function",cascade = CascadeType.ALL)
+	private TimesheetInputLineEntity timesheetLine; 
+	
 	@ManyToOne
 	@JoinColumn(name="missionId")
 	private MissionEntity mission ;
@@ -35,6 +41,12 @@ public class FunctionEntity extends AbstractEntity {
 	}
 	
 	
+	public TimesheetInputLineEntity getTimesheetLine() {
+		return timesheetLine;
+	}
+	public void setTimesheetLine(TimesheetInputLineEntity timesheetLine) {
+		this.timesheetLine = timesheetLine;
+	}
 	public String getStatus() {
 		return status;
 	}

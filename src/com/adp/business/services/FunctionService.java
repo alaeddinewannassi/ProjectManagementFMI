@@ -14,6 +14,7 @@ public interface FunctionService {
 	public FunctionEntity getFunction(Long idFunction) throws ADPException ;
 	public void updateFunction(FunctionEntity p) throws ADPException ;
 	public void deleteFunction(Long idFunction) throws ADPException ;
-	List<FunctionEntity> getAllFunctions()throws ADPException ;
+	public List<FunctionEntity> getAllFunctions()throws ADPException ;
 	List<FunctionEntity> getFunctionsByMission(Long missionId) throws ADPException;
+	public FunctionEntity getFunctionsByName(String functionName) throws ADPException;
 }

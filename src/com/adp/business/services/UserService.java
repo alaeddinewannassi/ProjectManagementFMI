@@ -12,7 +12,7 @@ import com.adp.exceptions.ADPException;
  */
 public interface UserService {
 
-	Long enregistrer(UserEntity u) throws ADPException;
+	public Long enregistrer(UserEntity u) throws ADPException;
 	public UserEntity getUserByToken(String token)throws ADPException ;
 	public UserEntity getUser(String email, String password)throws ADPException ;
 	public UserEntity updateUser(UserEntity u)throws ADPException ;

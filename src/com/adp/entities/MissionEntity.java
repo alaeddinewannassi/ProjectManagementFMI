@@ -6,10 +6,12 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -24,6 +26,10 @@ public class MissionEntity extends AbstractEntity {
 	private String description ;
 	private float budget ;
 	private String status ;
+	
+	@OneToOne(mappedBy="mission",cascade = CascadeType.ALL)
+	private TimesheetInputLineEntity timesheetLine; 
+	
 	@ManyToOne
 	@JoinColumn(name="projectId")
 	private ProjectEntity project ;
@@ -36,6 +42,12 @@ public class MissionEntity extends AbstractEntity {
 	
 	
 	
+	public TimesheetInputLineEntity getTimesheetLine() {
+		return timesheetLine;
+	}
+	public void setTimesheetLine(TimesheetInputLineEntity timesheetLine) {
+		this.timesheetLine = timesheetLine;
+	}
 	public String getStatus() {
 		return status;
 	}

@@ -11,7 +11,7 @@ import com.adp.exceptions.ADPException;
  */
 public interface UserDAO extends GenericDAO<UserEntity>{
 
-	Long addUser(UserEntity u) throws ADPException;
+	public Long addUser(UserEntity u) throws ADPException;
 	public UserEntity getUser(String email, String password)throws ADPException ;
 	public UserEntity getUserByToken(String token)throws ADPException ;
 	public UserEntity getUserByMail(String mail)throws ADPException ;

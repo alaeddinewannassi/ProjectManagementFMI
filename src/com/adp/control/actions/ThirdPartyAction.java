@@ -143,7 +143,8 @@ public class ThirdPartyAction extends AbstractAction {
 	
 	public String affectThirdParty() throws ADPException {
 		missions = missionService.getAllMissions() ;
-		
+		thirdParty = thirdPartyService.getThirdParty(id);
+
 		return SUCCESS ;
 		
 	}

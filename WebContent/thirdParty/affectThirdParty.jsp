@@ -80,7 +80,7 @@
             				<tr id='addr0' data-id="0" >
         						<td data-name="selectedMission0">
         						    <s:select id="missionSelect" theme="simple"  list="missions" listKey="missionName" listValue="missionName" 
-                      headerKey="0" headerValue="Select a mission"  name="selectedMission0"/>
+                      headerKey="0" headerValue="Select a mission"  name="selectedMission0" />
         						</td>
                                 <td data-name="startDate">
                                     <input type="date" name="startDate0" />

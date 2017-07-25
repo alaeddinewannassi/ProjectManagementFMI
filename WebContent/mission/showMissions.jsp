@@ -32,7 +32,7 @@
 	                          <s:param name="selectedProject" value="%{selectedProject}"></s:param>
 	                          </s:url>
 	                          
-                   <s:form id="demo-form2"  cssClass="form-horizontal form-label-left" method="get" action="%{URL}">
+                   <s:form id="demo-form2"  cssClass="form-horizontal form-label-left" method="post" action="%{URL}">
 						
 						
 					<p style="color: red;">
