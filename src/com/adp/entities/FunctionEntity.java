@@ -1,26 +1,26 @@
 package com.adp.entities;
 
+import java.util.Collection;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="FMI_FUNCTION")
 public class FunctionEntity extends AbstractEntity {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+
 	
 	private String functionName ;
 	private String description ;
 	
-	@OneToOne(mappedBy="function",cascade = CascadeType.ALL)
-	private TimesheetInputLineEntity timesheetLine; 
+	@OneToMany(mappedBy="function",cascade=CascadeType.ALL)
+	private Collection<TimesheetInputLineEntity> timesheetLines ;  
 	
 	@ManyToOne
 	@JoinColumn(name="missionId")
@@ -41,11 +41,11 @@ public class FunctionEntity extends AbstractEntity {
 	}
 	
 	
-	public TimesheetInputLineEntity getTimesheetLine() {
-		return timesheetLine;
+	public Collection<TimesheetInputLineEntity> getTimesheetLines() {
+		return timesheetLines;
 	}
-	public void setTimesheetLine(TimesheetInputLineEntity timesheetLine) {
-		this.timesheetLine = timesheetLine;
+	public void setTimesheetLines(Collection<TimesheetInputLineEntity> timesheetLines) {
+		this.timesheetLines = timesheetLines;
 	}
 	public String getStatus() {
 		return status;

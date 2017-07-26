@@ -6,7 +6,9 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -20,10 +22,14 @@ public class TimesheetInputEntity extends AbstractEntity {
 	private int month ;
 	private boolean completed ;
 	
-	@OneToMany(mappedBy="timesheet",fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+	@OneToOne
+	@JoinColumn(name="Project_ID")
+	private ProjectEntity project ;
+	
+	@OneToMany(mappedBy="timesheet",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
 	private Set<TimesheetInputLineEntity> inputLines = new HashSet<TimesheetInputLineEntity>() ;
 	
-	@OneToMany(mappedBy="timesheet")
+	@OneToMany(mappedBy="timesheet",cascade=CascadeType.ALL)
 	private Set<TimesheetErrorEntity> errors = new HashSet<TimesheetErrorEntity>();
 	
 	
@@ -35,6 +41,12 @@ public class TimesheetInputEntity extends AbstractEntity {
 	}
 
 	
+	public ProjectEntity getProject() {
+		return project;
+	}
+	public void setProject(ProjectEntity project) {
+		this.project = project;
+	}
 	public Set<TimesheetErrorEntity> getErrors() {
 		return errors;
 	}

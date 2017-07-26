@@ -3,10 +3,8 @@ package com.adp.entities;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -24,17 +22,18 @@ public class TimesheetInputLineEntity extends AbstractEntity {
 	@JoinColumn(name="timesheet_ID")
 	private TimesheetInputEntity timesheet;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name="ThirdParty_ID")
 	private ThirdPartyEntity humanRessource ;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name="mission_ID")
 	private MissionEntity mission ;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name="function_ID")
 	private FunctionEntity function ;
+	
 	public Date getDate() {
 		return date;
 	}

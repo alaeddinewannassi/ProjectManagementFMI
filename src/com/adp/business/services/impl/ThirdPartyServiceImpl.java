@@ -51,4 +51,10 @@ public class ThirdPartyServiceImpl implements ThirdPartyService {
 		return thirdPartyDAO.getThirdPartyByAdresse(adresse);
 	}
 
+	@Override
+	public ThirdPartyEntity getThirdPartyByName(String name) throws ADPException {
+		// TODO Auto-generated method stub
+		return thirdPartyDAO.getThirdPartyByName(name);
+	}
+
 }

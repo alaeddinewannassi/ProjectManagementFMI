@@ -43,11 +43,27 @@ public class ThirdPartyDAOImpl extends GenericDAOImpl<ThirdPartyEntity> implemen
 
 	@Override
 	public ThirdPartyEntity getThirdPartyByAdresse(String adresse) throws ADPException {
+		
 		String query = "from ThirdPartyEntity where adresse= :x";
 		
 		
         @SuppressWarnings("rawtypes")
 		List result = getHibernateTemplate().findByNamedParam(query, "x",adresse);
+
+		if(CollectionsUtil.isNotEmpty(result)) {
+			return (ThirdPartyEntity)result.get(0);
+		}
+		else return null;
+	}
+
+	@Override
+	public ThirdPartyEntity getThirdPartyByName(String name) throws ADPException {
+		
+		String query = "from ThirdPartyEntity t where CONCAT(t.firstName,' ', t.lastName) = :x";
+		
+		
+        @SuppressWarnings("rawtypes")
+		List result = getHibernateTemplate().findByNamedParam(query, "x",name);
 
 		if(CollectionsUtil.isNotEmpty(result)) {
 			return (ThirdPartyEntity)result.get(0);

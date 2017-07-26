@@ -4,11 +4,12 @@ package com.adp.entities;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 
 @Entity
 @Table(name = "FMI_PROJECT")
@@ -23,6 +24,9 @@ public class ProjectEntity extends AbstractEntity {
 	
 	private int period ;
 	
+	@OneToOne(mappedBy="project",cascade=CascadeType.ALL)
+	private TimesheetInputEntity timesheet ;
+	
 	@OneToOne(mappedBy="project")
 	private TeamEntity team ;
 	
@@ -36,10 +40,17 @@ public class ProjectEntity extends AbstractEntity {
 	//@JoinColumn(name="projectId")
 	//private ManagerEntity projectManager ;
 
-	@OneToMany(targetEntity=MissionEntity.class, mappedBy="project", fetch=FetchType.EAGER)
+	
+	@OneToMany(mappedBy="project",cascade=CascadeType.ALL)
 	private Collection<MissionEntity> missions ;
 	
 	
+	public TimesheetInputEntity getTimesheet() {
+		return timesheet;
+	}
+	public void setTimesheet(TimesheetInputEntity timesheet) {
+		this.timesheet = timesheet;
+	}
 	public TeamEntity getTeam() {
 		return team;
 	}
@@ -71,8 +82,6 @@ public class ProjectEntity extends AbstractEntity {
 		this.creationDate = creationDate;
 	}
 	
-	
-
 	public float getBudget() {
 		return budget;
 	}

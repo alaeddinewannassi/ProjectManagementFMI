@@ -4,6 +4,7 @@ package com.adp.control.actions;
 import java.io.File;
 import java.io.FileInputStream;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
@@ -22,8 +23,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.adp.business.services.FunctionService;
 import com.adp.business.services.MissionService;
+import com.adp.business.services.ProjectService;
 import com.adp.business.services.ThirdPartyService;
 import com.adp.business.services.TimesheetService;
+import com.adp.entities.ProjectEntity;
 import com.adp.entities.TimesheetInputEntity;
 import com.adp.entities.TimesheetInputLineEntity;
 import com.adp.exceptions.ADPException;
@@ -37,6 +40,9 @@ public class TimesheetAction extends ActionSupport implements ServletContextAwar
 	ThirdPartyService thirdPartyService;
 	
 	@Autowired
+	ProjectService projectService ;
+	
+	@Autowired
 	MissionService missionService ;
 	
 	@Autowired
@@ -47,14 +53,29 @@ public class TimesheetAction extends ActionSupport implements ServletContextAwar
 
 	private File timesheet;
 	
+	private String selectedProject ;
+	
 	private TimesheetInputEntity t ;
+	
+	private List<ProjectEntity> projects = new ArrayList<ProjectEntity>();
 		
 	private String selectedMonth ;
 	
 	private List<TimesheetInputEntity> timesheets ;
 	
-
 	
+	public String getSelectedProject() {
+		return selectedProject;
+	}
+	public void setSelectedProject(String selectedProject) {
+		this.selectedProject = selectedProject;
+	}
+	public List<ProjectEntity> getProjects() {
+		return projects;
+	}
+	public void setProjects(List<ProjectEntity> projects) {
+		this.projects = projects;
+	}
 	public List<TimesheetInputEntity> getTimesheets() {
 		return timesheets;
 	}
@@ -82,39 +103,47 @@ public class TimesheetAction extends ActionSupport implements ServletContextAwar
 		this.timesheet = timesheet;
 	}
 
-	public String upload(){
-		
+	public String upload() throws ADPException{
+		projects = projectService.getAllProjects();
 		return SUCCESS ;
 	}
 	public String doUpload(){
 		try 
 	       {
-			//DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 			DataFormatter formatter = new DataFormatter();
-			Date date= new Date();
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(date);
-			int month = cal.get(Calendar.MONTH);
-			 t = new TimesheetInputEntity(month,false) ;
+			//DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+			 t = new TimesheetInputEntity() ;
 			Set<TimesheetInputLineEntity> inputLines = new HashSet<TimesheetInputLineEntity>();
 	        FileInputStream file = new FileInputStream(timesheet);
 	        Workbook wb = WorkbookFactory.create(file);
 	        Sheet sheet = wb.getSheetAt(0);
+	        
+	        // get month
+	        Row r = sheet.getRow(1);
+			Date date= r.getCell(9).getDateCellValue();
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(date);
+			int month = cal.get(Calendar.MONTH);
+			t.setMonth(month+1);
+			t.setCompleted(false);
+	        t.setProject(projectService.getProjectByName(selectedProject));
+	        
+			//timesheet parse
 	        for (int i = 1; i <= sheet.getLastRowNum() ; i++) {
 		           
 	        	Row row = sheet.getRow(i);
 				            
-		            //timesheetLine constructor
-			            TimesheetInputLineEntity line = new TimesheetInputLineEntity(
-			            row.getCell(9).getDateCellValue(),
-				        formatter.formatCellValue(row.getCell(13)),
-				        Float.parseFloat(formatter.formatCellValue(row.getCell(11)))
-				        );
-			            
-			            line.setHumanRessource(thirdPartyService.getThirdParty(Long.parseLong(formatter.formatCellValue(row.getCell(0)))));
-				        line.setMission(missionService.getMissionByName(formatter.formatCellValue(row.getCell(4))));
-				        line.setFunction(functionService.getFunctionsByName(formatter.formatCellValue(row.getCell(8))));
-				        line.setTimesheet(t);
+		   //timesheetLine constructor
+            TimesheetInputLineEntity line = new TimesheetInputLineEntity(
+            row.getCell(9).getDateCellValue(),
+	        formatter.formatCellValue(row.getCell(13)),
+	        Float.parseFloat(formatter.formatCellValue(row.getCell(11)))
+	        );
+            
+            line.setHumanRessource(thirdPartyService.getThirdPartyByName(row.getCell(0).getStringCellValue()));
+	        line.setMission(missionService.getMissionByName(formatter.formatCellValue(row.getCell(4))));
+	        line.setFunction(functionService.getFunctionsByName(formatter.formatCellValue(row.getCell(8))));
+	        line.setTimesheet(t);
 				        
 			        //timesheetInput Constructor
 				        inputLines.add(line);

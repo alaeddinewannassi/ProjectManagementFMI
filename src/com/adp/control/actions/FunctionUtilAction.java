@@ -3,7 +3,6 @@ package com.adp.control.actions;
 
 
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -105,15 +104,13 @@ public class FunctionUtilAction extends AbstractAction{
 			FunctionEntity f = new FunctionEntity(FunctionName, description);
 			f.setMission(m);
 			
-				Collection<FunctionEntity> Functions = new ArrayList<FunctionEntity>();
+				Collection<FunctionEntity> Functions = m.getFunctions();
 				Functions.add(f);
 				m.setFunctions(Functions);
 				
 				FunctionService.addFunction(f);
-				
 				missionService.updateMission(m);
 				
-			
 			addActionMessage("the Function "+FunctionName+" was added successefully ! ");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

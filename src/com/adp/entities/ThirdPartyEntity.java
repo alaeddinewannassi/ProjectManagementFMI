@@ -35,7 +35,7 @@ public class ThirdPartyEntity extends AbstractEntity {
 	private String gender;
 	private String email ;
 	
-	@ManyToMany(fetch=FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+	@ManyToMany(cascade = CascadeType.ALL,fetch=FetchType.EAGER)
 	@JoinTable(name="FMI_Contributor_Interest",
     joinColumns = @JoinColumn( name="Contributor_id"),
     inverseJoinColumns = @JoinColumn( name="Interest_id") )
@@ -48,7 +48,7 @@ public class ThirdPartyEntity extends AbstractEntity {
 	@Column(name="profileImage", nullable=false, columnDefinition="blob")
 	private byte[] profileImage ;
 	
-	@OneToMany(mappedBy="thirdParty",fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="thirdParty",cascade=CascadeType.ALL)
 	private Set<AffectationEntity> association = new HashSet<AffectationEntity>();
 	
 	@ManyToOne

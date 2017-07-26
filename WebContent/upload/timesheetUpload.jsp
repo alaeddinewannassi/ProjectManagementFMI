@@ -1,36 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<%@ taglib prefix="s" uri="/struts-tags"%> 
-
-
-
-<div class="right_col" role="main">
-          <div class="">
-            <div class="page-title">
-              <div class="title_left">
-                <h3>Select File to Upload</h3>
-              </div>
-			
-		
-					
-              <div class="title_right">
-                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                  <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for...">
-                    <span class="input-group-btn">
-                      <button class="btn btn-default" type="button">Go!</button>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div class="clearfix"></div>
-
+<%@ taglib prefix="s" uri="/struts-tags"%>  
+        <!-- page content -->
+        <div class="right_col" role="main">
+        <div class="clearfix"></div>
             <div class="row">
-              <div class="col-md-12">
+      <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Timesheet</h2>
+                    <h2> Import Timesheet </h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -48,8 +25,11 @@
                     </ul>
                     <div class="clearfix"></div>
                   </div>
-               <div class="x_content">
-                 <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="" method="post" action="timesheetResult.action">
+                  <div class="x_content">
+                    
+                    <s:form theme="simple" id="demo-form2" cssClass="form-horizontal form-label-left"  method="post" action="timesheetResult.action" enctype="multipart/form-data">
+						
+						
 					<p style="color: red;">
 						<s:if test="hasActionErrors()">
 							<div id="loginMsg"
@@ -71,13 +51,43 @@
 								</s:iterator>
 							</div>
 						</s:elseif>
-					</p>
-					</form>
-
-
-						<s:form action="timesheetResult.action" method="post" enctype="multipart/form-data">
-						<s:file label="File" name="timesheet"></s:file>
-						<s:submit value="Upload"></s:submit>
-						</s:form>
+					</p>	
+                 	
+                      <div class="form-group" style=" margin-left: 200px">
+                      <s:label for="projectSelect" value= "Project Name : "/> &nbsp; &nbsp;   
+                      <s:select id="projectSelect" cssStyle="padding:10px ; margin-left:100px ; margin-top: -120px;" cssClass="selectpicker" list="projects"  listKey="projectName" listValue="projectName" 
+                      headerKey="0" headerValue="Select a project" label="Select a project"   name="selectedProject" />
+                      
+                      
+                      </div>
+                      <br>
+                      
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="timesheet" style="margin-left: 40px"> Import timesheet : </label> 
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                         <input style="margin-left: 40px" type="file" name="timesheet" />
+                        </div>
+                      </div>
+                      
+                  
+              
+                    
+                <div class="ln_solid"></div>
+                <div class="form-group">
+                  <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+  					<s:submit cssClass="btn btn-success" value="Submit"/>
+                  </div>
+                </div>
+				
+                    </s:form>
+                  </div>
+                </div>
+              </div>  	
+			</div>
+		</div>
+		
+	
+      
+  
 						
 						

@@ -32,7 +32,8 @@
     <link href="vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
     <link href="vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
     <link href="vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
-	
+	<!-- Dropzone.css -->
+    <link href="vendors/dropzone/dist/min/dropzone.min.css" rel="stylesheet">
 	<!--  bootstrap select -->
 	<link rel="stylesheet" type="text/css" href="dist/css/bootstrap-select.css">
 	
@@ -324,5 +325,8 @@
     <script src="vendors/pdfmake/build/pdfmake.min.js"></script>
     <script src="vendors/pdfmake/build/vfs_fonts.js"></script>
 	
+	 <!-- Dropzone.js -->
+    <script src="vendors/dropzone/dist/min/dropzone.min.js"></script>
+    
   </body>
 </html>

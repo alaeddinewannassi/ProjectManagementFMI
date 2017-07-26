@@ -11,8 +11,10 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+
+
 
 @Entity
 @Table(name = "FMI_MISSION")
@@ -27,26 +29,27 @@ public class MissionEntity extends AbstractEntity {
 	private float budget ;
 	private String status ;
 	
-	@OneToOne(mappedBy="mission",cascade = CascadeType.ALL)
-	private TimesheetInputLineEntity timesheetLine; 
+	@OneToMany(mappedBy="mission",cascade = CascadeType.ALL)
+	private Collection<TimesheetInputLineEntity> timesheetLines; 
 	
 	@ManyToOne
 	@JoinColumn(name="projectId")
 	private ProjectEntity project ;
 	
-	@OneToMany (mappedBy="mission")
+	
+	@OneToMany(mappedBy="mission",cascade=CascadeType.ALL)
 	private Collection<FunctionEntity> functions ;
 	
-	@OneToMany(mappedBy="mission")
+	
+	@OneToMany(mappedBy="mission",cascade=CascadeType.ALL)
 	private Set<AffectationEntity> affectation = new HashSet<AffectationEntity>();
 	
-	
-	
-	public TimesheetInputLineEntity getTimesheetLine() {
-		return timesheetLine;
+
+	public Collection<TimesheetInputLineEntity> getTimesheetLines() {
+		return timesheetLines;
 	}
-	public void setTimesheetLine(TimesheetInputLineEntity timesheetLine) {
-		this.timesheetLine = timesheetLine;
+	public void setTimesheetLines(Collection<TimesheetInputLineEntity> timesheetLines) {
+		this.timesheetLines = timesheetLines;
 	}
 	public String getStatus() {
 		return status;

@@ -291,7 +291,7 @@
 
 		<action name="timesheetResult" class="com.adp.control.actions.TimesheetAction"
 			method="doUpload">
-			<result name="success" type="tiles">timesheetReport</result>
+			<result name="success" type="tiles">timesheetResult</result>
 		</action>
 		
 		<action name="timesheetShowReport" class="com.adp.control.actions.TimesheetAction"
