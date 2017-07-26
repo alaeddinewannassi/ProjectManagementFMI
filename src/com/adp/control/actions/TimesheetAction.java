@@ -3,9 +3,11 @@ package com.adp.control.actions;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.ServletContext;
@@ -24,9 +26,10 @@ import com.adp.business.services.ThirdPartyService;
 import com.adp.business.services.TimesheetService;
 import com.adp.entities.TimesheetInputEntity;
 import com.adp.entities.TimesheetInputLineEntity;
+import com.adp.exceptions.ADPException;
 import com.opensymphony.xwork2.ActionSupport;
 
-public class FileUploadAction extends ActionSupport implements ServletContextAware{
+public class TimesheetAction extends ActionSupport implements ServletContextAware{
 
 	private static final long serialVersionUID = -4748500436762141116L;
 	
@@ -44,9 +47,34 @@ public class FileUploadAction extends ActionSupport implements ServletContextAwa
 
 	private File timesheet;
 	
-
+	private TimesheetInputEntity t ;
+		
+	private String selectedMonth ;
+	
+	private List<TimesheetInputEntity> timesheets ;
 	
 
+	
+	public List<TimesheetInputEntity> getTimesheets() {
+		return timesheets;
+	}
+	public void setTimesheets(List<TimesheetInputEntity> timesheets) {
+		this.timesheets = timesheets;
+	}
+	
+	
+	public String getSelectedMonth() {
+		return selectedMonth;
+	}
+	public void setSelectedMonth(String selectedMonth) {
+		this.selectedMonth = selectedMonth;
+	}
+	public TimesheetInputEntity getT() {
+		return t;
+	}
+	public void setT(TimesheetInputEntity t) {
+		this.t = t;
+	}
 	public File getTimesheet() {
 		return timesheet;
 	}
@@ -67,7 +95,7 @@ public class FileUploadAction extends ActionSupport implements ServletContextAwa
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(date);
 			int month = cal.get(Calendar.MONTH);
-			TimesheetInputEntity bdt = new TimesheetInputEntity(month,false) ;
+			 t = new TimesheetInputEntity(month,false) ;
 			Set<TimesheetInputLineEntity> inputLines = new HashSet<TimesheetInputLineEntity>();
 	        FileInputStream file = new FileInputStream(timesheet);
 	        Workbook wb = WorkbookFactory.create(file);
@@ -86,15 +114,15 @@ public class FileUploadAction extends ActionSupport implements ServletContextAwa
 			            line.setHumanRessource(thirdPartyService.getThirdParty(Long.parseLong(formatter.formatCellValue(row.getCell(0)))));
 				        line.setMission(missionService.getMissionByName(formatter.formatCellValue(row.getCell(4))));
 				        line.setFunction(functionService.getFunctionsByName(formatter.formatCellValue(row.getCell(8))));
-				        line.setTimesheet(bdt);
+				        line.setTimesheet(t);
 				        
 			        //timesheetInput Constructor
 				        inputLines.add(line);
 	          }
 	       
 	        //persist into database
-	        	bdt.setInputLines(inputLines);	
-	        	timesheetService.addTimesheet(bdt);
+	        	t.setInputLines(inputLines);	
+	        	timesheetService.addTimesheet(t);
 		         addActionMessage("timesheet persisted into database succefully ! ");   
 		        } catch (Exception e) {
 		            e.printStackTrace();
@@ -106,6 +134,27 @@ public class FileUploadAction extends ActionSupport implements ServletContextAwa
 		
 	}
 	
+	public String showReport() throws ADPException {
+		timesheets = timesheetService.getAllTimesheets();
+		return SUCCESS ;
+	}
+	
+	public String viewReport() throws ParseException, ADPException {
+		
+		
+		try {
+			t= timesheetService.getTimesheetByMonth(Integer.parseInt(selectedMonth));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			addActionError("there is no timesheet for this month ! ");
+			return "timesheetUpload" ;
+			
+		}
+		
+		
+		return SUCCESS ;
+	}
 	
 	@Override
 	public void setServletContext(ServletContext arg0) {

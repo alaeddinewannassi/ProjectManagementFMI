@@ -201,8 +201,16 @@
       <put-attribute name="body" value="/upload/timesheetUpload.jsp"/>      
  	 </definition>
 
-	 <definition name="timesheetReport" extends="siteBaseLayout" >
+	 <definition name="timesheetResult" extends="siteBaseLayout" >
       <put-attribute name="body" value="/upload/timesheetReport.jsp"/>      
+ 	 </definition>
+ 	 
+ 	 <definition name="timesheetShowReport" extends="siteBaseLayout" >
+      <put-attribute name="body" value="/upload/showReport.jsp"/>      
+ 	 </definition>
+ 	 
+ 	 <definition name="timesheetViewReport" extends="siteBaseLayout" >
+      <put-attribute name="body" value="/upload/viewReport.jsp"/>      
  	 </definition>
  	 
  	  <definition name="affectThirdParty" extends="siteBaseLayout" >

@@ -49,7 +49,7 @@
                     <div class="clearfix"></div>
                   </div>
                <div class="x_content">
-                 <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="" method="post" action="saveMission.action">
+                 <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="" method="post" action="timesheetResult.action">
 					<p style="color: red;">
 						<s:if test="hasActionErrors()">
 							<div id="loginMsg"
@@ -75,7 +75,7 @@
 					</form>
 
 
-						<s:form action="timesheetReport.action" method="post" enctype="multipart/form-data">
+						<s:form action="timesheetResult.action" method="post" enctype="multipart/form-data">
 						<s:file label="File" name="timesheet"></s:file>
 						<s:submit value="Upload"></s:submit>
 						</s:form>

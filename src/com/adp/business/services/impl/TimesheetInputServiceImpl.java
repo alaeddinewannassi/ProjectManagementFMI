@@ -1,5 +1,7 @@
 package com.adp.business.services.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +39,18 @@ public class TimesheetInputServiceImpl implements TimesheetService{
 	public void deleteTimesheet(Long id) throws ADPException {
 		// TODO Auto-generated method stub
 		timesheetDAO.deleteTimesheet(id);
+	}
+
+	@Override
+	public TimesheetInputEntity getTimesheetByMonth(int m) throws ADPException {
+		// TODO Auto-generated method stub
+		return timesheetDAO.getTimesheetByMonth(m);
+	}
+
+	@Override
+	public List<TimesheetInputEntity> getAllTimesheets() throws ADPException {
+		// TODO Auto-generated method stub
+		return timesheetDAO.getAllTimesheets();
 	}
 
 }

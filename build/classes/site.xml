@@ -284,16 +284,25 @@
 		</action>
 		<!-- END DETAIL ACTIONS -->
 
-		<action name="timesheetUpload" class="com.adp.control.actions.FileUploadAction"
+		<action name="timesheetUpload" class="com.adp.control.actions.TimesheetAction"
 			method="upload">
 			<result name="success" type="tiles">timesheetUpload</result>
 		</action>
 
-		<action name="timesheetReport" class="com.adp.control.actions.FileUploadAction"
+		<action name="timesheetResult" class="com.adp.control.actions.TimesheetAction"
 			method="doUpload">
 			<result name="success" type="tiles">timesheetReport</result>
 		</action>
-
+		
+		<action name="timesheetShowReport" class="com.adp.control.actions.TimesheetAction"
+			method="showReport">
+			<result name="success" type="tiles">timesheetShowReport</result>
+		</action>
+		
+		<action name="timesheetViewReport" class="com.adp.control.actions.TimesheetAction"
+			method="viewReport">
+			<result name="success" type="tiles">timesheetViewReport</result>
+		</action>
 
 
 	</package>
