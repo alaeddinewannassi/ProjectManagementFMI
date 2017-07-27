@@ -28,6 +28,7 @@ public class ProjectEntity extends AbstractEntity {
 	private TimesheetInputEntity timesheet ;
 	
 	@OneToOne(mappedBy="project")
+	
 	private TeamEntity team ;
 	
 	private float budget ;

@@ -100,7 +100,8 @@
 
 
                       <tbody>
-                        <s:iterator value="t.inputLines" var="inputLine" status="rowstatus">
+                        <s:iterator value="timesheetLatestInstance.inputLines" var="inputLine" status="rowstatus">
+                        	
                         <tr>
                           <td><s:property value="#inputLine.id"/></td>
                           
@@ -116,7 +117,8 @@
                         
                         
                         </tr>
-                        </s:iterator>
+                       
+                        	</s:iterator>
                        
 	                      </tbody>
 	                    </table>

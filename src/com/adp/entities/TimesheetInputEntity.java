@@ -18,28 +18,17 @@ public class TimesheetInputEntity extends AbstractEntity {
 	private static final long serialVersionUID = 1L;
 	
 	
-	
 	private int month ;
 	private boolean completed ;
+	
 	
 	@OneToOne
 	@JoinColumn(name="Project_ID")
 	private ProjectEntity project ;
 	
 	@OneToMany(mappedBy="timesheet",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
-	private Set<TimesheetInputLineEntity> inputLines = new HashSet<TimesheetInputLineEntity>() ;
+	private Set<TimesheetInstanceEntity> timesheetInstances = new HashSet<TimesheetInstanceEntity>() ;
 	
-	@OneToMany(mappedBy="timesheet",cascade=CascadeType.ALL)
-	private Set<TimesheetErrorEntity> errors = new HashSet<TimesheetErrorEntity>();
-	
-	
-	public Set<TimesheetInputLineEntity> getInputLines() {
-		return inputLines;
-	}
-	public void setInputLines(Set<TimesheetInputLineEntity> inputLines) {
-		this.inputLines = inputLines;
-	}
-
 	
 	public ProjectEntity getProject() {
 		return project;
@@ -47,12 +36,16 @@ public class TimesheetInputEntity extends AbstractEntity {
 	public void setProject(ProjectEntity project) {
 		this.project = project;
 	}
-	public Set<TimesheetErrorEntity> getErrors() {
-		return errors;
+	
+	public Set<TimesheetInstanceEntity> getTimesheetInstances() {
+		return timesheetInstances;
 	}
-	public void setErrors(Set<TimesheetErrorEntity> errors) {
-		this.errors = errors;
+	public void setTimesheetInstances(Set<TimesheetInstanceEntity> timesheetInstances) {
+		this.timesheetInstances = timesheetInstances;
 	}
+	
+	
+	
 	public int getMonth() {
 		return month;
 	}

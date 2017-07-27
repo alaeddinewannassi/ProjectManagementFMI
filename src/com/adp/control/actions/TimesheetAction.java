@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -26,9 +27,14 @@ import com.adp.business.services.MissionService;
 import com.adp.business.services.ProjectService;
 import com.adp.business.services.ThirdPartyService;
 import com.adp.business.services.TimesheetService;
+import com.adp.entities.AffectationEntity;
+import com.adp.entities.FunctionEntity;
+import com.adp.entities.MissionEntity;
 import com.adp.entities.ProjectEntity;
+import com.adp.entities.ThirdPartyEntity;
 import com.adp.entities.TimesheetInputEntity;
 import com.adp.entities.TimesheetInputLineEntity;
+import com.adp.entities.TimesheetInstanceEntity;
 import com.adp.exceptions.ADPException;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -53,9 +59,11 @@ public class TimesheetAction extends ActionSupport implements ServletContextAwar
 
 	private File timesheet;
 	
+	private TimesheetInstanceEntity timesheetLatestInstance ;
+	
 	private String selectedProject ;
 	
-	private TimesheetInputEntity t ;
+	private TimesheetInputEntity timesheetInput ;
 	
 	private List<ProjectEntity> projects = new ArrayList<ProjectEntity>();
 		
@@ -64,6 +72,18 @@ public class TimesheetAction extends ActionSupport implements ServletContextAwar
 	private List<TimesheetInputEntity> timesheets ;
 	
 	
+	public TimesheetInstanceEntity getTimesheetLatestInstance() {
+		return timesheetLatestInstance;
+	}
+	public void setTimesheetLatestInstance(TimesheetInstanceEntity timesheetLatestInstance) {
+		this.timesheetLatestInstance = timesheetLatestInstance;
+	}
+	public TimesheetInputEntity getTimesheetInput() {
+		return timesheetInput;
+	}
+	public void setTimesheetInput(TimesheetInputEntity timesheetInput) {
+		this.timesheetInput = timesheetInput;
+	}
 	public String getSelectedProject() {
 		return selectedProject;
 	}
@@ -90,12 +110,7 @@ public class TimesheetAction extends ActionSupport implements ServletContextAwar
 	public void setSelectedMonth(String selectedMonth) {
 		this.selectedMonth = selectedMonth;
 	}
-	public TimesheetInputEntity getT() {
-		return t;
-	}
-	public void setT(TimesheetInputEntity t) {
-		this.t = t;
-	}
+
 	public File getTimesheet() {
 		return timesheet;
 	}
@@ -112,8 +127,10 @@ public class TimesheetAction extends ActionSupport implements ServletContextAwar
 	       {
 			DataFormatter formatter = new DataFormatter();
 			//DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-			 t = new TimesheetInputEntity() ;
+			 
+			 TimesheetInstanceEntity instance = new TimesheetInstanceEntity(new Date()) ;
 			Set<TimesheetInputLineEntity> inputLines = new HashSet<TimesheetInputLineEntity>();
+		//	Set<TimesheetErrorEntity> inputErrors = new HashSet<TimesheetErrorEntity>();
 	        FileInputStream file = new FileInputStream(timesheet);
 	        Workbook wb = WorkbookFactory.create(file);
 	        Sheet sheet = wb.getSheetAt(0);
@@ -123,10 +140,12 @@ public class TimesheetAction extends ActionSupport implements ServletContextAwar
 			Date date= r.getCell(9).getDateCellValue();
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(date);
-			int month = cal.get(Calendar.MONTH);
-			t.setMonth(month+1);
-			t.setCompleted(false);
-	        t.setProject(projectService.getProjectByName(selectedProject));
+			int month = cal.get(Calendar.MONTH)+1;
+			timesheetInput = new TimesheetInputEntity(month, false) ;
+	        timesheetInput.setProject(projectService.getProjectByName(selectedProject));
+	        
+	        
+	        //int nbHours = 0 ;
 	        
 			//timesheet parse
 	        for (int i = 1; i <= sheet.getLastRowNum() ; i++) {
@@ -134,25 +153,77 @@ public class TimesheetAction extends ActionSupport implements ServletContextAwar
 	        	Row row = sheet.getRow(i);
 				            
 		   //timesheetLine constructor
-            TimesheetInputLineEntity line = new TimesheetInputLineEntity(
-            row.getCell(9).getDateCellValue(),
-	        formatter.formatCellValue(row.getCell(13)),
-	        Float.parseFloat(formatter.formatCellValue(row.getCell(11)))
-	        );
+	        	Date workDate =  row.getCell(9).getDateCellValue() ; 
+	        	Float hoursByDay = Float.parseFloat(formatter.formatCellValue(row.getCell(11))) ;
+	        	String comment =  formatter.formatCellValue(row.getCell(13));
+	        	
+            TimesheetInputLineEntity line = new TimesheetInputLineEntity(workDate,comment,hoursByDay);
             
-            line.setHumanRessource(thirdPartyService.getThirdPartyByName(row.getCell(0).getStringCellValue()));
-	        line.setMission(missionService.getMissionByName(formatter.formatCellValue(row.getCell(4))));
-	        line.setFunction(functionService.getFunctionsByName(formatter.formatCellValue(row.getCell(8))));
-	        line.setTimesheet(t);
-				        
-			        //timesheetInput Constructor
-				        inputLines.add(line);
+            ThirdPartyEntity thirdParty = thirdPartyService.getThirdPartyByName(row.getCell(0).getStringCellValue());
+            MissionEntity m = missionService.getMissionByName(formatter.formatCellValue(row.getCell(4))) ;
+            FunctionEntity f = functionService.getFunctionsByName(formatter.formatCellValue(row.getCell(8)));
+            
+            line.setHumanRessource(thirdParty);
+	        line.setMission(m);
+	        line.setFunction(f);
+	        line.setTimesheetInstance(instance);
+	        
+	        
+	        /*  	        
+	        // get startDate & endDate
+		        
+		        Date startDate = new Date();
+		        Date endDate = new Date() ;
+
+		        for( AffectationEntity aff  :  thirdParty.getAssociation() ) {
+	    			
+	    			if(aff.getMission().getMissionName().equals(m.getMissionName())){
+	    				startDate = aff.getStartDate() ;
+	    				endDate = aff.getEndDate() ;
+	    			}
+	    			
+	    		}
+	      
+	       //timesheetError Consctructor
+	        		
+	        	//1. affectation not exist 
+	    		
+	        		if (!exist(m, thirdParty.getAssociation())) {
+	        			TimesheetErrorEntity error = new TimesheetErrorEntity("Mission not conform with affectation config", "affectation TP - Mission", "configure contributors ' affectations ");
+	        			inputErrors.add(error);
+	        		}
+	        		
+	        		
+	        	//2. comparing period on mission to working date 	
+	        		
+	        		else if(workDate.compareTo(startDate) * workDate.compareTo(endDate) > 0) {
+	        			TimesheetErrorEntity error = new TimesheetErrorEntity("Mission "+m+"  not allowed for thirdParty on date "+workDate, "affectation TP - Mission", "configure contributors ' affectation periods ");
+	        			inputErrors.add(error);
+	        		}
+	        	//3. hours number comparing to 8 by mission	
+	        		
+	        		else if(nbHours < 8){
+	        			
+	        			TimesheetErrorEntity error = new TimesheetErrorEntity("Hours number on mission "+m+" is less than 8h", "Hours Per Mission", "Rework issue ");
+	        			inputErrors.add(error);
+	        			
+	        		} 
+	        		
+	       //timesheetInput Constructor 
+	        		else 
+	        */	
+	        
+				    inputLines.add(line);
 	          }
 	       
 	        //persist into database
-	        	t.setInputLines(inputLines);	
-	        	timesheetService.addTimesheet(t);
-		         addActionMessage("timesheet persisted into database succefully ! ");   
+	        	instance.setInputLines(inputLines);
+	        	instance.setTimesheet(timesheetInput);
+	        	timesheetInput.getTimesheetInstances().add(instance);
+	        	timesheetService.addTimesheet(timesheetInput);
+		        addActionMessage("timesheet persisted into database succefully ! ");   
+		         
+		         
 		        } catch (Exception e) {
 		            e.printStackTrace();
 		            addActionError("you have a problem with you upload !");
@@ -163,6 +234,7 @@ public class TimesheetAction extends ActionSupport implements ServletContextAwar
 		
 	}
 	
+	
 	public String showReport() throws ADPException {
 		timesheets = timesheetService.getAllTimesheets();
 		return SUCCESS ;
@@ -172,7 +244,17 @@ public class TimesheetAction extends ActionSupport implements ServletContextAwar
 		
 		
 		try {
-			t= timesheetService.getTimesheetByMonth(Integer.parseInt(selectedMonth));
+			timesheetInput= timesheetService.getTimesheetByMonth(Integer.parseInt(selectedMonth));
+			
+			Date latest = null ;
+			timesheetLatestInstance = null;
+				for (TimesheetInstanceEntity inst : timesheetInput.getTimesheetInstances()){
+					if(latest == null || inst.getDateImport().compareTo(latest) > 0 ){
+						latest=inst.getDateImport() ;
+						timesheetLatestInstance = inst ;
+					}
+				}
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -190,9 +272,32 @@ public class TimesheetAction extends ActionSupport implements ServletContextAwar
 		// TODO Auto-generated method stub
 		
 	}
+	public boolean exist(MissionEntity m , Set<AffectationEntity> assoc) {
+		
+		Iterator<AffectationEntity> i = assoc.iterator() ;
+		AffectationEntity aff = new AffectationEntity();
 
+		boolean verif =false ;
+		
+		do
+		{	
+			if(i.hasNext() & !aff.getMission().getMissionName().equals(m.getMissionName())) 
+			 {
+				aff = i.next() ;
+				verif=false ;
+			 }
+			else {
+			 verif = true ;
+			}
+		}
+		while(verif= false);
+		
+		return verif ;	
+	}
 	
-
+	
+		
+	
 }
 	
 	

@@ -63,7 +63,8 @@
 				<value>com.adp.entities.TimesheetInputEntity</value>
 				<value>com.adp.entities.TimesheetInputLineEntity</value>
 				<value>com.adp.entities.TimesheetErrorEntity</value>
-				
+				<value>com.adp.entities.TimesheetInstanceEntity</value>
+
 			</list>
 		</property>
 

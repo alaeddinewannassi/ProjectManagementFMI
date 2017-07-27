@@ -17,7 +17,7 @@ public class TimesheetErrorEntity extends AbstractEntity {
 	
 	@ManyToOne
 	@JoinColumn(name="timesheet_ID")
-	TimesheetInputEntity timesheet ;
+	TimesheetInstanceEntity timesheetInstance ;
 	
 	public String getErrorDescription() {
 		return errorDescription;
@@ -37,13 +37,14 @@ public class TimesheetErrorEntity extends AbstractEntity {
 	public void setPossibleSolution(String possibleSolution) {
 		this.possibleSolution = possibleSolution;
 	}
-	public TimesheetInputEntity getTimesheet() {
-		return timesheet;
-	}
-	public void setTimesheet(TimesheetInputEntity timesheet) {
-		this.timesheet = timesheet;
-	}
 	
+	
+	public TimesheetInstanceEntity getTimesheetInstance() {
+		return timesheetInstance;
+	}
+	public void setTimesheetInstance(TimesheetInstanceEntity timesheetInstance) {
+		this.timesheetInstance = timesheetInstance;
+	}
 	public TimesheetErrorEntity() {
 		super();
 		// TODO Auto-generated constructor stub

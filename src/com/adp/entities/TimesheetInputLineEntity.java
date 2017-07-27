@@ -20,7 +20,7 @@ public class TimesheetInputLineEntity extends AbstractEntity {
 	
 	@ManyToOne
 	@JoinColumn(name="timesheet_ID")
-	private TimesheetInputEntity timesheet;
+	private TimesheetInstanceEntity timesheetInstance;
 	
 	@ManyToOne
 	@JoinColumn(name="ThirdParty_ID")
@@ -72,11 +72,11 @@ public class TimesheetInputLineEntity extends AbstractEntity {
 		this.humanRessource = humanRessource;
 	}
 	
-	public TimesheetInputEntity getTimesheet() {
-		return timesheet;
+	public TimesheetInstanceEntity getTimesheetInstance() {
+		return timesheetInstance;
 	}
-	public void setTimesheet(TimesheetInputEntity timesheet) {
-		this.timesheet = timesheet;
+	public void setTimesheetInstance(TimesheetInstanceEntity timesheetInstance) {
+		this.timesheetInstance = timesheetInstance;
 	}
 	public TimesheetInputLineEntity() {
 		super();

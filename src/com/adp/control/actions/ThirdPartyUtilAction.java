@@ -276,7 +276,7 @@ public class ThirdPartyUtilAction extends AbstractAction{
 		
 		
 		
-		addActionMessage("the contributor" + t.getFirstName() +"was affected successefully !");
+		addActionMessage("the contributor " + t.getLastName() +" was affected successefully !");
 		
 		return SUCCESS ;
 	}

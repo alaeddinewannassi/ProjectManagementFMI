@@ -48,7 +48,7 @@ public class ThirdPartyEntity extends AbstractEntity {
 	@Column(name="profileImage", nullable=false, columnDefinition="blob")
 	private byte[] profileImage ;
 	
-	@OneToMany(mappedBy="thirdParty",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="thirdParty",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
 	private Set<AffectationEntity> association = new HashSet<AffectationEntity>();
 	
 	@ManyToOne
@@ -105,10 +105,6 @@ public class ThirdPartyEntity extends AbstractEntity {
 		return firstName;
 	}
 	
-	
-	
-	
-
 
 	public Set<TimesheetInputLineEntity> getTimesheetLines() {
 		return timesheetLines;
