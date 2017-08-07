@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -44,7 +45,9 @@ public class MissionEntity extends AbstractEntity {
 	@OneToMany(mappedBy="thirdParty",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
 
 	private Set<AffectationEntity> affectation = new HashSet<AffectationEntity>();
-	
+
+	@OneToOne 
+	private TurnoverEntity turnover ;
 
 	
 	public Set<TimesheetInputLineEntity> getTimesheetLines() {

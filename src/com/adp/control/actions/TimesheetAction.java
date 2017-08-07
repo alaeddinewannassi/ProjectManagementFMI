@@ -73,8 +73,8 @@ public class TimesheetAction extends ActionSupport implements ServletContextAwar
 	@Autowired
 	TimesheetInputService timesheetInputService ;
 	private ThirdPartyEntity contributor ;
-	private List<ThirdPartyEntity> thirdParties;
-	private List<TeamEntity> teams ;
+	private List<ThirdPartyEntity> thirdParties = new ArrayList<ThirdPartyEntity>();
+	private List<TeamEntity> teams = new ArrayList<TeamEntity>();
 	private List<String> timesheets = new ArrayList<String>();
 	private File timesheet;
 	private Set<TimesheetInputLineEntity> inputLines = new HashSet<TimesheetInputLineEntity>() ;
@@ -418,7 +418,7 @@ public class TimesheetAction extends ActionSupport implements ServletContextAwar
 	
 public String viewReport() throws ParseException, ADPException {
 		
-		TimesheetInstanceEntity timesheetLatestInstance = null;
+		TimesheetInstanceEntity timesheetLatestInstance = new TimesheetInstanceEntity();
 		
 		try {
 			if(selectedMonth.equals("0")&& selectedProject.equals("0") 
