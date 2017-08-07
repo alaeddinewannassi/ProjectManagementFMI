@@ -2,6 +2,10 @@ package com.adp.business.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.springframework.orm.hibernate3.HibernateCallback;
+
 import com.adp.business.dao.ThirdPartyDAO;
 import com.adp.entities.ThirdPartyEntity;
 import com.adp.exceptions.ADPException;
@@ -29,15 +33,15 @@ public class ThirdPartyDAOImpl extends GenericDAOImpl<ThirdPartyEntity> implemen
 		remove(idThirdParty);
 	}
 
-	public List<ThirdPartyEntity> getAllThirdPartys() throws ADPException {
+	public List<ThirdPartyEntity> getAllThirdParties() throws ADPException {
 		return findAll();
 	}
 
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<ThirdPartyEntity> getThirdPartysByTeam(Long teamId)throws ADPException {
-		String q =" from MissionEntity m where m.project.id = ? " ;
+	public List<ThirdPartyEntity> getThirdPartiesByTeam(Long teamId)throws ADPException {
+		String q =" from ThirdPartyEntity where team.id = ? " ;
 		return getHibernateTemplate().find(q,teamId);
 	}
 
@@ -69,6 +73,25 @@ public class ThirdPartyDAOImpl extends GenericDAOImpl<ThirdPartyEntity> implemen
 			return (ThirdPartyEntity)result.get(0);
 		}
 		else return null;
+	}
+
+	@Override
+	public boolean thirdPartyExistsinDB(final String name) throws ADPException {
+
+		Long count = getHibernateTemplate().execute(new HibernateCallback<Long>() {
+		    public Long doInHibernate(Session session) {
+		        Query query = session.createQuery("select count(*) from thirdPartyEntity u where CONCAT(t.firstName,' ', t.lastName) = :x");
+		        		query.setParameter("x", name);
+		        		return (Long) query.uniqueResult();
+		        
+		    }
+		});
+		
+		if (count > 0) {
+			return true ;
+		}
+		return false ;
+
 	}
 
 

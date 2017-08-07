@@ -119,6 +119,10 @@
       <put-attribute name="body" value="/function/editFunction.jsp"/>      
  	 </definition>
  	 
+ 	  <definition name="modifyAffectation" extends="siteBaseLayout" >
+      <put-attribute name="body" value="/thirdParty/editAffectation.jsp"/>      
+ 	 </definition>
+ 	 
  	  <definition name="modifyThirdParty" extends="siteBaseLayout" >
       <put-attribute name="body" value="/thirdParty/editThirdParty.jsp"/>      
  	 </definition>
@@ -143,6 +147,10 @@
       <put-attribute name="body" value="/function/resultFunction.jsp"/>      
  	 </definition>
  	 
+ 	  <definition name="removeAffectation" extends="siteBaseLayout" >
+      <put-attribute name="body" value="/thirdParty/result.jsp"/>      
+ 	 </definition>
+ 	 
  	   <definition name="editProject" extends="siteBaseLayout" >
       <put-attribute name="body" value="/project/resultProject.jsp"/>      
  	 </definition>
@@ -157,6 +165,10 @@
  	 
  	 <definition name="editFunction" extends="siteBaseLayout" >
       <put-attribute name="body" value="/function/resultFunction.jsp"/>      
+ 	 </definition>
+ 	 
+ 	 <definition name="editAffectation" extends="siteBaseLayout" >
+      <put-attribute name="body" value="/thirdParty/result.jsp"/>      
  	 </definition>
  	 
  	 <definition name="editThirdParty" extends="siteBaseLayout" >
@@ -216,7 +228,11 @@
  	  <definition name="affectThirdParty" extends="siteBaseLayout" >
       <put-attribute name="body" value="/thirdParty/affectThirdParty.jsp"/>      
  	 </definition>
- 	  
+ 	 
+ 	  <definition name="historyThirdParty" extends="siteBaseLayout" >
+      <put-attribute name="body" value="/thirdParty/historyThirdParty.jsp"/>      
+ 	 </definition>
+ 	 
  	  <definition name="doAffectThirdParty" extends="siteBaseLayout" >
       <put-attribute name="body" value="/thirdParty/result.jsp"/>      
  	 </definition>

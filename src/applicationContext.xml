@@ -107,7 +107,15 @@
 	</bean>
 	<bean id="InterestDAO" class="com.adp.business.dao.impl.InterestDAOImpl" parent="genericDAO">
 	</bean>
-	<bean id="TimesheetDAO" class="com.adp.business.dao.impl.TimesheetDAOImpl" parent="genericDAO">
+	<bean id="AffectationDAO" class="com.adp.business.dao.impl.AffectationDAOImpl" parent="genericDAO">
+	</bean>
+	<bean id="TimesheetInputDAO" class="com.adp.business.dao.impl.TimesheetInputDAOImpl" parent="genericDAO">
+	</bean>
+	<bean id="TimesheetInputLineDAO" class="com.adp.business.dao.impl.TimesheetInputLineDAOImpl" parent="genericDAO">
+	</bean>
+	<bean id="TimesheetInstanceDAO" class="com.adp.business.dao.impl.TimesheetInstanceDAOImpl" parent="genericDAO">
+	</bean>
+	<bean id="TimesheetErrorDAO" class="com.adp.business.dao.impl.TimesheetErrorDAOImpl" parent="genericDAO">
 	</bean>
 	
 	

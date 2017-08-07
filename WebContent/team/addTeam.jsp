@@ -54,14 +54,15 @@
 					</p>	
                  	
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="projectName">Team Name :<span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="teamName">Team Name :<span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" name="teamName"  required="required" class="form-control col-md-7 col-xs-12">
+                          <input id="teamName" type="text" name="teamName"  required="required" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       </br>
-                       <s:select cssStyle="padding:10px ; margin-left: 180px; margin-top: -120px;" name="projectName" list="projects" listKey="projectName" listValue="projectName" 
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="projectName">Project Name :</label> <span class="required">*</span>
+                       <s:select id="projectName" cssStyle="padding:10px ; margin-left: 50px; margin-top: -120px;" name="projectName" list="projects" listKey="projectName" listValue="projectName" 
 	                         headerKey="0" headerValue="Select a project" label="Select a project" />
                  		    </br>
                       

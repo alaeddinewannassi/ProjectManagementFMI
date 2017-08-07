@@ -3,6 +3,7 @@ package com.adp.business.dao.impl;
 import java.util.List;
 
 import com.adp.business.dao.TeamDAO;
+import com.adp.entities.ProjectEntity;
 import com.adp.entities.TeamEntity;
 import com.adp.exceptions.ADPException;
 import com.adp.utils.CollectionsUtil;
@@ -34,7 +35,8 @@ public class TeamDAOImpl extends GenericDAOImpl<TeamEntity> implements TeamDAO {
 	}
 
 	public TeamEntity getTeamByName(String name) throws ADPException {
-String query = "from TeamEntity where teamName= :x";
+		
+		String query = "from TeamEntity where teamName= :x";
 		
 		
         @SuppressWarnings("rawtypes")
@@ -44,6 +46,31 @@ String query = "from TeamEntity where teamName= :x";
 			return (TeamEntity)result.get(0);
 		}
 		else return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<TeamEntity> getTeamsByProject(String name) throws ADPException {
+		
+		String query = "from TeamEntity t where t.project.projectName= ?";
+		 return getHibernateTemplate().find(query,name);
+		
+	}
+
+	@Override
+	public ProjectEntity getProjectByTeam(String name) throws ADPException {
+			
+String query = "select t.project from TeamEntity t where t.teamName= :x";
+		
+		
+        @SuppressWarnings("rawtypes")
+		List result = getHibernateTemplate().findByNamedParam(query, "x",name);
+
+		if(CollectionsUtil.isNotEmpty(result)) {
+			return (ProjectEntity)result.get(0);
+		}
+		else return null;
+		
 	}
 
 

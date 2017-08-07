@@ -3,7 +3,6 @@ package com.adp.control.actions;
 
 
 
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,13 +101,10 @@ public class FunctionUtilAction extends AbstractAction{
 		}
 		 	MissionEntity m = missionService.getMissionByName(selectedMission);
 			FunctionEntity f = new FunctionEntity(FunctionName, description);
-			f.setMission(m);
 			
-				Collection<FunctionEntity> Functions = m.getFunctions();
-				Functions.add(f);
-				m.setFunctions(Functions);
-				
-				FunctionService.addFunction(f);
+				f.setMission(m);
+				m.getFunctions().add(f);
+			
 				missionService.updateMission(m);
 				
 			addActionMessage("the Function "+FunctionName+" was added successefully ! ");

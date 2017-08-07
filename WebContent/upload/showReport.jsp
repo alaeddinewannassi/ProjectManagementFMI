@@ -7,7 +7,7 @@
       <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2> View Reports </h2>
+                    <h2> Search Report Filters : </h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -27,6 +27,58 @@
                   </div>
                   <div class="x_content">
                     <br>
+                    
+                    
+                    
+                     <!-- JavaScript Plugins -->
+    <script>
+        function getTeams(){
+
+            var selectedProject = $('#project').val();
+
+            $.getJSON('doShowReport.action', {'selectedProject': selectedProject},
+            function(data) {
+    		//alert(data.teams);
+              var teamList = (data.teams);
+				
+                var options = $("#team");
+                options.find('option')
+                .remove()
+                .end();
+                options.append($("<option/>").val("0").text("Select a team"));
+              $.each(teamList, function() {
+                    options.append($("<option/>").val(this).text(this));
+                });
+            }
+        );}
+
+        function getThirdParties(){
+
+            var selectedTeam = $('#team').val();
+
+            $.getJSON('doShowReport.action', {'selectedTeam': selectedTeam},
+            function(data) {
+    		//alert(data.thirdParties);
+              var teamList = (data.thirdParties);
+				
+                var options = $("#thirdParty");
+                options.find('option')
+                .remove()
+                .end();
+                options.append($("<option/>").val("0").text("Select thirdParty"));
+              $.each(teamList, function() {
+                    options.append($("<option/>").val(this).text(this));
+                });
+            }
+        );}
+     
+        
+    </script>
+
+    <!-- jQuery-UI Dependent Scripts -->
+                    
+                    
+                    
                     
                      <s:url id="URL" action="timesheetViewReport.action"  includeContext="false">
 	                          <s:param name="selectedMonth" value="%{selectedMonth}"></s:param>
@@ -57,14 +109,39 @@
 							</div>
 						</s:elseif>
 					</p>	
-					 
-                 	 
-                       <s:select cssStyle="padding:10px ; margin-left: 180px; margin-top: -120px;" name="selectedMonth" list="timesheets" listKey="month" listValue="month" 
+					    
+					    <div class="form-group">
+                 	 	<label  class="control-label col-md-3 col-sm-3 col-xs-12"  for="selectedMonth">Timesheet Month :</label>
+                       <s:select cssStyle="padding:10px ; margin-left: 190px; margin-top: -360px;"  id="month"  name="selectedMonth" list="timesheets"  
 	                         headerKey="0" headerValue="Select a month" label="Select a month" />
+                 		    </div>
                  		    </br>
-                 		    
-                 		    
-                 		      <div class="clearfix"></div>
+					    
+					    
+					    <div class="form-group">
+                 	 	<label  class="control-label col-md-3 col-sm-3 col-xs-12"  for="selectedMonth">Project Name :</label>
+                       <s:select cssStyle="padding:10px ; margin-left: 190px; margin-top: -310px;" id="project" onchange="getTeams()" name="selectedProject" list="projects"  listKey="projectName" listValue="projectName" 
+	                         headerKey="0" headerValue="Select a project" label="Select a project" />
+                 		    </div>
+                 		    </br>
+                      
+                 		   
+                       <div class="form-group">
+                 	 	<label class="control-label col-md-3 col-sm-3 col-xs-12"  for="selectedMonth">Team Name :</label>
+                       <s:select id="team" cssStyle="padding:10px ; margin-left: 190px; margin-top: -260px;" onchange="getThirdParties()"  name="selectedTeam" list="teams" listKey="teamName" listValue="teamName" 
+	                         headerKey="" headerValue="Select a team" label="Select a team" />
+                 		    </div>
+                 		    </br>
+
+ 					<div class="form-group">
+                 	 	<label  class="control-label col-md-3 col-sm-3 col-xs-12"  for="selectedMonth">ThirdParty Name :</label>
+                       <s:select id="thirdParty"  cssStyle="padding:10px ; margin-left: 190px; margin-top: -200px;" name="thirdPartyName" list="thirdParties"  listKey="fullName" listValue="fullName" 
+	                         headerKey="0" headerValue="Select thirdParty" label="Select thirdParty" />
+                 		    </div>
+                 		    </br>
+                       
+                 		    </br>
+                 		                     		    
                  		       <div class="clearfix"></div>
                  		       </br>
                               </br>
@@ -80,6 +157,11 @@
                       </div>
 
                     </s:form>
+                    
+                    
+
+                    
+                    
                   </div>
                 </div>
               </div>  	

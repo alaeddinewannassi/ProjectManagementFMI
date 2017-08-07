@@ -2,12 +2,11 @@ package com.adp.business.dao.impl;
 
 import java.util.List;
 
-import com.adp.business.dao.TimesheetDAO;
+import com.adp.business.dao.TimesheetInputDAO;
 import com.adp.entities.TimesheetInputEntity;
 import com.adp.exceptions.ADPException;
-import com.adp.utils.CollectionsUtil;
 
-public class TimesheetDAOImpl extends GenericDAOImpl<TimesheetInputEntity> implements TimesheetDAO{
+public class TimesheetInputDAOImpl extends GenericDAOImpl<TimesheetInputEntity> implements TimesheetInputDAO{
 
 	
 	@Override
@@ -34,26 +33,31 @@ public class TimesheetDAOImpl extends GenericDAOImpl<TimesheetInputEntity> imple
 		remove(id);
 	}
 
-	@Override
-	public TimesheetInputEntity getTimesheetByMonth(int m) throws ADPException {
-
-		String query = "from TimesheetInputEntity where month= :x";
-		
-		
-        @SuppressWarnings("rawtypes")
-		List result = getHibernateTemplate().findByNamedParam(query, "x",m);
-
-		if(CollectionsUtil.isNotEmpty(result)) {
-			return (TimesheetInputEntity)result.get(0);
-		}
-		else return null;
-	}
-
+	
 	@Override
 	public List<TimesheetInputEntity> getAllTimesheets() throws ADPException {
-		// TODO Auto-generated method stub
+
+		
 		return findAll();
 	}
+
+	
+
+	
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<String> getAllTimesheetsByDistinctMonth() throws ADPException {
+		// TODO Auto-generated method stub
+		String q =" select DISTINCT e.month from TimesheetInputEntity e " ;
+		return getHibernateTemplate().find(q);
+	}
+
+	
+
+
+	
+
 	
 	}
 

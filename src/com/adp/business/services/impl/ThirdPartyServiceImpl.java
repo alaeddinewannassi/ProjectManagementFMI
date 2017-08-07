@@ -34,15 +34,15 @@ public class ThirdPartyServiceImpl implements ThirdPartyService {
 		thirdPartyDAO.deleteThirdParty(idThirdParty);
 	}
 
-	public List<ThirdPartyEntity> getAllThirdPartys() throws ADPException {
-		return thirdPartyDAO.getAllThirdPartys();
+	public List<ThirdPartyEntity> getAllThirdParties() throws ADPException {
+		return thirdPartyDAO.getAllThirdParties();
 	}
 
 
 	@Override
-	public List<ThirdPartyEntity> getThirdPartysByTeam(Long teamId) throws ADPException {
+	public List<ThirdPartyEntity> getThirdPartiesByTeam(Long teamId) throws ADPException {
 		// TODO Auto-generated method stub
-		return thirdPartyDAO.getThirdPartysByTeam(teamId);
+		return thirdPartyDAO.getThirdPartiesByTeam(teamId);
 	}
 
 	@Override
@@ -55,6 +55,12 @@ public class ThirdPartyServiceImpl implements ThirdPartyService {
 	public ThirdPartyEntity getThirdPartyByName(String name) throws ADPException {
 		// TODO Auto-generated method stub
 		return thirdPartyDAO.getThirdPartyByName(name);
+	}
+
+	@Override
+	public boolean thirdPartyExistsinDB(String name) throws ADPException {
+		// TODO Auto-generated method stub
+		return thirdPartyDAO.thirdPartyExistsinDB(name);
 	}
 
 }

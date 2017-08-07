@@ -6,10 +6,12 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.adp.business.services.AffectationService;
 import com.adp.business.services.InterestService;
 import com.adp.business.services.MissionService;
 import com.adp.business.services.TeamService;
 import com.adp.business.services.ThirdPartyService;
+import com.adp.entities.AffectationEntity;
 import com.adp.entities.InterestEntity;
 import com.adp.entities.MissionEntity;
 import com.adp.entities.TeamEntity;
@@ -24,6 +26,9 @@ public class ThirdPartyAction extends AbstractAction {
 	TeamService teamService ;
 	
 	@Autowired
+	AffectationService affectationService ;
+	
+	@Autowired
 	ThirdPartyService thirdPartyService ;
 	
 	@Autowired
@@ -35,14 +40,24 @@ public class ThirdPartyAction extends AbstractAction {
 	private ThirdPartyEntity thirdParty ;
 	
 	private List<TeamEntity> teams ;
-
+	
+	private AffectationEntity affectation ;
+	
 	private List<InterestEntity> interests = new ArrayList<InterestEntity>() ;
 	
 	private List<String> oldInterests = new ArrayList<String>();
 	
 	private List<MissionEntity> missions ;
 
-	
+	 
+	public AffectationEntity getAffectation() {
+		return affectation;
+	}
+
+	public void setAffectation(AffectationEntity affectation) {
+		this.affectation = affectation;
+	}
+
 	public List<String> getOldInterests() {
 		return oldInterests;
 	}
@@ -107,6 +122,27 @@ public class ThirdPartyAction extends AbstractAction {
 		this.id = id;
 	}
 
+	public String modifyAffectation() throws ADPException {
+		
+		 affectation = affectationService.getAffectation(id);
+		 missions = missionService.getAllMissions() ;
+		
+		
+		return SUCCESS ;
+	}
+	
+	
+	public String removeAffectation() throws ADPException {
+		
+		AffectationEntity a = affectationService.getAffectation(id);
+		String name = a.getMission().getMissionName();
+		String thirdPartyName = a.getThirdParty().getLastName() ;
+		affectationService.deleteAffectation(id);
+		addActionMessage("the affectation to "+name+" for thirdParty "+thirdPartyName+" was deleted successefully ! ");
+		
+		return SUCCESS ;
+	}
+	
 	public String detailThirdParty() throws ADPException {
 		thirdParty = thirdPartyService.getThirdParty(id);
 		
@@ -144,6 +180,7 @@ public class ThirdPartyAction extends AbstractAction {
 	public String affectThirdParty() throws ADPException {
 		missions = missionService.getAllMissions() ;
 		thirdParty = thirdPartyService.getThirdParty(id);
+		
 
 		return SUCCESS ;
 		
@@ -161,7 +198,7 @@ public class ThirdPartyAction extends AbstractAction {
 		return SUCCESS ;
 	}
 	
-	
+
 	
 	
 }

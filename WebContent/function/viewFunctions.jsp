@@ -114,12 +114,6 @@ function confirmation(id){
                           </td>
                           
                           <td>
-                            <!--  VIEW FUNCTION -->
-                          <s:url id="viewURL" action="viewFunction.action" >
-                          <s:param name="id" value="%{id}"></s:param>
-                          </s:url>
-                         
-                            <s:a href="%{viewURL}" cssClass="btn btn-primary btn-xs"> <i class="fa fa-folder"></i> View </s:a>
                          
 	                     <!--  EDIT FUNCTION -->
 	                         <s:url id="editURL" action="modifyFunction.action" >

@@ -36,7 +36,7 @@
 
 					<div>
 						<input id="email" name="email" type="text" class="form-control"
-							 value="<s:property value="email"/>" />
+							 value="<s:property value="email"/>" required="" />
 					</div>
 					<div>
 						<input id="password" name="password" type="password"

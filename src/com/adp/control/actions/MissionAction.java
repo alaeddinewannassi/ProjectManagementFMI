@@ -92,6 +92,9 @@ public class MissionAction extends AbstractAction {
 	}
 	
 	
-	
+	public String detailMission() throws ADPException {
+		mission = missionService.getMission(id);
+		return SUCCESS ;
+	}
 	
 }

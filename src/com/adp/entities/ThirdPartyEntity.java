@@ -8,6 +8,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -35,17 +37,18 @@ public class ThirdPartyEntity extends AbstractEntity {
 	private String gender;
 	private String email ;
 	
-	@ManyToMany(cascade = CascadeType.ALL,fetch=FetchType.EAGER)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy="thirdParty")
+	private Set<TimesheetInputEntity> timesheetInputs = new HashSet<TimesheetInputEntity>() ; 
+	
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name="FMI_Contributor_Interest",
     joinColumns = @JoinColumn( name="Contributor_id"),
     inverseJoinColumns = @JoinColumn( name="Interest_id") )
 	private Set<InterestEntity> interests = new HashSet<>();
 	
-	@OneToMany(mappedBy="humanRessource")
-	Set<TimesheetInputLineEntity> timesheetLines = new HashSet<TimesheetInputLineEntity>() ;
-	
-	@Lob
-	@Column(name="profileImage", nullable=false, columnDefinition="blob")
+	@Lob 
+	@Column(name="profileImage", nullable=false, columnDefinition="longblob")
 	private byte[] profileImage ;
 	
 	@OneToMany(mappedBy="thirdParty",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
@@ -60,6 +63,9 @@ public class ThirdPartyEntity extends AbstractEntity {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public String getFullName(){
+		return firstName+" "+lastName;
 	}
 	public String getGender() {
 		return gender;
@@ -104,14 +110,14 @@ public class ThirdPartyEntity extends AbstractEntity {
 	public String getFirstName() {
 		return firstName;
 	}
-	
 
-	public Set<TimesheetInputLineEntity> getTimesheetLines() {
-		return timesheetLines;
+	public Set<TimesheetInputEntity> getTimesheetInputs() {
+		return timesheetInputs;
 	}
-	public void setTimesheetLines(Set<TimesheetInputLineEntity> timesheetLines) {
-		this.timesheetLines = timesheetLines;
+	public void setTimesheetInputs(Set<TimesheetInputEntity> timesheetInputs) {
+		this.timesheetInputs = timesheetInputs;
 	}
+	
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}

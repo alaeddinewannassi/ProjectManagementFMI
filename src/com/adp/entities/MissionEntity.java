@@ -2,16 +2,17 @@ package com.adp.entities;
 
 
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 
 
 
@@ -29,26 +30,27 @@ public class MissionEntity extends AbstractEntity {
 	private float budget ;
 	private String status ;
 	
-	@OneToMany(mappedBy="mission",cascade = CascadeType.ALL)
-	private Collection<TimesheetInputLineEntity> timesheetLines; 
+	@OneToMany(mappedBy="mission",cascade = CascadeType.ALL,fetch=FetchType.EAGER)
+	private Set<TimesheetInputLineEntity> timesheetLines = new HashSet<TimesheetInputLineEntity>(); 
 	
 	@ManyToOne
 	@JoinColumn(name="projectId")
 	private ProjectEntity project ;
 	
+	@OneToMany(mappedBy="mission",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+	private Set<FunctionEntity> functions = new HashSet<FunctionEntity>() ;
 	
-	@OneToMany(mappedBy="mission",cascade=CascadeType.ALL)
-	private Collection<FunctionEntity> functions ;
 	
-	
-	@OneToMany(mappedBy="mission",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="thirdParty",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+
 	private Set<AffectationEntity> affectation = new HashSet<AffectationEntity>();
 	
 
-	public Collection<TimesheetInputLineEntity> getTimesheetLines() {
+	
+	public Set<TimesheetInputLineEntity> getTimesheetLines() {
 		return timesheetLines;
 	}
-	public void setTimesheetLines(Collection<TimesheetInputLineEntity> timesheetLines) {
+	public void setTimesheetLines(Set<TimesheetInputLineEntity> timesheetLines) {
 		this.timesheetLines = timesheetLines;
 	}
 	public String getStatus() {
@@ -57,10 +59,11 @@ public class MissionEntity extends AbstractEntity {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public Collection<FunctionEntity> getFunctions() {
+	
+	public Set<FunctionEntity> getFunctions() {
 		return functions;
 	}
-	public void setFunctions(Collection<FunctionEntity> functions) {
+	public void setFunctions(Set<FunctionEntity> functions) {
 		this.functions = functions;
 	}
 	public String getMissionName() {

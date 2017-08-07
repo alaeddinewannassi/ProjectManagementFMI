@@ -5,8 +5,8 @@ import java.util.Collection;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.LazyCollection;
@@ -26,7 +26,8 @@ public class TeamEntity extends AbstractEntity {
 	@OneToMany(mappedBy="team")
 	private Collection<ThirdPartyEntity> employees;
 	
-	@OneToOne
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@ManyToOne
 	@JoinColumn(name="projectId")
 	private ProjectEntity project ;
 	

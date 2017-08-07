@@ -70,8 +70,15 @@
 						 <s:url id="editURL" action="modifyThirdParty.action" >
                           <s:param name="id" value="%{thirdParty.id}"></s:param>
                           </s:url>
-                      <i class="fa fa-edit m-right-xs"></i> <s:a theme="simple" href="%{editURL}" cssClass="btn btn-success">Edit Profile</s:a>
+                          
+                           <s:url id="historyURL" action="historyThirdParty.action" >
+                          <s:param name="thirdPartyName" value="%{thirdParty.fullName}"></s:param>
+                          </s:url>
+                          
+                      &nbsp; <s:a theme="simple" href="%{editURL}" cssClass="btn btn-success">Edit Profile</s:a>
                       <br />
+                      &nbsp; <BUTTON class="btn btn-primary"><s:a cssStyle="color: white" theme="simple" href="%{historyURL}">Activity History</s:a></BUTTON>
+                      
 
                       <!-- start skills -->
                       <h4>Skills</h4>

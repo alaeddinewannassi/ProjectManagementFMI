@@ -3,7 +3,6 @@ package com.adp.entities;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -20,17 +19,18 @@ public class AffectationEntity extends AbstractEntity{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	@ManyToOne(targetEntity=ThirdPartyEntity.class,fetch=FetchType.EAGER)
+	@ManyToOne
     @JoinColumn(name = "thirdPartyId",nullable = false) 
 	private ThirdPartyEntity thirdParty ;
 	
 	
-	@ManyToOne(targetEntity=MissionEntity.class,fetch=FetchType.EAGER)
+	@ManyToOne
     @JoinColumn(name = "missionId",nullable = false) 
 	private MissionEntity mission ; 
 	 
 	@Temporal(TemporalType.DATE)
 	private Date startDate ;
+	
 	@Temporal(TemporalType.DATE)
 	private Date endDate ;
 	

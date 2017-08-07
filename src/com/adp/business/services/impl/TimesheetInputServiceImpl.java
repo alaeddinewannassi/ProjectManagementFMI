@@ -5,17 +5,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.adp.business.dao.TimesheetDAO;
-import com.adp.business.services.TimesheetService;
+import com.adp.business.dao.TimesheetInputDAO;
+import com.adp.business.services.TimesheetInputService;
 import com.adp.entities.TimesheetInputEntity;
 import com.adp.exceptions.ADPException;
 
 
 @Service("timesheetService")
-public class TimesheetInputServiceImpl implements TimesheetService{
+public class TimesheetInputServiceImpl implements TimesheetInputService{
 
 	@Autowired
-	TimesheetDAO timesheetDAO ;
+	TimesheetInputDAO timesheetDAO ;
 	
 	@Override
 	public TimesheetInputEntity addTimesheet(TimesheetInputEntity t) throws ADPException {
@@ -41,16 +41,23 @@ public class TimesheetInputServiceImpl implements TimesheetService{
 		timesheetDAO.deleteTimesheet(id);
 	}
 
-	@Override
-	public TimesheetInputEntity getTimesheetByMonth(int m) throws ADPException {
-		// TODO Auto-generated method stub
-		return timesheetDAO.getTimesheetByMonth(m);
-	}
+	
 
 	@Override
 	public List<TimesheetInputEntity> getAllTimesheets() throws ADPException {
 		// TODO Auto-generated method stub
 		return timesheetDAO.getAllTimesheets();
 	}
+
+
+	@Override
+	public List<String> getAllTimesheetsByDistinctMonth() throws ADPException {
+		// TODO Auto-generated method stub
+		return timesheetDAO.getAllTimesheetsByDistinctMonth();
+	}
+
+	
+
+	
 
 }

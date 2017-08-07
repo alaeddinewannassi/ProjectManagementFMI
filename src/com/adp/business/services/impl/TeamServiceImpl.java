@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.adp.business.dao.TeamDAO;
 import com.adp.business.services.TeamService;
+import com.adp.entities.ProjectEntity;
 import com.adp.entities.TeamEntity;
 import com.adp.exceptions.ADPException;
 
@@ -43,6 +44,18 @@ public class TeamServiceImpl implements TeamService{
 	public TeamEntity getTeamByName(String name) throws ADPException {
 		// TODO Auto-generated method stub
 		return TeamDAO.getTeamByName(name);
+	}
+
+	@Override
+	public List<TeamEntity> getTeamsByProject(String name) throws ADPException {
+		// TODO Auto-generated method stub
+		return TeamDAO.getTeamsByProject(name);
+	}
+
+	@Override
+	public ProjectEntity getProjectByTeam(String name) throws ADPException {
+		// TODO Auto-generated method stub
+		return TeamDAO.getProjectByTeam(name);
 	}
 
 	

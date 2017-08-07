@@ -1,9 +1,11 @@
 package com.adp.entities;
 
-import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -19,8 +21,8 @@ public class FunctionEntity extends AbstractEntity {
 	private String functionName ;
 	private String description ;
 	
-	@OneToMany(mappedBy="function",cascade=CascadeType.ALL)
-	private Collection<TimesheetInputLineEntity> timesheetLines ;  
+	@OneToMany(mappedBy="function",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+	private Set<TimesheetInputLineEntity> timesheetLines = new HashSet<TimesheetInputLineEntity>();  
 	
 	@ManyToOne
 	@JoinColumn(name="missionId")
@@ -41,10 +43,11 @@ public class FunctionEntity extends AbstractEntity {
 	}
 	
 	
-	public Collection<TimesheetInputLineEntity> getTimesheetLines() {
+
+	public Set<TimesheetInputLineEntity> getTimesheetLines() {
 		return timesheetLines;
 	}
-	public void setTimesheetLines(Collection<TimesheetInputLineEntity> timesheetLines) {
+	public void setTimesheetLines(Set<TimesheetInputLineEntity> timesheetLines) {
 		this.timesheetLines = timesheetLines;
 	}
 	public String getStatus() {

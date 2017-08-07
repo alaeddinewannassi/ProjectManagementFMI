@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.adp.business.services.ThirdPartyService;
+import com.adp.business.services.AffectationService;
 import com.adp.business.services.InterestService;
 import com.adp.business.services.MissionService;
 import com.adp.business.services.TeamService;
@@ -41,6 +42,9 @@ public class ThirdPartyUtilAction extends AbstractAction{
 	TeamService teamService ;
 	
 	@Autowired
+	AffectationService affectationService ;
+	
+	@Autowired
 	InterestService interestService ;
 	
 	@Autowired
@@ -50,6 +54,12 @@ public class ThirdPartyUtilAction extends AbstractAction{
 
 	
 	private String firstName ;
+	
+	private String selectedMission ;
+	
+	private String startDate;
+	
+	private String endDate;
 	
 	private String lastName ;
 	
@@ -76,6 +86,31 @@ public class ThirdPartyUtilAction extends AbstractAction{
 	private List<Date> selectedEndDate = new ArrayList<Date>();
 	
 	
+	
+
+	public String getSelectedMission() {
+		return selectedMission;
+	}
+
+	public void setSelectedMission(String selectedMission) {
+		this.selectedMission = selectedMission;
+	}
+
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
 
 	public List<String> getSelectedMissions() {
 		return selectedMissions;
@@ -258,7 +293,7 @@ public class ThirdPartyUtilAction extends AbstractAction{
 	public String viewContributors() throws ADPException{
 		
 		//	TeamEntity team = teamService.getTeamByName(selectedTeam);
-			thirdPartys = thirdPartyService.getAllThirdPartys();
+			thirdPartys = thirdPartyService.getAllThirdParties();
 			
 		return SUCCESS ;
 	
@@ -351,6 +386,23 @@ public class ThirdPartyUtilAction extends AbstractAction{
 		
 		return SUCCESS ;
 	}
+	
+	public String updateAffectation() throws ADPException, ParseException {
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		
+		AffectationEntity a = affectationService.getAffectation(id);
+		a.setMission(missionService.getMissionByName(selectedMission));
+		a.setStartDate(df.parse(startDate));
+		a.setEndDate(df.parse(endDate));
+		
+		affectationService.updateAffectation(a);
+		
+		addActionMessage("the affectation to "+a.getMission().getMissionName()+" for thirdParty "+a.getThirdParty().getFirstName() +" was updated successefully ! ");
+		
+		return SUCCESS ;
+	}
+	
+	
 	
 	
 	private boolean check() {

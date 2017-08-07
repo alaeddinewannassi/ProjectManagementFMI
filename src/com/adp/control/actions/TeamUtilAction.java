@@ -82,8 +82,12 @@ public class TeamUtilAction extends AbstractAction{
 		 	
 			TeamEntity t = new TeamEntity(teamName);
 			ProjectEntity p = projectService.getProjectByName(projectName);
-			t.setProject(p);
-			teamService.addTeam(t);
+				t.setProject(p);
+				p.getTeams().add(t);
+				
+				
+			projectService.updateProject(p);
+			
 			addActionMessage("the Team "+teamName+" was added successefully ! ");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

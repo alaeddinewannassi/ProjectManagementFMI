@@ -1,14 +1,18 @@
 package com.adp.entities;
 
 
-import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 
 
 @Entity
@@ -24,12 +28,13 @@ public class ProjectEntity extends AbstractEntity {
 	
 	private int period ;
 	
-	@OneToOne(mappedBy="project",cascade=CascadeType.ALL)
+	
+	@OneToOne(mappedBy="project",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
 	private TimesheetInputEntity timesheet ;
 	
-	@OneToOne(mappedBy="project")
+	@OneToMany(mappedBy="project",cascade = CascadeType.ALL,fetch=FetchType.EAGER)
 	
-	private TeamEntity team ;
+	private List<TeamEntity> teams ;
 	
 	private float budget ;
 	
@@ -42,8 +47,8 @@ public class ProjectEntity extends AbstractEntity {
 	//private ManagerEntity projectManager ;
 
 	
-	@OneToMany(mappedBy="project",cascade=CascadeType.ALL)
-	private Collection<MissionEntity> missions ;
+	@OneToMany(mappedBy="project",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+	private Set<MissionEntity> missions = new HashSet<MissionEntity>() ;
 	
 	
 	public TimesheetInputEntity getTimesheet() {
@@ -52,26 +57,29 @@ public class ProjectEntity extends AbstractEntity {
 	public void setTimesheet(TimesheetInputEntity timesheet) {
 		this.timesheet = timesheet;
 	}
-	public TeamEntity getTeam() {
-		return team;
-	}
-	public void setTeam(TeamEntity team) {
-		this.team = team;
-	}
+	
 	/*public ManagerEntity getProjectManager() {
 		return projectManager;
 	}
 	public void setProjectManager(ManagerEntity projectManager) {
 		this.projectManager = projectManager;
 	}*/
-	public Collection<MissionEntity> getMissions() {
-		return missions;
-	}
-	public void setMissions(Collection<MissionEntity> missions) {
-		this.missions = missions;
-	}
+	
+	
 	public String getProjectName() {
 		return projectName;
+	}
+	public List<TeamEntity> getTeams() {
+		return teams;
+	}
+	public void setTeams(List<TeamEntity> teams) {
+		this.teams = teams;
+	}
+	public Set<MissionEntity> getMissions() {
+		return missions;
+	}
+	public void setMissions(Set<MissionEntity> missions) {
+		this.missions = missions;
 	}
 	public void setProjectName(String projectName) {
 		this.projectName = projectName;

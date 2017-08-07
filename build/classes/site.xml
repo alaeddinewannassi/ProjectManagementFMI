@@ -27,6 +27,7 @@
 			<result name="logout" type="redirectAction">logout</result>
 			<result name="addThirdParty" type="tiles">addThirdParty</result>
 			<result name="timesheetUpload" type="tiles">timesheetUpload</result>
+			<result name="timesheetShowReport" type="tiles">timesheetShowReport</result>
 		</global-results>
 
 		<!-- LOGIN ACTIONS -->
@@ -121,10 +122,6 @@
 
 		<action name="saveThirdParty" class="com.adp.control.actions.ThirdPartyUtilAction"
 			method="saveThirdParty">
-			<interceptor-ref name="defaultStack">
-			
-				<param name="fileUpload.maximumSize">100485760</param>
-			</interceptor-ref>
 			<result name="success" type="tiles">saveThirdParty</result>
 			<result name="input" type="tiles">addThirdParty</result>
 		</action>
@@ -205,6 +202,11 @@
 			method="modifyThirdParty">
 			<result name="success" type="tiles">modifyThirdParty</result>
 		</action>
+		
+		<action name="modifyAffectation" class="com.adp.control.actions.ThirdPartyAction"
+			method="modifyAffectation">
+			<result name="success" type="tiles">modifyAffectation</result>
+		</action>
 		<!-- END MODIFY ACTIONS -->
 
 		<!-- REMOVE ACTIONS -->
@@ -221,6 +223,11 @@
 		<action name="removeMission" class="com.adp.control.actions.MissionAction"
 			method="removeMission">
 			<result name="success" type="tiles">removeMission</result>
+		</action>
+		
+		<action name="removeAffectation" class="com.adp.control.actions.ThirdPartyAction"
+			method="removeAffectation">
+			<result name="success" type="tiles">removeAffectation</result>
 		</action>
 
 		<action name="affectThirdParty" class="com.adp.control.actions.ThirdPartyAction"
@@ -260,9 +267,19 @@
 			<result name="success" type="tiles">editFunction</result>
 		</action>
 		
+		<action name="editAffectation" class="com.adp.control.actions.ThirdPartyUtilAction"
+			method="updateAffectation">
+			<result name="success" type="tiles">editAffectation</result>
+		</action>
+		
 		<action name="editThirdParty" class="com.adp.control.actions.ThirdPartyUtilAction"
 			method="updateThirdParty">
 			<result name="success" type="tiles">editThirdParty</result>
+		</action>
+		
+		<action name="historyThirdParty" class="com.adp.control.actions.TimesheetAction"
+			method="historyThirdParty">
+			<result name="success" type="tiles">historyThirdParty</result>
 		</action>
 		
 		<action name="contactThirdParty" class="com.adp.control.actions.ThirdPartyAction"
@@ -303,6 +320,10 @@
 			method="viewReport">
 			<result name="success" type="tiles">timesheetViewReport</result>
 		</action>
+		
+		 <action name="doShowReport" class="com.adp.control.actions.ReportAction" method="doShowReport" >
+            <result type="json" />
+        </action>
 
 
 	</package>

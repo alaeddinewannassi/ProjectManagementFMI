@@ -2,8 +2,6 @@ package com.adp.control.actions;
 
 
 
-
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -110,14 +108,10 @@ public class MissionUtilAction extends AbstractAction{
 		}
 		 	ProjectEntity p = projectService.getProjectByName(selectedProject);
 			MissionEntity m = new MissionEntity(missionName, budget, description);
-			m.setProject(p);
+			
+				m.setProject(p);
+				p.getMissions().add(m);
 				
-				
-				Collection<MissionEntity> missions = p.getMissions() ;
-				missions.add(m);
-				p.setMissions(missions);
-				
-				missionService.addMission(m);
 				projectService.updateProject(p);
 				
 			

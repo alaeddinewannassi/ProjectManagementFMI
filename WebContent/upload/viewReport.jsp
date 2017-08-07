@@ -16,21 +16,6 @@
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>Report</h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
-                          </li>
-                          <li><a href="#">Settings 2</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul>
                     <div class="clearfix"></div>
                   </div>
                <div class="x_content">
@@ -60,23 +45,13 @@
 					</form>
 				
 				
+					
 				<div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>Timesheet <small>Listing</small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
-                          </li>
-                          <li><a href="#">Settings 2</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
                       </li>
                     </ul>
                     <div class="clearfix"></div>
@@ -87,49 +62,92 @@
                     <table id="datatable-buttons" class="table table-striped table-bordered">
                       <thead>
                         <tr>
-                          <th style="width: 1%">#</th>
                           <th style="width: 20%">ThirdParty Name</th>
                           <th> Mission Name </th>
                           <th> Function Name </th>
                           <th> Comment </th>
                           <th>Date</th>
-                          <th>Hours By Day</th>
+                          <th>Hours</th>
                          
                         </tr>
                       </thead>
 
 
                       <tbody>
-                        <s:iterator value="timesheetLatestInstance.inputLines" var="inputLine" status="rowstatus">
-                        	
+                        <s:iterator value="instances" var="instance" status="rowstatus">
+                        	<s:iterator value="#instance.inputLines" var="inputLine" status="rowstatus">
                         <tr>
-                          <td><s:property value="#inputLine.id"/></td>
                           
-                          <td> <s:property value="#inputLine.humanRessource.firstName"/> <s:property value="#inputLine.humanRessource.lastName"/> </td>
-                           <td> <s:property value="#inputLine.mission.missionName"/>
+                          <td width="15%"> <s:property value="#inputLine.contributorName"/>  </td>
+                           <td style="font-size: 11px "> <s:property value="#inputLine.mission.missionName"/>
                           </td>
-                          <td> <s:property value="#inputLine.function.functionName"/>
+                          <td  width="200px" style="font-size: 11px "> <s:property value="#inputLine.function.functionName"/>
                            </td>
-                          <td> <s:property value="#inputLine.comment"/> </td>
-                          <td> <s:property value="#inputLine.date"/> </td>
+                          <td width="500px"  style="font-size: 11px "> <s:property value="#inputLine.comment"/> </td>
+                          <td  width="150px" style="font-size: 11px "> <s:date name="date" format="dd/MMM/yyyy" /> </td>
                          
-                          <td> <s:property value="#inputLine.hours"/> </td>
+                          <td  style="font-size: 11px "> <s:property value="#inputLine.hours"/> </td>
                         
                         
                         </tr>
-                       
+                       </s:iterator>
                         	</s:iterator>
-                       
 	                      </tbody>
 	                    </table>
 	                  </div>
 	                </div>
 	              </div>
+	              
+	              
+	              
+	              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                   <h2> Input errors  <small>Listing</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <p class="text-muted font-13 m-b-30">
+                    </p>
+                    <table id="datatable-buttons" class="table table-striped table-bordered">
+                      <thead>
+                        <tr>
+                          <th> Description </th>
+                          <th>Type</th>
+                          <th>Possible Solution</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                         <s:iterator value="instances" var="instance" status="rowstatus">
+                        		<s:iterator value="#instance.inputErrors" var="inputError" status="rowstatus">
+                        <tr>
+                          <td style="font-size: 12px "><s:property value="#inputError.errorDescription"/></td>
+                          <td style="font-size: 12px "><s:property value="#inputError.errorType"/></td>
+                          <td style="font-size: 12px "><s:property value="#inputError.possibleSolution"/></td>
+                        </tr>
+                        		</s:iterator>
+                       	</s:iterator>
+                      </tbody>
+	                    </table>
+	                    <form action="sendErrors.action" method="post">
+                    
+						<input class="btn btn-primary" style="float: right" type="submit" value="Send Email" />
+						</form>
+	                  </div>
+	                </div>
+	              </div>
+	              
+	              
 	            </div>
 	          </div>
 	        </div>
 	      </div>
-	    </div>
 	  </div>
+	</div>
+	  
  
         <!-- /page content -->

@@ -17,14 +17,11 @@ public class TimesheetInputLineEntity extends AbstractEntity {
 	private Date date ;
 	private String comment ;
 	private float hours ;
+	private String contributorName ;
 	
 	@ManyToOne
-	@JoinColumn(name="timesheet_ID")
+	@JoinColumn(name="instance_ID")
 	private TimesheetInstanceEntity timesheetInstance;
-	
-	@ManyToOne
-	@JoinColumn(name="ThirdParty_ID")
-	private ThirdPartyEntity humanRessource ;
 	
 	@ManyToOne
 	@JoinColumn(name="mission_ID")
@@ -65,13 +62,12 @@ public class TimesheetInputLineEntity extends AbstractEntity {
 		this.function = function;
 	}
 	
-	public ThirdPartyEntity getHumanRessource() {
-		return humanRessource;
+	public String getContributorName() {
+		return contributorName;
 	}
-	public void setHumanRessource(ThirdPartyEntity humanRessource) {
-		this.humanRessource = humanRessource;
+	public void setContributorName(String contributorName) {
+		this.contributorName = contributorName;
 	}
-	
 	public TimesheetInstanceEntity getTimesheetInstance() {
 		return timesheetInstance;
 	}

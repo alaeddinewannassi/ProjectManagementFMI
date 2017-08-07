@@ -16,7 +16,7 @@ public class TimesheetErrorEntity extends AbstractEntity {
 	private String possibleSolution; 
 	
 	@ManyToOne
-	@JoinColumn(name="timesheet_ID")
+	@JoinColumn(name="instance_ID")
 	TimesheetInstanceEntity timesheetInstance ;
 	
 	public String getErrorDescription() {

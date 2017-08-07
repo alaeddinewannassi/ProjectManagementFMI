@@ -7,9 +7,11 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 
 @Entity
 @Table(name="FMI_TIMESHEET_INPUT")
@@ -26,6 +28,11 @@ public class TimesheetInputEntity extends AbstractEntity {
 	@JoinColumn(name="Project_ID")
 	private ProjectEntity project ;
 	
+	@ManyToOne
+	@JoinColumn(name="thirdParty_ID")
+	private ThirdPartyEntity thirdParty ; 
+	
+
 	@OneToMany(mappedBy="timesheet",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
 	private Set<TimesheetInstanceEntity> timesheetInstances = new HashSet<TimesheetInstanceEntity>() ;
 	
@@ -45,7 +52,12 @@ public class TimesheetInputEntity extends AbstractEntity {
 	}
 	
 	
-	
+	public ThirdPartyEntity getThirdParty() {
+		return thirdParty;
+	}
+	public void setThirdParty(ThirdPartyEntity thirdParty) {
+		this.thirdParty = thirdParty;
+	}
 	public int getMonth() {
 		return month;
 	}

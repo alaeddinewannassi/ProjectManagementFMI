@@ -34,7 +34,8 @@ public class ProjectDAOImpl extends GenericDAOImpl<ProjectEntity> implements Pro
 	}
 
 	public ProjectEntity getProjectByName(String name) throws ADPException {
-String query = "from ProjectEntity where projectName= :x";
+
+		String query = "from ProjectEntity where projectName= :x";
 		
 		
         @SuppressWarnings("rawtypes")
@@ -46,8 +47,6 @@ String query = "from ProjectEntity where projectName= :x";
 		else return null;
 	}
 
-
-	
 	
 	
 }

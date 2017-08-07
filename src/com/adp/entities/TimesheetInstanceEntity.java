@@ -21,7 +21,7 @@ public class TimesheetInstanceEntity extends AbstractEntity {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private Date dateImport ;
+	private Date importDate ;
 	
 	@ManyToOne
 	@JoinColumn(name="timesheet_ID")
@@ -34,12 +34,13 @@ public class TimesheetInstanceEntity extends AbstractEntity {
 	private Set<TimesheetErrorEntity> inputErrors = new HashSet<TimesheetErrorEntity>();
 	
 	
-	public Date getDateImport() {
-		return dateImport;
+
+	public Date getImportDate() {
+		return importDate;
 	}
 
-	public void setDateImport(Date dateImport) {
-		this.dateImport = dateImport;
+	public void setImportDate(Date importDate) {
+		this.importDate = importDate;
 	}
 
 	public Set<TimesheetInputLineEntity> getInputLines() {
@@ -71,10 +72,11 @@ public class TimesheetInstanceEntity extends AbstractEntity {
 		// TODO Auto-generated constructor stub
 	}
 
-	public TimesheetInstanceEntity(Date dateImport) {
+	public TimesheetInstanceEntity(Date importDate) {
 		super();
-		this.dateImport = dateImport;
+		this.importDate = importDate;
 	}
+
 	
 	
 	

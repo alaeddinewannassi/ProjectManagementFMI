@@ -57,12 +57,16 @@
 						</s:elseif>
 					</p>	
 
-  <div class="half left cf">
-    <input type="text" id="input-name" placeholder="Name">
-    <input type="email" id="input-email" placeholder="Email address">
+  <div class=" form-group">
+    
+    <input type="text" id="input-name" placeholder="Name"/> 
+  <div class=" form-group">
+    <input type="email" id="input-email" placeholder="Email address"/>
+    </div>
+    <div class=" form-group">
     <input type="text" id="input-subject" placeholder="Subject">
   </div>
-  <div class="half right cf">
+  <div class=" form-group">
     <textarea name="message" type="text" id="input-message" placeholder="Message"></textarea>
   </div>  
   <input type="submit" value="Submit" id="input-submit">

@@ -15,21 +15,12 @@ public class ProjectAction extends AbstractAction {
 	@Autowired
 	ProjectService projectService ;
 	
-	private float budget ;
 	
 	private ProjectEntity project ;
 	
 	private List<ProjectEntity> projects ;
 	
 	
-	
-	public float getBudget() {
-		return budget;
-	}
-
-	public void setBudget(float budget) {
-		this.budget = budget;
-	}
 
 	public ProjectEntity getProject() {
 		return project;
@@ -98,8 +89,7 @@ public class ProjectAction extends AbstractAction {
 	}
 	
 public String detailProject() throws ADPException {
-		ProjectEntity p = projectService.getProject(id) ;
-		budget= p.getBudget() ;
+		project = projectService.getProject(id) ;
 		
 		return SUCCESS ;
 	}
