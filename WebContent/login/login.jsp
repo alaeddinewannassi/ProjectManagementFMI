@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<%@ taglib prefix="s" uri="/struts-tags"%>  
+<%@ taglib prefix="s" uri="/struts-tags"%>
 
 <div>
 	<a class="hiddenanchor" id="signup"></a> <a class="hiddenanchor"
@@ -36,15 +36,16 @@
 
 					<div>
 						<input id="email" name="email" type="text" class="form-control"
-							 value="<s:property value="email"/>" required="" />
+							value="<s:property value="email"/>" required="" />
 					</div>
 					<div>
 						<input id="password" name="password" type="password"
-							class="form-control"/>
+							class="form-control" />
 					</div>
 					<div>
 						<button type="submit">Log in</button>
-						<a class="reset_pass" href="lostPassword.action">Lost your password?</a>
+						<a class="reset_pass" href="lostPassword.action">Lost your
+							password?</a>
 					</div>
 
 					<div class="clearfix"></div>
@@ -68,35 +69,36 @@
 				<form action="subscribe.action" method="post">
 					<h1>Create Account</h1>
 					<div>
-						<input type="text" class="form-control" placeholder="Username" name="login"
-							required="" />
+						<input type="text" class="form-control" placeholder="Username"
+							name="login" required="" />
 					</div>
 					<div>
-						<input type="email" class="form-control" placeholder="Email" name="email"
-							required="" />
+						<input type="email" class="form-control" placeholder="Email"
+							name="email" required="" />
 					</div>
 					<div>
-						<input type="password" class="form-control" placeholder="Password" name="password"
-							required=""/>
+						<input type="password" class="form-control" placeholder="Password"
+							name="password" required="" />
 					</div>
 					<div>
-					
-					<div>
-						<input class="btn btn-default submit" type="submit" value="submit" />
-					</div>
 
-					<div class="clearfix"></div>
-
-					<div class="separator">
-						<p class="change_link">
-							Already a member ? <a href="#signin" class="to_register"> Log
-								in </a>
-						</p>
+						<div>
+							<input class="btn btn-default submit" type="submit"
+								value="submit" />
+						</div>
 
 						<div class="clearfix"></div>
-						<br />
 
-					</div>
+						<div class="separator">
+							<p class="change_link">
+								Already a member ? <a href="#signin" class="to_register">
+									Log in </a>
+							</p>
+
+							<div class="clearfix"></div>
+							<br />
+
+						</div>
 				</form>
 			</section>
 		</div>

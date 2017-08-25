@@ -23,33 +23,32 @@ public class ThirdPartyAction extends AbstractAction {
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
-	TeamService teamService ;
-	
-	@Autowired
-	AffectationService affectationService ;
-	
-	@Autowired
-	ThirdPartyService thirdPartyService ;
-	
-	@Autowired
-	InterestService interestService ;
-	
-	@Autowired
-	MissionService missionService ;
-	
-	private ThirdPartyEntity thirdParty ;
-	
-	private List<TeamEntity> teams ;
-	
-	private AffectationEntity affectation ;
-	
-	private List<InterestEntity> interests = new ArrayList<InterestEntity>() ;
-	
-	private List<String> oldInterests = new ArrayList<String>();
-	
-	private List<MissionEntity> missions ;
+	TeamService teamService;
 
-	 
+	@Autowired
+	AffectationService affectationService;
+
+	@Autowired
+	ThirdPartyService thirdPartyService;
+
+	@Autowired
+	InterestService interestService;
+
+	@Autowired
+	MissionService missionService;
+
+	private ThirdPartyEntity thirdParty;
+
+	private List<TeamEntity> teams;
+
+	private AffectationEntity affectation;
+
+	private List<InterestEntity> interests = new ArrayList<InterestEntity>();
+
+	private List<String> oldInterests = new ArrayList<String>();
+
+	private List<MissionEntity> missions;
+
 	public AffectationEntity getAffectation() {
 		return affectation;
 	}
@@ -90,7 +89,6 @@ public class ThirdPartyAction extends AbstractAction {
 		this.thirdParty = thirdParty;
 	}
 
-
 	public List<TeamEntity> getTeams() {
 		return teams;
 	}
@@ -99,21 +97,21 @@ public class ThirdPartyAction extends AbstractAction {
 		this.teams = teams;
 	}
 
-	public String addThirdParty() throws ADPException  {
-		//teams = teamService.getAllTeams() ;
-		//missions = missionService.getAllMissions();
-		interests = interestService.getAllInterests() ;
-		
-		return SUCCESS ;
+	public String addThirdParty() throws ADPException {
+		// teams = teamService.getAllTeams() ;
+		// missions = missionService.getAllMissions();
+		interests = interestService.getAllInterests();
+
+		return SUCCESS;
 	}
-	
-	public String contactThirdParty() throws ADPException  {
-		
-		return SUCCESS ;
+
+	public String contactThirdParty() throws ADPException {
+
+		return SUCCESS;
 	}
-	
-	private Long id ;
-	
+
+	private Long id;
+
 	public Long getId() {
 		return id;
 	}
@@ -123,82 +121,76 @@ public class ThirdPartyAction extends AbstractAction {
 	}
 
 	public String modifyAffectation() throws ADPException {
-		
-		 affectation = affectationService.getAffectation(id);
-		 missions = missionService.getAllMissions() ;
-		
-		
-		return SUCCESS ;
+
+		affectation = affectationService.getAffectation(id);
+		missions = missionService.getAllMissions();
+
+		return SUCCESS;
 	}
-	
-	
+
 	public String removeAffectation() throws ADPException {
-		
+
 		AffectationEntity a = affectationService.getAffectation(id);
 		String name = a.getMission().getMissionName();
-		String thirdPartyName = a.getThirdParty().getLastName() ;
+		String thirdPartyName = a.getThirdParty().getLastName();
 		affectationService.deleteAffectation(id);
-		addActionMessage("the affectation to "+name+" for thirdParty "+thirdPartyName+" was deleted successefully ! ");
-		
-		return SUCCESS ;
+		addActionMessage(
+				"the affectation to " + name + " for thirdParty " + thirdPartyName + " was deleted successefully ! ");
+
+		return SUCCESS;
 	}
-	
+
 	public String detailThirdParty() throws ADPException {
 		thirdParty = thirdPartyService.getThirdParty(id);
-		
-		
-		return SUCCESS ;
-		
+
+		return SUCCESS;
+
 	}
+
 	public String modifyThirdParty() throws ADPException {
-		
-		missions = missionService.getAllMissions() ;
+
+		missions = missionService.getAllMissions();
 		thirdParty = thirdPartyService.getThirdParty(id);
 		teams = teamService.getAllTeams();
-		interests = interestService.getAllInterests() ;
-		Set<InterestEntity> collection = thirdParty.getInterests() ;
-		for(InterestEntity interest : collection){
-			oldInterests.add(interest.getInterestName()) ;
+		interests = interestService.getAllInterests();
+		Set<InterestEntity> collection = thirdParty.getInterests();
+		for (InterestEntity interest : collection) {
+			oldInterests.add(interest.getInterestName());
 		}
-		 
-		return SUCCESS ;
+
+		return SUCCESS;
 	}
+
 	public String viewContibutor() throws ADPException {
-		
+
 		try {
-			teams = teamService.getAllTeams() ;
-			
+			teams = teamService.getAllTeams();
+
 		} catch (ADPException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		return SUCCESS ;
-		
+
+		return SUCCESS;
+
 	}
-	
+
 	public String affectThirdParty() throws ADPException {
-		missions = missionService.getAllMissions() ;
+		missions = missionService.getAllMissions();
 		thirdParty = thirdPartyService.getThirdParty(id);
-		
 
-		return SUCCESS ;
-		
+		return SUCCESS;
+
 	}
-	
 
-	
 	public String removeThirdParty() throws ADPException {
-		
-		ThirdPartyEntity t = thirdPartyService.getThirdParty(id);
-		String name = t.getFirstName() ;
-		thirdPartyService.deleteThirdParty(id);
-		addActionMessage("the member "+name+" was deleted successefully ! ");
-		
-		return SUCCESS ;
-	}
-	
 
-	
-	
+		ThirdPartyEntity t = thirdPartyService.getThirdParty(id);
+		String name = t.getFirstName();
+		thirdPartyService.deleteThirdParty(id);
+		addActionMessage("the member " + name + " was deleted successefully ! ");
+
+		return SUCCESS;
+	}
+
 }

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:aop="http://www.springframework.org/schema/aop"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/aop
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop
        http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
        http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
@@ -16,21 +14,16 @@
 
 	<!-- ========================= CONFIG DEFINITIONS ========================= -->
 
-	<!--
-		Activates various annotations to be detected in bean classes: Spring's
-		@Required and @Autowired, as well as JSR 250''s @PostConstruct,
-		@PreDestroy and @Resource (if available) and JPA's @PersistenceContext
-		and @PersistenceUnit (if available).
-	-->
+	<!-- Activates various annotations to be detected in bean classes: Spring's 
+		@Required and @Autowired, as well as JSR 250''s @PostConstruct, @PreDestroy 
+		and @Resource (if available) and JPA's @PersistenceContext and @PersistenceUnit 
+		(if available). -->
 	<context:annotation-config />
 	<context:component-scan base-package="com.adp" />
-	<bean id="myDataSource"
-		class="org.apache.commons.dbcp.BasicDataSource"
+	<bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
-		<property name="driverClassName"
-			value="com.mysql.jdbc.Driver" />
-		<property name="url"
-			value="jdbc:mysql://localhost:3306/FMAPROJECT" />
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/FMAPROJECT" />
 		<property name="username" value="root" />
 		<property name="password" value="" />
 	</bean>
@@ -38,18 +31,18 @@
 	<!-- JPA EntityManagerFactory -->
 	<bean id="mySessionFactory"
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-		 <property name="hibernateProperties">
-           <props>
-               <prop key="hibernate.current_session_context_class">thread</prop>
-               <prop key="hibernate.hbm2ddl.auto">update</prop>
-               <prop key="hibernate.show_sql">true</prop>
-               <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.current_session_context_class">thread</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
 			</props>
 		</property>
 		<property name="dataSource">
 			<ref local="myDataSource" />
 		</property>
-		
+
 		<property name="annotatedClasses">
 			<list>
 				<value>com.adp.entities.UserEntity</value>
@@ -64,7 +57,8 @@
 				<value>com.adp.entities.TimesheetInputLineEntity</value>
 				<value>com.adp.entities.TimesheetErrorEntity</value>
 				<value>com.adp.entities.TimesheetInstanceEntity</value>
-
+				<value>com.adp.entities.TurnoverEntity</value>
+				<value>com.adp.entities.MonthlyTurnoverEntity</value>
 			</list>
 		</property>
 
@@ -75,12 +69,14 @@
 		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
 	<!-- ================================== TRANSACTIONS DEFINITIONS ================================== -->
-	<!-- For the moment JPA only support ISOLATION_DEFAULT for the transaction isolation -->
+	<!-- For the moment JPA only support ISOLATION_DEFAULT for the transaction 
+		isolation -->
 
 	<!-- enable the configuration of transactional behavior based on annotations -->
 	<tx:annotation-driven transaction-manager="txManager" />
 
-	<!-- Transaction manager for a single JPA EntityManagerFactory (alternative to JTA) -->
+	<!-- Transaction manager for a single JPA EntityManagerFactory (alternative 
+		to JTA) -->
 	<bean id="txManager"
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory">
@@ -88,38 +84,57 @@
 		</property>
 
 	</bean>
-	
-	<bean id="genericDAO" class="com.adp.business.dao.impl.GenericDAOImpl" abstract="true">
-		<property name="sessionFactory" ref="mySessionFactory"/>
+
+	<bean id="genericDAO" class="com.adp.business.dao.impl.GenericDAOImpl"
+		abstract="true">
+		<property name="sessionFactory" ref="mySessionFactory" />
 	</bean>
-	
-	<bean id="UserDAO" class="com.adp.business.dao.impl.UserDAOImpl" parent="genericDAO">
+
+	<bean id="UserDAO" class="com.adp.business.dao.impl.UserDAOImpl"
+		parent="genericDAO">
 	</bean>
-	<bean id="ProjectDAO" class="com.adp.business.dao.impl.ProjectDAOImpl" parent="genericDAO">
+	<bean id="ProjectDAO" class="com.adp.business.dao.impl.ProjectDAOImpl"
+		parent="genericDAO">
 	</bean>
-	<bean id="MissionDAO" class="com.adp.business.dao.impl.MissionDAOImpl" parent="genericDAO">
+	<bean id="MissionDAO" class="com.adp.business.dao.impl.MissionDAOImpl"
+		parent="genericDAO">
 	</bean>
-	<bean id="FunctionDAO" class="com.adp.business.dao.impl.FunctionDAOImpl" parent="genericDAO">
+	<bean id="FunctionDAO" class="com.adp.business.dao.impl.FunctionDAOImpl"
+		parent="genericDAO">
 	</bean>
-	<bean id="ThirdPartyDAO" class="com.adp.business.dao.impl.ThirdPartyDAOImpl" parent="genericDAO">
+	<bean id="ThirdPartyDAO" class="com.adp.business.dao.impl.ThirdPartyDAOImpl"
+		parent="genericDAO">
 	</bean>
-	<bean id="TeamDAO" class="com.adp.business.dao.impl.TeamDAOImpl" parent="genericDAO">
+	<bean id="TeamDAO" class="com.adp.business.dao.impl.TeamDAOImpl"
+		parent="genericDAO">
 	</bean>
-	<bean id="InterestDAO" class="com.adp.business.dao.impl.InterestDAOImpl" parent="genericDAO">
+	<bean id="InterestDAO" class="com.adp.business.dao.impl.InterestDAOImpl"
+		parent="genericDAO">
 	</bean>
-	<bean id="AffectationDAO" class="com.adp.business.dao.impl.AffectationDAOImpl" parent="genericDAO">
+	<bean id="AffectationDAO" class="com.adp.business.dao.impl.AffectationDAOImpl"
+		parent="genericDAO">
 	</bean>
-	<bean id="TimesheetInputDAO" class="com.adp.business.dao.impl.TimesheetInputDAOImpl" parent="genericDAO">
+	<bean id="TimesheetInputDAO" class="com.adp.business.dao.impl.TimesheetInputDAOImpl"
+		parent="genericDAO">
 	</bean>
-	<bean id="TimesheetInputLineDAO" class="com.adp.business.dao.impl.TimesheetInputLineDAOImpl" parent="genericDAO">
+	<bean id="TimesheetInputLineDAO" class="com.adp.business.dao.impl.TimesheetInputLineDAOImpl"
+		parent="genericDAO">
 	</bean>
-	<bean id="TimesheetInstanceDAO" class="com.adp.business.dao.impl.TimesheetInstanceDAOImpl" parent="genericDAO">
+	<bean id="TimesheetInstanceDAO" class="com.adp.business.dao.impl.TimesheetInstanceDAOImpl"
+		parent="genericDAO">
 	</bean>
-	<bean id="TimesheetErrorDAO" class="com.adp.business.dao.impl.TimesheetErrorDAOImpl" parent="genericDAO">
+	<bean id="TimesheetErrorDAO" class="com.adp.business.dao.impl.TimesheetErrorDAOImpl"
+		parent="genericDAO">
 	</bean>
-	
-	
-	
-	
+	<bean id="TurnoverDAO" class="com.adp.business.dao.impl.TurnoverDAOImpl"
+		parent="genericDAO">
+	</bean>
+	<bean id="MonthlyTurnoverDAO" class="com.adp.business.dao.impl.MonthlyTurnoverDAOImpl"
+		parent="genericDAO">
+	</bean>
+
+
+
+
 </beans>
 

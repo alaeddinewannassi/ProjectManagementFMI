@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<%@ taglib prefix="s" uri="/struts-tags"%>  
+<%@ taglib prefix="s" uri="/struts-tags"%>
 
 <div>
 	<a class="hiddenanchor" id="signup"></a> <a class="hiddenanchor"
@@ -9,8 +9,8 @@
 		<div class="animate form login_form">
 			<section class="login_content">
 				<form id="loginForm" action="resetPassword.action" method="post">
-					<h1> Your email Adress </h1>
-					
+					<h1>Your email Adress</h1>
+
 					<p style="color: red;">
 						<s:if test="hasActionErrors()">
 							<div id="loginMsg"
@@ -36,23 +36,22 @@
 
 					<div>
 						<input id="email" name="email" type="text" class="form-control"
-							 value="<s:property value="email"/>" />
+							value="<s:property value="email"/>" />
 					</div>
-					
+
 					<div>
-						<button type="submit"> Submit </button>
-					
+						<button type="submit">Submit</button>
+
 					</div>
 
 					<div class="clearfix"></div>
 
-						<br />
-
-					</div>
-				</form>
-			</section>
+					<br />
 		</div>
+		</form>
+		</section>
+	</div>
 
-			</div>
+</div>
 
 

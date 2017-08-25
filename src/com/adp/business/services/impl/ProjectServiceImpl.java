@@ -20,6 +20,11 @@ public class ProjectServiceImpl implements ProjectService{
 	ProjectDAO projectDAO ;
 	
 	
+	@Override
+	public List<ProjectEntity> getProjectsByMonth(int month) throws ADPException {
+		return projectDAO.getProjectsByMonth(month);
+	}
+
 	public ProjectEntity addProject(ProjectEntity p) throws ADPException {
 		return projectDAO.addProject(p);
 	}
@@ -41,7 +46,6 @@ public class ProjectServiceImpl implements ProjectService{
 	}
 
 	public ProjectEntity getProjectByName(String name) throws ADPException {
-		// TODO Auto-generated method stub
 		return projectDAO.getProjectByName(name);
 	}
 

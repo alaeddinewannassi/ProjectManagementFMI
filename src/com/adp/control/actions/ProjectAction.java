@@ -1,6 +1,5 @@
 package com.adp.control.actions;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,14 +12,9 @@ public class ProjectAction extends AbstractAction {
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
-	ProjectService projectService ;
-	
-	
-	private ProjectEntity project ;
-	
-	private List<ProjectEntity> projects ;
-	
-	
+	ProjectService projectService;
+
+	private ProjectEntity project;
 
 	public ProjectEntity getProject() {
 		return project;
@@ -30,25 +24,13 @@ public class ProjectAction extends AbstractAction {
 		this.project = project;
 	}
 
-	public List<ProjectEntity> getProjects() {
-		return projects;
+	public String addProject() {
+
+		return SUCCESS;
 	}
 
-	public void setProjects(List<ProjectEntity> projects) {
-		this.projects = projects;
-	}
+	private Long id;
 
-	public String addProject()  {
-		
-		return SUCCESS ;
-	}
-	
-	
-	
-	private Long id ;
-	
-	
-	
 	public Long getId() {
 		return id;
 	}
@@ -58,43 +40,32 @@ public class ProjectAction extends AbstractAction {
 	}
 
 	public String modifyProject() throws ADPException {
-		
-		
+
 		project = projectService.getProject(id);
-		
-		
-		return SUCCESS ;
+
+		return SUCCESS;
 	}
+
 	public String viewProjects() throws ADPException {
-		
-		try {
-			projects = projectService.getAllProjects();
-		} catch (ADPException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return SUCCESS ;
-		
+
+		return SUCCESS;
+
 	}
-	
+
 	public String removeProject() throws ADPException {
-		
+
 		ProjectEntity p = projectService.getProject(id);
-		String name = p.getProjectName() ;
+		String name = p.getProjectName();
 		projectService.deleteProject(id);
-		addActionMessage("the project "+name+" was deleted successefully ! ");
-		
-		return SUCCESS ;
+		addActionMessage("the project " + name + " was deleted successefully ! ");
+
+		return SUCCESS;
 	}
-	
-public String detailProject() throws ADPException {
-		project = projectService.getProject(id) ;
-		
-		return SUCCESS ;
+
+	public String detailProject() throws ADPException {
+		project = projectService.getProject(id);
+
+		return SUCCESS;
 	}
-	
-	
-	
-	
+
 }

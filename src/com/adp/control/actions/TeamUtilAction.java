@@ -1,8 +1,8 @@
 package com.adp.control.actions;
 
+import javax.servlet.ServletContext;
 
-
-
+import org.apache.struts2.util.ServletContextAware;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.adp.business.services.ProjectService;
@@ -12,25 +12,24 @@ import com.adp.entities.TeamEntity;
 import com.adp.exceptions.ADPException;
 import com.adp.utils.StringUtil;
 
-public class TeamUtilAction extends AbstractAction{
+public class TeamUtilAction extends AbstractAction implements ServletContextAware{
 
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
-	ProjectService projectService ;
-	
+	ProjectService projectService;
+
 	@Autowired
-	TeamService teamService ;
-	
-	private String teamName ;
-	
-	private String projectName ;
-	
-	private Long id ;
-	
-	private String selectedProject ;
-	
-	
+	TeamService teamService;
+
+	private String teamName;
+
+	private String projectName;
+
+	private Long id;
+
+	private String selectedProject;
+
 	public String getSelectedProject() {
 		return selectedProject;
 	}
@@ -63,67 +62,61 @@ public class TeamUtilAction extends AbstractAction{
 		this.teamName = teamName;
 	}
 
-	
-
 	public TeamUtilAction() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	
-
 	public String saveTeam() throws ADPException {
-		
+
 		try {
-		if (!check()) {
-			addActionError("verify Team fields (*)!");
-			return "addTeam" ;
-		}
-		 	
+			if (!check()) {
+				addActionError("verify Team fields (*)!");
+				return "addTeam";
+			}
+
 			TeamEntity t = new TeamEntity(teamName);
 			ProjectEntity p = projectService.getProjectByName(projectName);
-				t.setProject(p);
-				p.getTeams().add(t);
-				
-				
+			t.setProject(p);
+			p.getTeams().add(t);
+
 			projectService.updateProject(p);
-			
-			addActionMessage("the Team "+teamName+" was added successefully ! ");
+
+			addActionMessage("the Team " + teamName + " was added successefully ! ");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		return SUCCESS ;
+
+		return SUCCESS;
 	}
-	
+
 	public String updateTeam() throws ADPException {
-		
-	
+
 		TeamEntity t = teamService.getTeam(id);
-			
+
 		t.setTeamName(teamName);
 		ProjectEntity p = projectService.getProjectByName(selectedProject);
 		t.setProject(p);
 		teamService.updateTeam(t);
-		
-		addActionMessage("the Team "+teamName+" was updated successefully ! ");
-		
-		return SUCCESS ;
+
+		addActionMessage("the Team " + teamName + " was updated successefully ! ");
+
+		return SUCCESS;
 	}
-	
 
-
-	
 	private boolean check() {
-		if(StringUtil.isEmpty(teamName) ){
+		if (StringUtil.isEmpty(teamName)) {
 			return false;
 		}
-		
+
 		return true;
 	}
-	
-	
-	
+
+	@Override
+	public void setServletContext(ServletContext arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

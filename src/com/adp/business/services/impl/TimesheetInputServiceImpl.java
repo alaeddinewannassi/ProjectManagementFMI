@@ -17,6 +17,13 @@ public class TimesheetInputServiceImpl implements TimesheetInputService{
 	@Autowired
 	TimesheetInputDAO timesheetDAO ;
 	
+	
+	@Override
+	public List<TimesheetInputEntity> getAllTimesheets(int month) throws ADPException {
+		// TODO Auto-generated method stub
+		return timesheetDAO.getAllTimesheets(month);
+	}
+
 	@Override
 	public TimesheetInputEntity addTimesheet(TimesheetInputEntity t) throws ADPException {
 		// TODO Auto-generated method stub

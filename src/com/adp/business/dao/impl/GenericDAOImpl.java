@@ -10,8 +10,7 @@ import com.adp.business.dao.GenericDAO;
 import com.adp.entities.AbstractEntity;
 import com.adp.exceptions.ADPException;
 
-
-@Repository(value="genericDAO")
+@Repository(value = "genericDAO")
 public class GenericDAOImpl<E extends AbstractEntity> extends HibernateDaoSupport implements GenericDAO<E> {
 
 	/**
@@ -25,8 +24,8 @@ public class GenericDAOImpl<E extends AbstractEntity> extends HibernateDaoSuppor
 	@SuppressWarnings("all")
 	public GenericDAOImpl() {
 		super();
-		this.entityClass = (Class<E>) ((ParameterizedType) getClass()
-				.getGenericSuperclass()).getActualTypeArguments()[0];
+		this.entityClass = (Class<E>) ((ParameterizedType) getClass().getGenericSuperclass())
+				.getActualTypeArguments()[0];
 	}
 
 	/**
@@ -42,7 +41,7 @@ public class GenericDAOImpl<E extends AbstractEntity> extends HibernateDaoSuppor
 	 * {@inheritEoc}
 	 */
 	public E persist(E entity) throws ADPException {
-		
+
 		if (entity.getId() == null) {
 			// new
 			getHibernateTemplate().persist(entity);
@@ -58,7 +57,7 @@ public class GenericDAOImpl<E extends AbstractEntity> extends HibernateDaoSuppor
 	 */
 	public E load(Long entityId) throws ADPException {
 		return getHibernateTemplate().get(entityClass, entityId);
-		
+
 	}
 
 	/**
@@ -91,14 +90,12 @@ public class GenericDAOImpl<E extends AbstractEntity> extends HibernateDaoSuppor
 	public List<E> findByCriteria(String criteria) throws ADPException {
 		return null;
 	}
-	
+
 	public E loadNoSession(Long entityId) throws ADPException {
 		E entity = null;
 		try {
-			entity = (E) getHibernateTemplate()
-					.get(entityClass, entityId);
-		} 
-		catch (Exception e) {
+			entity = (E) getHibernateTemplate().get(entityClass, entityId);
+		} catch (Exception e) {
 			throw new ADPException("Erreur base des donnees", e);
 
 		}

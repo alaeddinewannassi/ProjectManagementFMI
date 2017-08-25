@@ -8,55 +8,55 @@ import org.springframework.stereotype.Service;
 
 import com.adp.business.dao.TimesheetInputLineDAO;
 import com.adp.business.services.TimesheetInputLineService;
+import com.adp.entities.MissionEntity;
 import com.adp.entities.TimesheetInputLineEntity;
+import com.adp.entities.TimesheetInstanceEntity;
 import com.adp.exceptions.ADPException;
 
 @Service("timesheetInputLineService")
-public class TimesheetInputLineServiceImpl implements TimesheetInputLineService{
-	
+public class TimesheetInputLineServiceImpl implements TimesheetInputLineService {
+
 	@Autowired
-	TimesheetInputLineDAO timesheetInputLineDAO; 
-	
+	TimesheetInputLineDAO timesheetInputLineDAO;
+
+	@Override
+	public List<MissionEntity> getMissionsByInstance(TimesheetInstanceEntity inst) throws ADPException {
+		return timesheetInputLineDAO.getMissionsByInstance(inst);
+	}
+
 	@Override
 	public TimesheetInputLineEntity addTimesheetInputLine(TimesheetInputLineEntity t) throws ADPException {
-		// TODO Auto-generated method stub
 		return timesheetInputLineDAO.addTimesheetInputLine(t);
 	}
 
 	@Override
 	public TimesheetInputLineEntity getTimesheetInputLine(Long id) throws ADPException {
-		// TODO Auto-generated method stub
 		return timesheetInputLineDAO.getTimesheetInputLine(id);
 	}
 
 	@Override
 	public void updateTimesheetInputLine(TimesheetInputLineEntity t) throws ADPException {
-		// TODO Auto-generated method stub
 		timesheetInputLineDAO.updateTimesheetInputLine(t);
 	}
 
 	@Override
 	public void deleteTimesheetInputLine(Long id) throws ADPException {
-		// TODO Auto-generated method stub
 		timesheetInputLineDAO.deleteTimesheetInputLine(id);
 	}
 
 	@Override
 	public List<TimesheetInputLineEntity> getAllTimesheetInputLines() throws ADPException {
-		// TODO Auto-generated method stub
 		return timesheetInputLineDAO.getAllTimesheetInputLines();
 	}
 
 	@Override
 	public boolean ContributorExistsInTimeSheet(String name) throws ADPException {
-		// TODO Auto-generated method stub
-		return timesheetInputLineDAO.ContributorExistsInTimeSheet(name) ;
+		return timesheetInputLineDAO.ContributorExistsInTimeSheet(name);
 	}
 
 	@Override
 	public boolean ImportDateExistsInTimeSheet(Date importDate) throws ADPException {
-		// TODO Auto-generated method stub
 		return timesheetInputLineDAO.ImportDateExistsInTimeSheet(importDate);
 	}
-	
+
 }

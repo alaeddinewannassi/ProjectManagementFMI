@@ -13,27 +13,25 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="FMI_TIMESHEET_INSTANCE")
+@Table(name = "FMI_TIMESHEET_INSTANCE")
 public class TimesheetInstanceEntity extends AbstractEntity {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	private Date importDate ;
-	
+
+	private Date importDate;
+
 	@ManyToOne
-	@JoinColumn(name="timesheet_ID")
-	private TimesheetInputEntity timesheet ;
-	
-	@OneToMany(mappedBy="timesheetInstance",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
-	private Set<TimesheetInputLineEntity> inputLines = new HashSet<TimesheetInputLineEntity>() ;
-	
-	@OneToMany(mappedBy="timesheetInstance",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+	@JoinColumn(name = "timesheet_ID")
+	private TimesheetInputEntity timesheet;
+
+	@OneToMany(mappedBy = "timesheetInstance", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<TimesheetInputLineEntity> inputLines = new HashSet<TimesheetInputLineEntity>();
+
+	@OneToMany(mappedBy = "timesheetInstance", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<TimesheetErrorEntity> inputErrors = new HashSet<TimesheetErrorEntity>();
-	
-	
 
 	public Date getImportDate() {
 		return importDate;
@@ -76,10 +74,5 @@ public class TimesheetInstanceEntity extends AbstractEntity {
 		super();
 		this.importDate = importDate;
 	}
-
-	
-	
-	
-	
 
 }

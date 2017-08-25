@@ -27,7 +27,9 @@
 			<result name="logout" type="redirectAction">logout</result>
 			<result name="addThirdParty" type="tiles">addThirdParty</result>
 			<result name="timesheetUpload" type="tiles">timesheetUpload</result>
-			<result name="timesheetShowReport" type="tiles">timesheetShowReport</result>
+			<result name="timesheetShowReport" type="tiles">timesheetShowReport
+			</result>
+			<result name="addMonth" type="tiles">addMonth</result>
 		</global-results>
 
 		<!-- LOGIN ACTIONS -->
@@ -117,7 +119,7 @@
 		<action name="saveTeam" class="com.adp.control.actions.TeamUtilAction"
 			method="saveTeam">
 			<result name="success" type="tiles">saveTeam</result>
-			
+
 		</action>
 
 		<action name="saveThirdParty" class="com.adp.control.actions.ThirdPartyUtilAction"
@@ -144,18 +146,18 @@
 			method="viewContibutor">
 			<result name="success" type="tiles">viewContibutor</result>
 		</action>
-		
+
 		<action name="viewContributors" class="com.adp.control.actions.ThirdPartyUtilAction"
 			method="viewContributors">
 			<result name="success" type="tiles">viewContributors</result>
 		</action>
-		
+
 		<action name="detailThirdParty" class="com.adp.control.actions.ThirdPartyAction"
 			method="detailThirdParty">
 			<result name="success" type="tiles">detailThirdParty</result>
 		</action>
-		
-		
+
+
 		<action name="showMissions" class="com.adp.control.actions.MissionAction"
 			method="showMissions">
 			<result name="success" type="tiles">showMissions</result>
@@ -197,12 +199,12 @@
 			method="modifyFunction">
 			<result name="success" type="tiles">modifyFunction</result>
 		</action>
-		
+
 		<action name="modifyThirdParty" class="com.adp.control.actions.ThirdPartyAction"
 			method="modifyThirdParty">
 			<result name="success" type="tiles">modifyThirdParty</result>
 		</action>
-		
+
 		<action name="modifyAffectation" class="com.adp.control.actions.ThirdPartyAction"
 			method="modifyAffectation">
 			<result name="success" type="tiles">modifyAffectation</result>
@@ -224,7 +226,7 @@
 			method="removeMission">
 			<result name="success" type="tiles">removeMission</result>
 		</action>
-		
+
 		<action name="removeAffectation" class="com.adp.control.actions.ThirdPartyAction"
 			method="removeAffectation">
 			<result name="success" type="tiles">removeAffectation</result>
@@ -234,12 +236,12 @@
 			method="affectThirdParty">
 			<result name="success" type="tiles">affectThirdParty</result>
 		</action>
-		
+
 		<action name="doAffectThirdParty" class="com.adp.control.actions.ThirdPartyUtilAction"
 			method="affectThirdParty">
 			<result name="success" type="tiles">doAffectThirdParty</result>
 		</action>
-		
+
 		<action name="removeFunction" class="com.adp.control.actions.FunctionAction"
 			method="removeFunction">
 			<result name="success" type="tiles">removeFunction</result>
@@ -251,7 +253,7 @@
 			method="updateProject">
 			<result name="success" type="tiles">editProject</result>
 		</action>
-		
+
 		<action name="editTeam" class="com.adp.control.actions.TeamUtilAction"
 			method="updateTeam">
 			<result name="success" type="tiles">editTeam</result>
@@ -266,27 +268,27 @@
 			method="updateFunction">
 			<result name="success" type="tiles">editFunction</result>
 		</action>
-		
+
 		<action name="editAffectation" class="com.adp.control.actions.ThirdPartyUtilAction"
 			method="updateAffectation">
 			<result name="success" type="tiles">editAffectation</result>
 		</action>
-		
+
 		<action name="editThirdParty" class="com.adp.control.actions.ThirdPartyUtilAction"
 			method="updateThirdParty">
 			<result name="success" type="tiles">editThirdParty</result>
 		</action>
-		
+
 		<action name="historyThirdParty" class="com.adp.control.actions.TimesheetAction"
 			method="historyThirdParty">
 			<result name="success" type="tiles">historyThirdParty</result>
 		</action>
-		
+
 		<action name="contactThirdParty" class="com.adp.control.actions.ThirdPartyAction"
 			method="contactThirdParty">
 			<result name="success" type="tiles">contactThirdParty</result>
 		</action>
-		
+
 		<!-- END EDIT ACTIONS -->
 
 		<!-- DETAIL ACTIONS -->
@@ -301,6 +303,7 @@
 		</action>
 		<!-- END DETAIL ACTIONS -->
 
+		<!-- TIMESHEET ACTIONS -->
 		<action name="timesheetUpload" class="com.adp.control.actions.TimesheetAction"
 			method="upload">
 			<result name="success" type="tiles">timesheetUpload</result>
@@ -310,20 +313,55 @@
 			method="doUpload">
 			<result name="success" type="tiles">timesheetResult</result>
 		</action>
-		
+
 		<action name="timesheetShowReport" class="com.adp.control.actions.TimesheetAction"
 			method="showReport">
 			<result name="success" type="tiles">timesheetShowReport</result>
 		</action>
-		
+
 		<action name="timesheetViewReport" class="com.adp.control.actions.TimesheetAction"
 			method="viewReport">
 			<result name="success" type="tiles">timesheetViewReport</result>
 		</action>
-		
-		 <action name="doShowReport" class="com.adp.control.actions.ReportAction" method="doShowReport" >
-            <result type="json" />
-        </action>
+
+		<action name="doShowReport" class="com.adp.control.actions.ReportAction"
+			method="doShowReport">
+			<result type="json" />
+		</action>
+
+		<!-- END TIMESHEET ACTIONS -->
+
+		<action name="viewDashboard" class="com.adp.control.actions.DashboardAction"
+			method="viewDashboard">
+			<result name="success" type="tiles">viewDashboard</result>
+		</action>
+
+		<action name="calculateMissionCA" class="com.adp.control.actions.MissionAction"
+			method="calculateMissionCA">
+			<result name="success" type="tiles">calculateMissionCA</result>
+		</action>
+
+		<action name="calculTurnoverAmount" class="com.adp.control.actions.DashboardAction"
+			method="calculTurnoverAmount">
+			<result name="success" type="tiles">calculTurnoverAmount</result>
+		</action>
+
+		<action name="addMonth" class="com.adp.control.actions.DashboardAction"
+			method="addMonth">
+			<result name="success" type="tiles">addMonth</result>
+		</action>
+
+		<action name="doAddMonth" class="com.adp.control.actions.TurnoverAction"
+			method="doAddMonth">
+			<result type="json" />
+		</action>
+
+		<action name="calculateTurnover" class="com.adp.control.actions.DashboardAction"
+			method="calculateTurnover">
+			<result name="success" type="tiles">calculateTurnover</result>
+		</action>
+
+		<!-- DASHBOARD ACTIONS -->
 
 
 	</package>

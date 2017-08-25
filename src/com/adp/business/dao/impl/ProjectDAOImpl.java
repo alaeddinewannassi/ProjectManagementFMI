@@ -9,20 +9,29 @@ import com.adp.utils.CollectionsUtil;
 
 public class ProjectDAOImpl extends GenericDAOImpl<ProjectEntity> implements ProjectDAO {
 
-	public ProjectEntity addProject(ProjectEntity p) throws ADPException {
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ProjectEntity> getProjectsByMonth(int month) throws ADPException {
 		
+		String q = " select DISTINCT p from ProjectEntity p where p.timesheet.month = ? ";
+		return getHibernateTemplate().find(q,month);
+	}
+
+	public ProjectEntity addProject(ProjectEntity p) throws ADPException {
+
 		return persist(p);
 	}
 
 	public ProjectEntity getProject(Long idProject) throws ADPException {
-		
+
 		return load(idProject);
 	}
 
 	public void updateProject(ProjectEntity p) throws ADPException {
-		
+
 		merge(p);
-		
+
 	}
 
 	public void deleteProject(Long idProject) throws ADPException {
@@ -36,17 +45,14 @@ public class ProjectDAOImpl extends GenericDAOImpl<ProjectEntity> implements Pro
 	public ProjectEntity getProjectByName(String name) throws ADPException {
 
 		String query = "from ProjectEntity where projectName= :x";
-		
-		
-        @SuppressWarnings("rawtypes")
-		List result = getHibernateTemplate().findByNamedParam(query, "x",name);
 
-		if(CollectionsUtil.isNotEmpty(result)) {
-			return (ProjectEntity)result.get(0);
-		}
-		else return null;
+		@SuppressWarnings("rawtypes")
+		List result = getHibernateTemplate().findByNamedParam(query, "x", name);
+
+		if (CollectionsUtil.isNotEmpty(result)) {
+			return (ProjectEntity) result.get(0);
+		} else
+			return null;
 	}
 
-	
-	
 }

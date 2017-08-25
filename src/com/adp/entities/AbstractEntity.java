@@ -10,7 +10,7 @@ import javax.persistence.MappedSuperclass;
 import org.granite.tide.data.DataPublishListener;
 
 @MappedSuperclass
-@EntityListeners( {DataPublishListener.class})
+@EntityListeners({ DataPublishListener.class })
 public abstract class AbstractEntity implements Serializable {
 
 	/**

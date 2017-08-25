@@ -11,7 +11,7 @@ import com.adp.business.dao.TimesheetErrorDAO;
 import com.adp.entities.TimesheetErrorEntity;
 import com.adp.exceptions.ADPException;
 
-public class TimesheetErrorDAOImpl extends GenericDAOImpl<TimesheetErrorEntity> implements TimesheetErrorDAO{
+public class TimesheetErrorDAOImpl extends GenericDAOImpl<TimesheetErrorEntity> implements TimesheetErrorDAO {
 
 	@Override
 	public TimesheetErrorEntity addTimesheetErrorLine(TimesheetErrorEntity t) throws ADPException {
@@ -47,40 +47,40 @@ public class TimesheetErrorDAOImpl extends GenericDAOImpl<TimesheetErrorEntity> 
 	public boolean ContributorExistsInTimeSheet(final String name) throws ADPException {
 
 		Long count = getHibernateTemplate().execute(new HibernateCallback<Long>() {
-		    public Long doInHibernate(Session session) {
-		        Query query = session.createQuery("select count(*) from TimesheetErrorEntity t where t.contributorName= :x");
-		        		query.setParameter("x", name);
-		        		return (Long) query.uniqueResult();
-		        
-		    }
+			public Long doInHibernate(Session session) {
+				Query query = session
+						.createQuery("select count(*) from TimesheetErrorEntity t where t.contributorName= :x");
+				query.setParameter("x", name);
+				return (Long) query.uniqueResult();
+
+			}
 		});
-		
+
 		if (count > 0) {
-			return true ;
+			return true;
 		}
-		return false ;
-		
+		return false;
+
 	}
 
 	@Override
 	public boolean ImportDateExistsInTimeSheet(final Date importDate) throws ADPException {
 
 		Long count = getHibernateTemplate().execute(new HibernateCallback<Long>() {
-		    public Long doInHibernate(Session session) {
-		        Query query = session.createQuery("select count(*) from TimesheetErrorEntity t where t.timesheetInstance.importDate= :x");
-		        		query.setParameter("x", importDate);
-		        		return (Long) query.uniqueResult();
-		        
-		    }
+			public Long doInHibernate(Session session) {
+				Query query = session.createQuery(
+						"select count(*) from TimesheetErrorEntity t where t.timesheetInstance.importDate= :x");
+				query.setParameter("x", importDate);
+				return (Long) query.uniqueResult();
+
+			}
 		});
-		
+
 		if (count > 0) {
-			return true ;
+			return true;
 		}
-		return false ;
-		
+		return false;
+
 	}
-	
-	
-	
+
 }

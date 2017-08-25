@@ -11,7 +11,7 @@ public class AffectationDAOImpl extends GenericDAOImpl<AffectationEntity> implem
 	@Override
 	public AffectationEntity addAffectation(AffectationEntity p) throws ADPException {
 		// TODO Auto-generated method stub
-		return persist(p) ;
+		return persist(p);
 	}
 
 	@Override

@@ -1,11 +1,14 @@
 package com.adp.entities;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="FMI_MONTHLY_TURNOVER")
+@Table(name = "FMI_MONTHLY_TURNOVER")
 public class MonthlyTurnoverEntity extends AbstractEntity {
 
 	/**
@@ -13,14 +16,37 @@ public class MonthlyTurnoverEntity extends AbstractEntity {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	
-	private int month  ;
-	private float progress ;
-	private float turnoverAmount ;
-	private float RTD ;
-	
+	private int month;
+
+	private float progress;
+
+	private float turnoverAmount;
+
+	private float actual;
+
+	private float realRTD;
+
+	private Date referenceDate; // import date ( timesheet )
+
 	@ManyToOne
-	private TurnoverEntity turnover ;
+	@JoinColumn(name="turnover_id")
+	private TurnoverEntity turnover;
+
+	public float getActual() {
+		return actual;
+	}
+
+	public void setActual(float actual) {
+		this.actual = actual;
+	}
+
+	public Date getReferenceDate() {
+		return referenceDate;
+	}
+
+	public void setReferenceDate(Date referenceDate) {
+		this.referenceDate = referenceDate;
+	}
 
 	public int getMonth() {
 		return month;
@@ -46,12 +72,12 @@ public class MonthlyTurnoverEntity extends AbstractEntity {
 		this.turnoverAmount = turnoverAmount;
 	}
 
-	public float getRTD() {
-		return RTD;
+	public float getRealRTD() {
+		return realRTD;
 	}
 
-	public void setRTD(float rTD) {
-		RTD = rTD;
+	public void setRealRTD(float realRTD) {
+		this.realRTD = realRTD;
 	}
 
 	public TurnoverEntity getTurnover() {
@@ -67,16 +93,13 @@ public class MonthlyTurnoverEntity extends AbstractEntity {
 		// TODO Auto-generated constructor stub
 	}
 
-	public MonthlyTurnoverEntity(int month, float progress, float turnoverAmount, float rTD) {
+	public MonthlyTurnoverEntity(Date referenceDate,int month, float progress, float turnoverAmount, float rTD) {
 		super();
+		this.referenceDate = referenceDate;
 		this.month = month;
 		this.progress = progress;
 		this.turnoverAmount = turnoverAmount;
-		RTD = rTD;
+		this.realRTD = rTD;
 	}
-	
-	
-	
-	
-	
+
 }

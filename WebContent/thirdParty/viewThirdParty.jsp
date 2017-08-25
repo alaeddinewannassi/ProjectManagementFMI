@@ -11,17 +11,18 @@
                 <h3>View Contributors</h3>
               </div>
 
-              <div class="title_right">
-                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                  <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for...">
-                    <span class="input-group-btn">
-                      <button class="btn btn-default" type="button">Go!</button>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
+			<div class="title_right">
+				<div
+					class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+					<div class="input-group">
+						<input type="text" class="form-control"
+							placeholder="Search for..."><span class="input-group-btn">
+							<button class="btn btn-default" type="button">Go!</button>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
 
             <div class="clearfix"></div>
 
@@ -79,7 +80,7 @@
                             </div>
                             <div class="right col-xs-5 text-center">
                            
-                              <img src="images/<s:property value="firstName"/>.jpg" alt="" class="img-circle img-responsive">
+                              <img src="images/<s:property value="fullName"/>.jpg" alt="" class="img-circle img-responsive">
                             </div>
                           </div>
                           <div class="col-xs-12 bottom text-center">

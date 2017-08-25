@@ -10,27 +10,22 @@ import com.adp.entities.UserEntity;
 import com.adp.exceptions.ADPException;
 import com.adp.utils.ResetUtil;
 
-public class LostPasswordAction extends AbstractAction{
+public class LostPasswordAction extends AbstractAction {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	
+
 	@Autowired
-	UserService userService ;
-	
-	private String email ;
-	
-	private String token ;
-	
-	private String password ;
-	
-	
-	
-	
-	
+	UserService userService;
+
+	private String email;
+
+	private String token;
+
+	private String password;
+
 	public String getPassword() {
 		return password;
 	}
@@ -57,46 +52,45 @@ public class LostPasswordAction extends AbstractAction{
 
 	public String execute() throws ADPException {
 		addActionMessage("please enter your e-mail adress ! ");
-		return SUCCESS ;
+		return SUCCESS;
 	}
-	
+
 	public String reset() throws ADPException {
-		
-		if(!userService.userExistsinDB(email)){
+
+		if (!userService.userExistsinDB(email)) {
 			addActionError("user does not exist !");
-			return "login" ;
+			return "login";
 		}
-		
+
 		UserEntity user = userService.getUserByMail(email);
 		HttpServletRequest request = ServletActionContext.getRequest();
-		String link = request.getScheme() + "://" + request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/confirmReset.action?token="+user.getConfirmationToken();
+		String link = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+				+ request.getContextPath() + "/confirmReset.action?token=" + user.getConfirmationToken();
 		ResetUtil Sender = new ResetUtil();
-		Sender.sendEmail(user.getLogin(),email,link);
+		Sender.sendEmail(user.getLogin(), email, link);
 		addActionMessage("please check your mail inbox ! ");
-		
-		return SUCCESS ;
+
+		return SUCCESS;
 	}
-	
+
 	public String confirmReset() throws ADPException {
 		UserEntity user = userService.getUserByToken(token);
-		if (user== null){
+		if (user == null) {
 			addActionError("play away hacker ! ");
-			return "login" ;
+			return "login";
 		}
-		
-		return SUCCESS ;
+
+		return SUCCESS;
 	}
-	
+
 	public String finalReset() throws ADPException {
 		UserEntity user = userService.getUserByToken(token);
 		user.setPassword(password);
 		userService.updateUser(user);
-		
-		addActionMessage(user.getLogin()+" , your password was updated successfully !");
-		
-		return SUCCESS ;
+
+		addActionMessage(user.getLogin() + " , your password was updated successfully !");
+
+		return SUCCESS;
 	}
-	
-	
-	
+
 }

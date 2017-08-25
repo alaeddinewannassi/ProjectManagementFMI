@@ -14,37 +14,31 @@ import com.adp.business.services.ThirdPartyService;
 import com.adp.entities.TeamEntity;
 import com.adp.entities.ThirdPartyEntity;
 import com.adp.exceptions.ADPException;
-import com.opensymphony.xwork2.ActionSupport;
 
-public class ReportAction extends ActionSupport implements ServletContextAware{
+public class ReportAction extends AbstractAction implements ServletContextAware {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	
+
 	@Autowired
-	TeamService teamService ;
-	
+	TeamService teamService;
+
 	@Autowired
 	ThirdPartyService thirdPartyService;
-	
-	
-	@Autowired
-	ProjectService projectService ;
-	
-	
-	private String selectedProject ;
-	
-	private List<String> teams = new ArrayList<>() ;
-	
-	private List<String> thirdParties = new ArrayList<>() ;
-	
-	private String selectedTeam ;
 
-	
-	
+	@Autowired
+	ProjectService projectService;
+
+	private String selectedProject;
+
+	private List<String> teams = new ArrayList<>();
+
+	private List<String> thirdParties = new ArrayList<>();
+
+	private String selectedTeam;
+
 	public List<String> getThirdParties() {
 		return thirdParties;
 	}
@@ -77,36 +71,32 @@ public class ReportAction extends ActionSupport implements ServletContextAware{
 		this.selectedProject = selectedProject;
 	}
 
-	
 	public String doShowReport() throws ADPException {
-		
-		
+
 		List<TeamEntity> teamsByProject = teamService.getTeamsByProject(selectedProject);
-		
-		for(TeamEntity team : teamsByProject){
-			teams.add(team.getTeamName()); 
+
+		for (TeamEntity team : teamsByProject) {
+			teams.add(team.getTeamName());
 		}
-		
+
 		TeamEntity team = teamService.getTeamByName(selectedTeam);
-		if(team != null){
-		List<ThirdPartyEntity> contributors = thirdPartyService.getThirdPartiesByTeam(team.getId());
 		
-			for(ThirdPartyEntity thirdParty : contributors) {
+		if (team != null) {
+			List<ThirdPartyEntity> contributors = thirdPartyService.getThirdPartiesByTeam(team.getId());
+
+			for (ThirdPartyEntity thirdParty : contributors) {
 				thirdParties.add(thirdParty.getFullName());
 			}
-		
-			return SUCCESS ;	
-		}
-		else 
-			return SUCCESS ;
+
+			return SUCCESS;
+		} else
+			return SUCCESS;
 	}
-		
-	
 
 	@Override
 	public void setServletContext(ServletContext arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 }

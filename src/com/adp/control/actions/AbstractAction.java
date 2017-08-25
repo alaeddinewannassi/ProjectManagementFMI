@@ -25,7 +25,18 @@ public class AbstractAction extends ActionSupport implements SessionAware{
 	
 	private String loggedInUser;
 	
+	private String projects;
 	
+	
+	
+	public String getProjects() {
+		if(ServletActionContext.getRequest().getSession().getAttribute("projects") != null){
+			projects = (String) ServletActionContext.getRequest().getSession().getAttribute("projects");
+		}
+		return projects;
+	}
+
+
 	public void setSession(Map<String, Object> session) {
 		this.session = session;
 	}

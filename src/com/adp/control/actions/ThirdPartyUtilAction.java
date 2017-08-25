@@ -30,63 +30,59 @@ import com.adp.entities.ThirdPartyEntity;
 import com.adp.exceptions.ADPException;
 import com.adp.utils.StringUtil;
 
-public class ThirdPartyUtilAction extends AbstractAction{
+public class ThirdPartyUtilAction extends AbstractAction {
 
 	private static final long serialVersionUID = 1L;
 	private static final String MISSION_PARAM_PREFIX = "selectedMission";
 
 	@Autowired
-	ThirdPartyService thirdPartyService ;
-	
-	@Autowired
-	TeamService teamService ;
-	
-	@Autowired
-	AffectationService affectationService ;
-	
-	@Autowired
-	InterestService interestService ;
-	
-	@Autowired
-	MissionService missionService ;
-	
-	private List<ThirdPartyEntity> thirdPartys ;
+	ThirdPartyService thirdPartyService;
 
-	
-	private String firstName ;
-	
-	private String selectedMission ;
-	
+	@Autowired
+	TeamService teamService;
+
+	@Autowired
+	AffectationService affectationService;
+
+	@Autowired
+	InterestService interestService;
+
+	@Autowired
+	MissionService missionService;
+
+	private List<ThirdPartyEntity> thirdPartys;
+
+	private String firstName;
+
+	private String selectedMission;
+
 	private String startDate;
-	
-	private String endDate;
-	
-	private String lastName ;
-	
-	private String phone ;
-	
-	private String adresse ;
-	
-	private String gender ;
 
-	private String jobTitle ;
-	
-	private String email ;
-	
-	private File profileImage ;
-	
-	private String selectedTeam ;
-	
-	private List<String> selectedInterests ;
-	
+	private String endDate;
+
+	private String lastName;
+
+	private String phone;
+
+	private String adresse;
+
+	private String gender;
+
+	private String jobTitle;
+
+	private String email;
+
+	private File profileImage;
+
+	private String selectedTeam;
+
+	private List<String> selectedInterests;
+
 	private List<String> selectedMissions = new ArrayList<String>();
-	
+
 	private List<Date> selectedStartDate = new ArrayList<Date>();
-	
+
 	private List<Date> selectedEndDate = new ArrayList<Date>();
-	
-	
-	
 
 	public String getSelectedMission() {
 		return selectedMission;
@@ -160,7 +156,6 @@ public class ThirdPartyUtilAction extends AbstractAction{
 		this.selectedTeam = selectedTeam;
 	}
 
-	
 	public File getProfileImage() {
 		return profileImage;
 	}
@@ -177,8 +172,7 @@ public class ThirdPartyUtilAction extends AbstractAction{
 		this.profileImage = profileImage;
 	}
 
-	private Long id ;
-	
+	private Long id;
 
 	public String getAdresse() {
 		return adresse;
@@ -204,7 +198,6 @@ public class ThirdPartyUtilAction extends AbstractAction{
 		this.thirdPartys = thirdPartys;
 	}
 
-	
 	public String getFirstName() {
 		return firstName;
 	}
@@ -220,7 +213,6 @@ public class ThirdPartyUtilAction extends AbstractAction{
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-
 
 	public String getJobTitle() {
 		return jobTitle;
@@ -238,113 +230,109 @@ public class ThirdPartyUtilAction extends AbstractAction{
 		this.id = id;
 	}
 
-
 	public ThirdPartyUtilAction() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-
-
 	public String saveThirdParty() throws ADPException {
-		
-		try {
-		if (!check()) {
-			addActionError("verify ThirdParty fields (*)!");
-			return "addThirdParty" ;
-		}
 
-		 byte[] imageFile = new byte[(int) profileImage.length()];
-		 
-	        try {
-	            // persist image to db
-	        	FileInputStream fileInputStream = new FileInputStream(profileImage);
-	            fileInputStream.read(imageFile);
-	            fileInputStream.close();
-	            
-	            
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
-	        Set<InterestEntity> collection = new HashSet<>();
-	        ThirdPartyEntity t = new ThirdPartyEntity(firstName, lastName, email , gender , jobTitle, phone, adresse,imageFile);
-	        for (String interestName : selectedInterests){
-	        	InterestEntity i = interestService.getInterestByName(interestName);
-	        	collection.add(i);
-	        }
-	        t.setInterests(collection);
-	        thirdPartyService.addThirdParty(t);
-			
-			 // persist image in local
-            FileOutputStream fos = new FileOutputStream("C:\\ProjectManagementFMI\\images\\"+t.getFirstName()+".jpg");  
-            fos.write(t.getProfileImage());
-            // fos.flush(); 
-            fos.close();
-            
-			addActionMessage("the Contributor "+firstName+" was added successefully ! ");
+		try {
+			if (!check()) {
+				addActionError("verify ThirdParty fields (*)!");
+				return "addThirdParty";
+			}
+
+			byte[] imageFile = new byte[(int) profileImage.length()];
+
+			try {
+				// persist image to db
+				FileInputStream fileInputStream = new FileInputStream(profileImage);
+				fileInputStream.read(imageFile);
+				fileInputStream.close();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			Set<InterestEntity> collection = new HashSet<>();
+			ThirdPartyEntity t = new ThirdPartyEntity(firstName, lastName, email, gender, jobTitle, phone, adresse,
+					imageFile);
+			for (String interestName : selectedInterests) {
+				InterestEntity i = interestService.getInterestByName(interestName);
+				collection.add(i);
+			}
+			t.setInterests(collection);
+			thirdPartyService.addThirdParty(t);
+
+			// persist image in local
+			FileOutputStream fos = new FileOutputStream(
+					"C:\\ProjectManagementFMI\\images\\" + t.getFullName() + ".jpg");
+			fos.write(t.getProfileImage());
+			// fos.flush();
+			fos.close();
+
+			addActionMessage("the Contributor " + firstName + " was added successefully ! ");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
-		return SUCCESS ;
+
+		return SUCCESS;
 	}
-	
-	public String viewContributors() throws ADPException{
-		
-		//	TeamEntity team = teamService.getTeamByName(selectedTeam);
-			thirdPartys = thirdPartyService.getAllThirdParties();
-			
-		return SUCCESS ;
-	
+
+	public String viewContributors() throws ADPException {
+
+		// TeamEntity team = teamService.getTeamByName(selectedTeam);
+		thirdPartys = thirdPartyService.getAllThirdParties();
+
+		return SUCCESS;
+
 	}
+
 	public String doAffectThirdParty() throws ADPException, ParseException {
 		ThirdPartyEntity t = thirdPartyService.getThirdParty(id);
 		List<MissionToThirdPartyLink> list = buildLinks();
-		
-		for(MissionToThirdPartyLink mt : list){
+
+		for (MissionToThirdPartyLink mt : list) {
 			MissionEntity m = missionService.getMissionByName(mt.getMissionName());
 			AffectationEntity association = new AffectationEntity(t, m, mt.getStartDate(), mt.getEndDate());
 			t.getAssociation().add(association);
 			thirdPartyService.updateThirdParty(t);
 		}
-		
-		
-		
-		addActionMessage("the contributor " + t.getLastName() +" was affected successefully !");
-		
-		return SUCCESS ;
+
+		addActionMessage("the contributor " + t.getLastName() + " was affected successefully !");
+
+		return SUCCESS;
 	}
-	
-	private List<MissionToThirdPartyLink> buildLinks() throws ParseException{
-		
+
+	private List<MissionToThirdPartyLink> buildLinks() throws ParseException {
+
 		List<MissionToThirdPartyLink> links = new ArrayList<>();
 		HttpServletRequest request = getRequest();
 		@SuppressWarnings("unchecked")
 		Map<String, String[]> parameters = request.getParameterMap();
-		
-		for(String parameterName : parameters.keySet()){
-			if(parameterName.startsWith(MISSION_PARAM_PREFIX)){
-				
+
+		for (String parameterName : parameters.keySet()) {
+			if (parameterName.startsWith(MISSION_PARAM_PREFIX)) {
+
 				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-				
+
 				int index = Integer.valueOf(parameterName.substring(MISSION_PARAM_PREFIX.length()));
-				MissionToThirdPartyLink link = new MissionToThirdPartyLink(request.getParameter(MISSION_PARAM_PREFIX+index),
-					 df.parse(request.getParameter("startDate"+index)), 
-						df.parse(request.getParameter("endDate"+index)) ) ;
-				
+				MissionToThirdPartyLink link = new MissionToThirdPartyLink(
+						request.getParameter(MISSION_PARAM_PREFIX + index),
+						df.parse(request.getParameter("startDate" + index)),
+						df.parse(request.getParameter("endDate" + index)));
+
 				links.add(link);
 			}
 		}
-		
+
 		return links;
 	}
-	
-	private class MissionToThirdPartyLink{
+
+	private class MissionToThirdPartyLink {
 		private String missionName;
 		private Date startDate;
 		private Date endDate;
-		
 
 		public String getMissionName() {
 			return missionName;
@@ -358,17 +346,15 @@ public class ThirdPartyUtilAction extends AbstractAction{
 			return endDate;
 		}
 
-
-
-		private MissionToThirdPartyLink(String missionName, Date startDate, Date endDate){
+		private MissionToThirdPartyLink(String missionName, Date startDate, Date endDate) {
 			this.missionName = missionName;
 			this.startDate = startDate;
 			this.endDate = endDate;
 		}
 	}
-	
+
 	public String updateThirdParty() throws ADPException {
-		
+
 		TeamEntity team = teamService.getTeamByName(selectedTeam);
 		ThirdPartyEntity t = thirdPartyService.getThirdParty(id);
 		t.setFirstName(firstName);
@@ -380,39 +366,34 @@ public class ThirdPartyUtilAction extends AbstractAction{
 		t.setTeam(team);
 
 		thirdPartyService.updateThirdParty(t);
-		
-		
-		addActionMessage("the ThirdParty "+t.getFirstName()+" was updated successefully ! ");
-		
-		return SUCCESS ;
+
+		addActionMessage("the ThirdParty " + t.getFirstName() + " was updated successefully ! ");
+
+		return SUCCESS;
 	}
-	
+
 	public String updateAffectation() throws ADPException, ParseException {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		
+
 		AffectationEntity a = affectationService.getAffectation(id);
 		a.setMission(missionService.getMissionByName(selectedMission));
 		a.setStartDate(df.parse(startDate));
 		a.setEndDate(df.parse(endDate));
-		
+
 		affectationService.updateAffectation(a);
-		
-		addActionMessage("the affectation to "+a.getMission().getMissionName()+" for thirdParty "+a.getThirdParty().getFirstName() +" was updated successefully ! ");
-		
-		return SUCCESS ;
+
+		addActionMessage("the affectation to " + a.getMission().getMissionName() + " for thirdParty "
+				+ a.getThirdParty().getFirstName() + " was updated successefully ! ");
+
+		return SUCCESS;
 	}
-	
-	
-	
-	
+
 	private boolean check() {
-		if(StringUtil.isEmpty(firstName) ||StringUtil.isEmpty(lastName) ){
+		if (StringUtil.isEmpty(firstName) || StringUtil.isEmpty(lastName)) {
 			return false;
 		}
-		
+
 		return true;
 	}
-	
-	
-	
+
 }

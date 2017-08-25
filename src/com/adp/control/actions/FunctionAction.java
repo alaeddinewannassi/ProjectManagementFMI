@@ -15,16 +15,14 @@ public class FunctionAction extends AbstractAction {
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
-	FunctionService FunctionService ;
-	
+	FunctionService FunctionService;
+
 	@Autowired
-	MissionService missionService ;
-	
-	
-	private FunctionEntity Function ;
-	
-	private List<MissionEntity> missions ;
-	
+	MissionService missionService;
+
+	private FunctionEntity Function;
+
+	private List<MissionEntity> missions;
 
 	public List<MissionEntity> getMissions() {
 		return missions;
@@ -42,19 +40,15 @@ public class FunctionAction extends AbstractAction {
 		this.Function = Function;
 	}
 
-	
-
 	public String addFunction() throws ADPException {
-		
+
 		missions = missionService.getAllMissions();
-		
-		return SUCCESS ;
+
+		return SUCCESS;
 	}
-	
-	private Long id ;
-	
-	
-	
+
+	private Long id;
+
 	public Long getId() {
 		return id;
 	}
@@ -64,29 +58,26 @@ public class FunctionAction extends AbstractAction {
 	}
 
 	public String modifyFunction() throws ADPException {
-		
-		 Function = FunctionService.getFunction(id);
-		
-		
-		return SUCCESS ;
+
+		Function = FunctionService.getFunction(id);
+
+		return SUCCESS;
 	}
+
 	public String showFunctions() throws ADPException {
-		
-		missions = missionService.getAllMissions() ;
-		return SUCCESS ;	
+
+		missions = missionService.getAllMissions();
+		return SUCCESS;
 	}
-	
+
 	public String removeFunction() throws ADPException {
-		
+
 		FunctionEntity p = FunctionService.getFunction(id);
-		String name = p.getFunctionName() ;
+		String name = p.getFunctionName();
 		FunctionService.deleteFunction(id);
-		addActionMessage("the Function "+name+" was deleted successefully ! ");
-		
-		return SUCCESS ;
+		addActionMessage("the Function " + name + " was deleted successefully ! ");
+
+		return SUCCESS;
 	}
-	
-	
-	
-	
+
 }

@@ -1,7 +1,5 @@
 package com.adp.control.actions;
 
-
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,33 +11,37 @@ import com.adp.entities.ProjectEntity;
 import com.adp.exceptions.ADPException;
 import com.adp.utils.StringUtil;
 
-public class MissionUtilAction extends AbstractAction{
+public class MissionUtilAction extends AbstractAction {
 
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
-	MissionService missionService ;
-	
+	MissionService missionService;
+
 	@Autowired
-	ProjectService projectService ;
-	
-	private List<MissionEntity> missions ;
-	
-	private String selectedProject ;
-	
-	private String missionName ;
+	ProjectService projectService;
 
-	private float budget ;
-	
-	private String description ;
-	
-	private Long id ;
-	
-	
-	
-	
-	
+	private List<MissionEntity> missions;
 
+	private String selectedProject;
+
+	private String missionName;
+
+	private float budget;
+
+	private float workload;
+
+	private String description;
+
+	private Long id;
+
+	public float getWorkload() {
+		return workload;
+	}
+
+	public void setWorkload(float workload) {
+		this.workload = workload;
+	}
 
 	public List<MissionEntity> getMissions() {
 		return missions;
@@ -73,8 +75,6 @@ public class MissionUtilAction extends AbstractAction{
 		this.missionName = MissionName;
 	}
 
-	
-
 	public MissionUtilAction() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -87,8 +87,7 @@ public class MissionUtilAction extends AbstractAction{
 	public void setBudget(float budget) {
 		this.budget = budget;
 	}
-	
-	
+
 	public String getDescription() {
 		return description;
 	}
@@ -97,74 +96,65 @@ public class MissionUtilAction extends AbstractAction{
 		this.description = desc;
 	}
 
-	
-
 	public String saveMission() throws ADPException {
-		
+
 		try {
-		if (!check()) {
-			addActionError("verify mission fields (*)!");
-			return "addMission" ;
-		}
-		 	ProjectEntity p = projectService.getProjectByName(selectedProject);
-			MissionEntity m = new MissionEntity(missionName, budget, description);
-			
-				m.setProject(p);
-				p.getMissions().add(m);
-				
-				projectService.updateProject(p);
-				
-			
-			addActionMessage("the Mission "+missionName+" was added successefully ! ");
+			if (!check()) {
+				addActionError("verify mission fields (*)!");
+				return "addMission";
+			}
+			ProjectEntity p = projectService.getProjectByName(selectedProject);
+			MissionEntity m = new MissionEntity(missionName, budget, workload, description);
+
+			m.setProject(p);
+			p.getMissions().add(m);
+
+			projectService.updateProject(p);
+
+			addActionMessage("the Mission " + missionName + " was added successefully ! ");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		return SUCCESS ;
+
+		return SUCCESS;
 	}
-	
-	public String viewMissions() throws ADPException{
+
+	public String viewMissions() throws ADPException {
 		try {
 			ProjectEntity p = projectService.getProjectByName(selectedProject);
 			missions = missionService.getMissionsByProject(p.getId());
-			
+
 		} catch (ADPException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		return SUCCESS ;
-	
+
+		return SUCCESS;
+
 	}
-	
+
 	public String updateMission() throws ADPException {
-		
-	
+
 		MissionEntity m = missionService.getMission(id);
 		m.setBudget(budget);
 		m.setDescription(description);
 		m.setMissionName(missionName);
-		
+		m.setWorkload(workload);
+
 		missionService.updateMission(m);
-		
-		addActionMessage("the Mission "+missionName+" was updated successefully ! ");
-		
-		return SUCCESS ;
+
+		addActionMessage("the Mission " + missionName + " was updated successefully ! ");
+
+		return SUCCESS;
 	}
-	
 
-
-	
 	private boolean check() {
-		if(StringUtil.isEmpty(missionName) ||StringUtil.isEmpty(description) || budget==0 ){
+		if (StringUtil.isEmpty(missionName) || StringUtil.isEmpty(description) || budget == 0) {
 			return false;
 		}
-		
+
 		return true;
 	}
-	
-	
-	
+
 }

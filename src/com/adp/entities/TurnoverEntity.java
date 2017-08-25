@@ -1,30 +1,38 @@
 package com.adp.entities;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 @Entity
-@Table(name="FMI_TURNOVER")
-public class TurnoverEntity extends AbstractEntity{
+@Table(name = "FMI_TURNOVER")
+public class TurnoverEntity extends AbstractEntity {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	private float revisedWorkload ;
-	private float revisedBudgetAmount ;
-	private float turnoverAmount ;
-	
-	@OneToMany
-	private List<MonthlyTurnoverEntity> monthlyTurnovers ;
-	
-	@OneToOne(mappedBy="mission_ID")
-	private MissionEntity mission ;
+
+	private float revisedWorkload;
+	private float revisedBudgetAmount;
+
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy = "turnover", cascade = CascadeType.ALL,fetch=FetchType.EAGER)
+	private Set<MonthlyTurnoverEntity> monthlyTurnovers = new HashSet<MonthlyTurnoverEntity>();
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "mission_ID")
+	private MissionEntity mission;
 
 	public float getRevisedWorkload() {
 		return revisedWorkload;
@@ -43,11 +51,12 @@ public class TurnoverEntity extends AbstractEntity{
 	}
 
 	public float getTurnoverAmount() {
-		return turnoverAmount;
-	}
+		float res = 0;
+		for (MonthlyTurnoverEntity m : monthlyTurnovers) {
+			res = res + m.getTurnoverAmount();
+		}
 
-	public void setTurnoverAmount(float turnoverAmount) {
-		this.turnoverAmount = turnoverAmount;
+		return res;
 	}
 
 	public MissionEntity getMission() {
@@ -57,33 +66,33 @@ public class TurnoverEntity extends AbstractEntity{
 	public void setMission(MissionEntity mission) {
 		this.mission = mission;
 	}
-	
-	public List<MonthlyTurnoverEntity> getMonthlyTurnovers() {
+
+	public Set<MonthlyTurnoverEntity> getMonthlyTurnovers() {
 		return monthlyTurnovers;
 	}
 
-	public void setMonthlyTurnovers(List<MonthlyTurnoverEntity> monthlyTurnovers) {
+	public void setMonthlyTurnovers(Set<MonthlyTurnoverEntity> monthlyTurnovers) {
 		this.monthlyTurnovers = monthlyTurnovers;
 	}
-
+	public float getCumulatedActuals(){
+		
+		float res = 0;
+		for(MonthlyTurnoverEntity m : monthlyTurnovers){
+			res = res + m.getActual();  
+		}
+		return res ;
+	}
+	
+	
 	public TurnoverEntity() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public TurnoverEntity(float revisedWorkload, float revisedBudgetAmount, float turnoverAmount) {
+	public TurnoverEntity(float revisedWorkload, float revisedBudgetAmount) {
 		super();
 		this.revisedWorkload = revisedWorkload;
 		this.revisedBudgetAmount = revisedBudgetAmount;
-		this.turnoverAmount = turnoverAmount;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

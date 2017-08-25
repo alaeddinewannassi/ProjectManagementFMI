@@ -9,31 +9,29 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-
 @Entity
-@Table(name="FMI_AFFECTATION")
-public class AffectationEntity extends AbstractEntity{
+@Table(name = "FMI_AFFECTATION")
+public class AffectationEntity extends AbstractEntity {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@ManyToOne
-    @JoinColumn(name = "thirdPartyId",nullable = false) 
-	private ThirdPartyEntity thirdParty ;
-	
-	
+	@JoinColumn(name = "thirdPartyId", nullable = false)
+	private ThirdPartyEntity thirdParty;
+
 	@ManyToOne
-    @JoinColumn(name = "missionId",nullable = false) 
-	private MissionEntity mission ; 
-	 
+	@JoinColumn(name = "missionId", nullable = false)
+	private MissionEntity mission;
+
 	@Temporal(TemporalType.DATE)
-	private Date startDate ;
-	
+	private Date startDate;
+
 	@Temporal(TemporalType.DATE)
-	private Date endDate ;
-	
+	private Date endDate;
+
 	public Date getStartDate() {
 		return startDate;
 	}
@@ -79,16 +77,4 @@ public class AffectationEntity extends AbstractEntity{
 		this.endDate = endDate;
 	}
 
-	
-	
-
-
-	
-	 
-	
-	
-	
-	
-	
-	
 }

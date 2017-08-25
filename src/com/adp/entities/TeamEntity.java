@@ -1,6 +1,5 @@
 package com.adp.entities;
 
-
 import java.util.Collection;
 
 import javax.persistence.Entity;
@@ -13,24 +12,23 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
-@Table(name="FMI_TEAM")
+@Table(name = "FMI_TEAM")
 public class TeamEntity extends AbstractEntity {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String teamName ;
-	
+	private String teamName;
+
 	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(mappedBy="team")
+	@OneToMany(mappedBy = "team")
 	private Collection<ThirdPartyEntity> employees;
-	
+
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@ManyToOne
-	@JoinColumn(name="projectId")
-	private ProjectEntity project ;
-	
+	@JoinColumn(name = "projectId")
+	private ProjectEntity project;
 
 	public TeamEntity() {
 		super();
@@ -66,10 +64,4 @@ public class TeamEntity extends AbstractEntity {
 		this.project = project;
 	}
 
-	
-	
-	
-	
-	
-	
 }

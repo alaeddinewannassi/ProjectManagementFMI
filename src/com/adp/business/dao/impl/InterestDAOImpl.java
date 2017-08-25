@@ -7,7 +7,7 @@ import com.adp.entities.InterestEntity;
 import com.adp.exceptions.ADPException;
 import com.adp.utils.CollectionsUtil;
 
-public class InterestDAOImpl extends GenericDAOImpl<InterestEntity> implements InterestDAO{
+public class InterestDAOImpl extends GenericDAOImpl<InterestEntity> implements InterestDAO {
 
 	@Override
 	public Long addInterest(InterestEntity i) throws ADPException {
@@ -30,17 +30,14 @@ public class InterestDAOImpl extends GenericDAOImpl<InterestEntity> implements I
 	@Override
 	public InterestEntity getInterestByName(String name) throws ADPException {
 		String query = "from InterestEntity where interestName= :x";
-		
-		
-        @SuppressWarnings("rawtypes")
-		List result = getHibernateTemplate().findByNamedParam(query, "x",name);
 
-		if(CollectionsUtil.isNotEmpty(result)) {
-			return (InterestEntity)result.get(0);
-		}
-		else return null;
+		@SuppressWarnings("rawtypes")
+		List result = getHibernateTemplate().findByNamedParam(query, "x", name);
+
+		if (CollectionsUtil.isNotEmpty(result)) {
+			return (InterestEntity) result.get(0);
+		} else
+			return null;
 	}
-	
-	
 
 }

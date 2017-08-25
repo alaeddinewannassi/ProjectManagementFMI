@@ -2,24 +2,20 @@ package com.adp.entities;
 
 import java.util.Collection;
 
-
-
-
 public class ManagerEntity extends UserEntity {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	private String firstName ;
-	private String lastName ;
-	
-	//@OneToMany(mappedBy="projectManager")
-	private Collection<ProjectEntity> projects ;
-	
-	
-	private String jobTitle ;
-	private String phone ;
+
+	private String firstName;
+	private String lastName;
+
+	// @OneToMany(mappedBy="projectManager")
+	private Collection<ProjectEntity> projects;
+
+	private String jobTitle;
+	private String phone;
 
 	public String getJobTitle() {
 		return jobTitle;
@@ -45,7 +41,6 @@ public class ManagerEntity extends UserEntity {
 		this.projects = projects;
 	}
 
-	
 	public String getFirstName() {
 		return firstName;
 	}
@@ -66,6 +61,5 @@ public class ManagerEntity extends UserEntity {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	
+
 }
