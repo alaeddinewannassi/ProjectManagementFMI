@@ -1,5 +1,4 @@
 # ProjectManagementFMI
-Internship project with Vermeg :
 An intranet solution that ensures the correct follow-up of all the employees' services on a project and gives the manager the possibility to automatically verify manual entries, calculate the monthly turnover and generate a complete activity report
 
 ## Getting Started
